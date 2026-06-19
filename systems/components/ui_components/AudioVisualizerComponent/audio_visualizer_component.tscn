@@ -1,0 +1,172 @@
+[gd_scene format=3 uid="uid://bajc4fumqtrfr"]
+
+[ext_resource type="Script" uid="uid://y0dutuwclf4k" path="res://systems/components/ui_components/AudioVisualizerComponent/audio_visualizer_component.gd" id="1_wapra"]
+[ext_resource type="AudioStream" uid="uid://dn2y6qgeq1xe8" path="res://sound/music/mus_breakbeat.mp3" id="2_xlqm3"]
+
+[node name="AudioVisualizerComponent" type="Control" unique_id=1170582492]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wapra")
+
+[node name="BarsUp" type="MarginContainer" parent="." unique_id=1039434077]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1152.0
+offset_top = 648.0
+offset_right = 1152.0
+offset_bottom = 648.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 3.1415927
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="BarContainerUp" type="HBoxContainer" parent="BarsUp" unique_id=527431774]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="AudioBar1" type="ColorRect" parent="BarsUp/BarContainerUp" unique_id=1491689920]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="AudioBar2" type="ColorRect" parent="BarsUp/BarContainerUp" unique_id=1449172811]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="AudioBar3" type="ColorRect" parent="BarsUp/BarContainerUp" unique_id=1217995734]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="AudioBar4" type="ColorRect" parent="BarsUp/BarContainerUp" unique_id=1100329301]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="AudioBar5" type="ColorRect" parent="BarsUp/BarContainerUp" unique_id=2043789860]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="AudioBar6" type="ColorRect" parent="BarsUp/BarContainerUp" unique_id=2066960449]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="AudioBar7" type="ColorRect" parent="BarsUp/BarContainerUp" unique_id=1795548920]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="AudioBar8" type="ColorRect" parent="BarsUp/BarContainerUp" unique_id=683826589]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="AudioBar9" type="ColorRect" parent="BarsUp/BarContainerUp" unique_id=1624001008]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="AudioBar10" type="ColorRect" parent="BarsUp/BarContainerUp" unique_id=1101387445]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="AudioBar11" type="ColorRect" parent="BarsUp/BarContainerUp" unique_id=1761151150]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="AudioBar12" type="ColorRect" parent="BarsUp/BarContainerUp" unique_id=1648124326]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="BarsDown" type="MarginContainer" parent="." unique_id=1645688729]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="BarContainerDown" type="HBoxContainer" parent="BarsDown" unique_id=513369587]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="AudioBar1" type="ColorRect" parent="BarsDown/BarContainerDown" unique_id=350266558]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="AudioBar2" type="ColorRect" parent="BarsDown/BarContainerDown" unique_id=1742926252]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="AudioBar3" type="ColorRect" parent="BarsDown/BarContainerDown" unique_id=652709889]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="AudioBar4" type="ColorRect" parent="BarsDown/BarContainerDown" unique_id=1895937788]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="AudioBar5" type="ColorRect" parent="BarsDown/BarContainerDown" unique_id=1856384157]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="AudioBar6" type="ColorRect" parent="BarsDown/BarContainerDown" unique_id=1886043002]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="AudioBar7" type="ColorRect" parent="BarsDown/BarContainerDown" unique_id=905273626]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="AudioBar8" type="ColorRect" parent="BarsDown/BarContainerDown" unique_id=1450730241]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="AudioBar9" type="ColorRect" parent="BarsDown/BarContainerDown" unique_id=450924848]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="AudioBar10" type="ColorRect" parent="BarsDown/BarContainerDown" unique_id=1640285700]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="AudioBar11" type="ColorRect" parent="BarsDown/BarContainerDown" unique_id=1417279599]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="AudioBar12" type="ColorRect" parent="BarsDown/BarContainerDown" unique_id=2140241585]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="TestMusic" type="AudioStreamPlayer2D" parent="." unique_id=1889963470]
+stream = ExtResource("2_xlqm3")
+bus = &"Music"
