@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://cvbbvhpy2p3kl"]
+
+[ext_resource type="Script" uid="uid://qhgal6864715" path="res://systems/globals/conductor/Conductor.gd" id="1_ygtk4"]
+[ext_resource type="AudioStream" uid="uid://dbvgscnb3kmft" path="res://sound/music/Geoxor - Lollipop.mp3" id="2_1xtsx"]
+
+[node name="Conductor" type="Node" unique_id=30210512]
+script = ExtResource("1_ygtk4")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1872205035]
+stream = ExtResource("2_1xtsx")

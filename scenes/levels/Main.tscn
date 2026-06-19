@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://chykunq0fllas"]
+
+[ext_resource type="Script" uid="uid://dhob63b2lbkiu" path="res://systems/components/chart/NoteSpawner.gd" id="1_ty8y3"]
+[ext_resource type="PackedScene" uid="uid://k00spa2y4tnk" path="res://objects/Note/Note.tscn" id="2_wplmo"]
+[ext_resource type="Resource" uid="uid://4dtd04jpacxi" path="res://scenes/levels/TestChart.tres" id="3_5vxlb"]
+
+[node name="Main" type="Node" unique_id=347520972]
+
+[node name="Spawner" type="Node" parent="." unique_id=1318660033]
+script = ExtResource("1_ty8y3")
+note_scene = ExtResource("2_wplmo")
+chart = ExtResource("3_5vxlb")
+
+[node name="Lane0" type="Marker2D" parent="Spawner" unique_id=1798207016]
+position = Vector2(80, 500)
+
+[node name="Lane1" type="Marker2D" parent="Spawner" unique_id=1041766570]
+position = Vector2(160, 500)
+
+[node name="Lane2" type="Marker2D" parent="Spawner" unique_id=1799734893]
+position = Vector2(240, 500)
+
+[node name="Lane3" type="Marker2D" parent="Spawner" unique_id=1905408060]
+position = Vector2(320, 500)
+
+[node name="NoteContainer" type="Node2D" parent="Spawner" unique_id=150388160]
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=186705864]
+offset_top = 500.0
+offset_right = 400.0
+offset_bottom = 505.0
