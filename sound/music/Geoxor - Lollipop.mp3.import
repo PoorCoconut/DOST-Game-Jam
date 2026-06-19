@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dbvgscnb3kmft"
+path="res://.godot/imported/Geoxor - Lollipop.mp3-94508a711358f4094d5f9ba8d46055e0.mp3str"
+
+[deps]
+
+source_file="res://sound/music/Geoxor - Lollipop.mp3"
+dest_files=["res://.godot/imported/Geoxor - Lollipop.mp3-94508a711358f4094d5f9ba8d46055e0.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
