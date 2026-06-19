@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cf48cjyq1olpu"
-path="res://.godot/imported/NoteSprite.png-369e4349e7712fbc79a83af8fbe22565.ctex"
+uid="uid://bp0rpjb8w374n"
+path="res://.godot/imported/test_circle.png-c9b6d24a2ea7866febb08f9ba1ba43ee.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://objects/Note/NoteSprite.png"
-dest_files=["res://.godot/imported/NoteSprite.png-369e4349e7712fbc79a83af8fbe22565.ctex"]
+source_file="res://assets/test_circle.png"
+dest_files=["res://.godot/imported/test_circle.png-c9b6d24a2ea7866febb08f9ba1ba43ee.ctex"]
 
 [params]
 

@@ -5,18 +5,17 @@ const TRANSFORM_ACTION: String = "transform"
 
 @onready var spawner: Node = get_node("../Spawner")
 
-var current_mode: String = "plus"
+var current_mode: String = "+"
 
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed(TRANSFORM_ACTION):
-		current_mode = "x" if current_mode == "plus" else "plus"
+		current_mode = "x" if current_mode == "+" else "+"
 		print("Transform → ", "High Current" if current_mode == "x" else "Low Current")
-
+ 
 	for lane in range(LANE_ACTIONS.size()):
 		if Input.is_action_just_pressed(LANE_ACTIONS[lane]):
 			_try_hit(lane)
-
 
 func _try_hit(lane: int) -> void:
 	var now: float = Conductor.get_time()
@@ -38,7 +37,7 @@ func _try_hit(lane: int) -> void:
 		return
 
 	closest_note.judged = true
-
+	
 	ScoreSystem.register_judgment(closest_diff)
 
 	if closest_note.has_method("destroy"):

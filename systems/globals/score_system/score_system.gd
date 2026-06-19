@@ -34,7 +34,7 @@ func register_judgment(time_diff: float) -> String:
 	
 	
 	#debug rani
-	#print("%s | Amps: %d | Volts: %d | Watts: %d" % [result.to_upper(), amps, volts, watts])
+	print("[DEBUG] %s | Amps: %d | Volts: %d | Watts: %d" % [result.to_upper(), amps, volts, watts])
 	
 	
 	return result

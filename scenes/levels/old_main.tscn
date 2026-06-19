@@ -1,15 +1,13 @@
 [gd_scene format=3 uid="uid://chykunq0fllas"]
 
-[ext_resource type="Script" uid="uid://dhob63b2lbkiu" path="res://systems/components/chart/NoteSpawner.gd" id="1_ty8y3"]
-[ext_resource type="PackedScene" uid="uid://k00spa2y4tnk" path="res://objects/Note/Note.tscn" id="2_wplmo"]
-[ext_resource type="Resource" uid="uid://4dtd04jpacxi" path="res://scenes/levels/TestChart.tres" id="3_5vxlb"]
+[ext_resource type="Script" uid="uid://dhob63b2lbkiu" path="res://systems/components/spawner/note_spawner.gd" id="1_hq64w"]
+[ext_resource type="PackedScene" uid="uid://k00spa2y4tnk" path="res://objects/note/note.tscn" id="2_b0uyw"]
 
 [node name="Main" type="Node" unique_id=347520972]
 
 [node name="Spawner" type="Node" parent="." unique_id=1318660033]
-script = ExtResource("1_ty8y3")
-note_scene = ExtResource("2_wplmo")
-chart = ExtResource("3_5vxlb")
+script = ExtResource("1_hq64w")
+note_scene = ExtResource("2_b0uyw")
 
 [node name="Lane0" type="Marker2D" parent="Spawner" unique_id=1798207016]
 position = Vector2(80, 500)

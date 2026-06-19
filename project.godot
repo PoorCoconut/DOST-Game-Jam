@@ -11,13 +11,17 @@ config_version=5
 [application]
 
 config/name="RhythmGame"
-run/main_scene="res://scenes/notes/tester_main.tscn"
+run/main_scene="uid://bqt4xr8p226va"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="uid://cur1eswi0qgdq"
+
 [autoload]
 
-Conductor="*uid://ccft0dflocjf5"
+Conductor="*uid://cvbbvhpy2p3kl"
 SkillSystem="*uid://clanyirc2ig8i"
 ScoreSystem="*uid://blp5kqsfd5c2b"
 
@@ -66,6 +70,7 @@ transform={
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=3
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
