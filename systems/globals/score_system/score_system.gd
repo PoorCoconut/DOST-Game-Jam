@@ -31,17 +31,39 @@ func register_judgment(time_diff: float) -> String:
 
 	judgment_made.emit(result)
 	score_updated.emit(volts, watts)
-	
-	
+
 	#debug rani
 	print("[DEBUG] %s | Amps: %d | Volts: %d | Watts: %d" % [result.to_upper(), amps, volts, watts])
-	
-	
+
 	return result
+
+
+func register_hold_judgment(base_amps: int, beats_held: float, completed: bool) -> void:
+	# amps = base amps from head press * beats actually held
+	var amps: int = int(base_amps * beats_held)
+
+	if completed:
+		volts += 1
+	else:
+		# early release — combo resets
+		volts = 0
+
+	watts += volts * amps
+
+	var result: String = "hold_complete" if completed else "hold_early"
+	judgment_made.emit(result)
+	score_updated.emit(volts, watts)
+
+	#debug rani
+	print("[DEBUG] HOLD %s | Base Amps: %d | Beats Held: %.2f | Amps: %d | Volts: %d | Watts: %d" % [
+		"COMPLETE" if completed else "EARLY", base_amps, beats_held, amps, volts, watts
+	])
+
 
 #didn't click
 func register_miss() -> void:
 	register_judgment(INF)
+
 
 #timings
 func _get_judgment(time_diff: float) -> String:

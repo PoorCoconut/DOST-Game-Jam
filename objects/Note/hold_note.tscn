@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://d3skweb2myvk"]
+
+[ext_resource type="Script" uid="uid://cex2uuhj60vxt" path="res://objects/Note/hold_note.gd" id="1_holdnote"]
+
+[node name="HoldNote" type="Node2D" unique_id=905825719]
+script = ExtResource("1_holdnote")
+
+[node name="Head" type="Polygon2D" parent="." unique_id=843044587]
+color = Color(0.9, 0.9, 0.95, 1)
+polygon = PackedVector2Array(-20, -20, 20, -20, 20, 20, -20, 20)
+
+[node name="Tail" type="Polygon2D" parent="." unique_id=401829824]
+color = Color(0.6, 0.6, 0.8, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)
+
+[node name="Body" type="Line2D" parent="." unique_id=1044612314]
+width = 8.0
+default_color = Color(0.7, 0.7, 0.9, 0.8)
