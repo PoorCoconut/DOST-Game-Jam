@@ -8,23 +8,27 @@
 script = ExtResource("1_c4sp5")
 beat_start = 2.0
 lane = 1
+mode = "high (x)"
 metadata/_custom_type_script = "uid://dsabl2qk2n1bp"
 
 [sub_resource type="Resource" id="Resource_7rueo"]
 script = ExtResource("1_c4sp5")
 beat_start = 3.0
+mode = "high (x)"
 metadata/_custom_type_script = "uid://dsabl2qk2n1bp"
 
 [sub_resource type="Resource" id="Resource_rntpc"]
 script = ExtResource("1_c4sp5")
 beat_start = 4.0
 lane = 1
+mode = "high (x)"
 metadata/_custom_type_script = "uid://dsabl2qk2n1bp"
 
 [sub_resource type="Resource" id="Resource_5c7k5"]
 script = ExtResource("1_c4sp5")
 beat_start = 5.0
 lane = 2
+mode = "high (x)"
 metadata/_custom_type_script = "uid://dsabl2qk2n1bp"
 
 [sub_resource type="Resource" id="Resource_efckb"]
@@ -54,6 +58,31 @@ metadata/_custom_type_script = "uid://dsabl2qk2n1bp"
 script = ExtResource("1_c4sp5")
 beat_start = 9.0
 beat_end = 11.0
+mode = "high (x)"
+metadata/_custom_type_script = "uid://dsabl2qk2n1bp"
+
+[sub_resource type="Resource" id="Resource_c4sp5"]
+script = ExtResource("1_c4sp5")
+beat_start = 11.0
+beat_end = 13.0
+lane = 1
+mode = "high (x)"
+metadata/_custom_type_script = "uid://dsabl2qk2n1bp"
+
+[sub_resource type="Resource" id="Resource_5gtrs"]
+script = ExtResource("1_c4sp5")
+beat_start = 13.0
+beat_end = 15.0
+lane = 2
+mode = "high (x)"
+metadata/_custom_type_script = "uid://dsabl2qk2n1bp"
+
+[sub_resource type="Resource" id="Resource_an2lq"]
+script = ExtResource("1_c4sp5")
+beat_start = 15.0
+beat_end = 17.0
+lane = 3
+mode = "high (x)"
 metadata/_custom_type_script = "uid://dsabl2qk2n1bp"
 
 [resource]
@@ -61,4 +90,4 @@ script = ExtResource("2_5gtrs")
 song_name = "Lollipop"
 bpm = 128.0
 stream = ExtResource("3_an2lq")
-notes = [SubResource("Resource_31yi3"), SubResource("Resource_7rueo"), SubResource("Resource_rntpc"), SubResource("Resource_5c7k5"), SubResource("Resource_efckb"), SubResource("Resource_2gqt3"), SubResource("Resource_tssxn"), SubResource("Resource_ci2i8"), SubResource("Resource_itk14")]
+notes = [SubResource("Resource_31yi3"), SubResource("Resource_7rueo"), SubResource("Resource_rntpc"), SubResource("Resource_5c7k5"), SubResource("Resource_efckb"), SubResource("Resource_2gqt3"), SubResource("Resource_tssxn"), SubResource("Resource_ci2i8"), SubResource("Resource_itk14"), SubResource("Resource_c4sp5"), SubResource("Resource_5gtrs"), SubResource("Resource_an2lq")]
