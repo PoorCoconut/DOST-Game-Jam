@@ -10,5 +10,5 @@ script = ExtResource("1_y2nr7")
 [node name="Music" type="AudioStreamPlayer" parent="." unique_id=1872205035]
 stream = ExtResource("2_5jk86")
 
-[node name="SFX" type="AudioStreamPlayer" parent="." unique_id=1844198805]
+[node name="Beat" type="AudioStreamPlayer" parent="." unique_id=1844198805]
 stream = ExtResource("3_ms4m3")

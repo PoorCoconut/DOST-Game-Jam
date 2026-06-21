@@ -25,7 +25,7 @@ var note_index: int = 0
 
 func _ready():
 	Conductor.load_song(chart_resource)
-	chart_resource.notes.sort_custom(func(a, b): return a.beat < b.beat)
+	chart_resource.notes.sort_custom(func(a, b): return a.beat_start < b.beat_start)
 	Conductor.play_song()
 
 func _process(_delta: float) -> void:
@@ -36,7 +36,7 @@ func _process(_delta: float) -> void:
 	while note_index < chart_resource.notes.size():
 		var data: NoteData = chart_resource.notes[note_index]
 		
-		if current_beat >= data.beat - spawn_ahead_beats:
+		if current_beat >= data.beat_start - spawn_ahead_beats:
 			spawn_note(data)
 			note_index += 1
 		else:
@@ -50,13 +50,13 @@ func spawn_note(data: NoteData) -> void:
 	var angle_rad = deg_to_rad(angles[lane])
 	var direction = Vector2(cos(angle_rad), sin(angle_rad))
 
-	if data.beat_end > data.beat:
+	if data.beat_end > data.beat_start:
 		# hold note
 		var hold = hold_note_scene.instantiate()
 		add_child(hold)
-		var target_time = data.beat * Conductor.seconds_per_beat
+		var target_time = data.beat_start * Conductor.seconds_per_beat
 		var end_time = data.beat_end * Conductor.seconds_per_beat
-		var beat_duration = data.beat_end - data.beat
+		var beat_duration = data.beat_end - data.beat_start
 		hold.scroll_speed = scroll_speed
 		hold.setup(data.lane, target_time, end_time, beat_duration, direction)
 		active_hold_notes[mode][lane].append(hold)
@@ -65,7 +65,7 @@ func spawn_note(data: NoteData) -> void:
 		# tap note
 		var new_note = note_scene.instantiate()
 		add_child(new_note)
-		var target_time = data.beat * Conductor.seconds_per_beat
+		var target_time = data.beat_start * Conductor.seconds_per_beat
 		new_note.setup(data.lane, target_time, direction)
 		active_notes[mode][lane].append(new_note)
 		new_note.tree_exited.connect(func(): active_notes[mode][lane].erase(new_note))

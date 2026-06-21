@@ -3,7 +3,6 @@ extends Node
 signal judgment_made(result)
 signal score_updated(volts, watts)
 
-#adjust please
 const PERFECT_WINDOW: float = 0.05   # +-50ms
 const GREAT_WINDOW: float = 0.083    # +-83ms
 const GOOD_WINDOW: float = 0.116     # +-116ms
@@ -32,7 +31,7 @@ func register_judgment(time_diff: float) -> String:
 	judgment_made.emit(result)
 	score_updated.emit(volts, watts)
 
-	#debug rani
+	# for debug
 	print("[DEBUG] %s | Amps: %d | Volts: %d | Watts: %d" % [result.to_upper(), amps, volts, watts])
 
 	return result
@@ -60,12 +59,12 @@ func register_hold_judgment(base_amps: int, beats_held: float, completed: bool) 
 	])
 
 
-#didn't click
+# didn't click
 func register_miss() -> void:
 	register_judgment(INF)
 
 
-#timings
+# timings
 func _get_judgment(time_diff: float) -> String:
 	if time_diff <= PERFECT_WINDOW:
 		return "perfect"

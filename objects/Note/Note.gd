@@ -3,12 +3,12 @@ extends Node2D
 var lane: int = 0
 var target_time: float = 0.0
 var judged: bool = false
+var scroll_speed: float = 600.0
+var direction_vector: Vector2 = Vector2.ZERO
+
 @export var miss_window: float = 0.15
 @export var HIT_RADIUS: float = 100.0
 
-var scroll_speed: float = 600.0
-
-var direction_vector: Vector2 = Vector2.ZERO
 
 func setup(p_lane: int, p_target_time: float, p_direction: Vector2) -> void:
 	lane = p_lane
