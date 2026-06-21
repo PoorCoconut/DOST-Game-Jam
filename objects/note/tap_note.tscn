@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://k00spa2y4tnk"]
+
+[ext_resource type="Script" uid="uid://cy1wflpvnod8w" path="res://objects/note/tap_note.gd" id="1_6kmmr"]
+[ext_resource type="Texture2D" uid="uid://cf48cjyq1olpu" path="res://assets/placeholder_note.png" id="2_j5bbv"]
+
+[node name="Note" type="Area2D" unique_id=697545741]
+script = ExtResource("1_6kmmr")
+
+[node name="Visual" type="Polygon2D" parent="." unique_id=1607131712]
+position = Vector2(0, -1.6744184)
+scale = Vector2(0.20823245, 0.6511628)
+color = Color(0.9, 0.9, 0.95, 1)
+polygon = PackedVector2Array(-85, -16, -33, -21, 53, -22, 93, -15, 207, 21, 97, 2, 23, -5, 0, -6, -19, -5, -88, 0, -206, 19)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1850790354]
+visible = false
+texture = ExtResource("2_j5bbv")
