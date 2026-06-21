@@ -1,10 +1,14 @@
 extends Node2D
 
+@export_group("Note Scenes")
 @export var note_scene: PackedScene
 @export var hold_note_scene: PackedScene
-@export var chart_resource: Resource
+
+@export_group("Chart Stats")
 @export var spawn_ahead_beats: float = 4.0 
 @export var scroll_speed: float = 600.0
+
+var chart_resource: Resource = SceneManager.selected_chart
 
 # (+): N, E, S, W | (x): NE, SE, SW, NW
 var plus_angles: Array = [-90.0, 0.0, 90.0, 180.0]

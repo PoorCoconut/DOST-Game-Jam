@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="RhythmGame"
-run/main_scene="uid://bgjhkq1n1v2tw"
+run/main_scene="uid://clev3y13kdqt1"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -23,6 +23,7 @@ buses/default_bus_layout="uid://cur1eswi0qgdq"
 
 Conductor="*uid://cvbbvhpy2p3kl"
 SoundManager="*uid://vwumpp0njlov"
+SceneManager="*uid://wd8jaoonho3o"
 SkillSystem="*uid://clanyirc2ig8i"
 ScoreSystem="*uid://blp5kqsfd5c2b"
 
