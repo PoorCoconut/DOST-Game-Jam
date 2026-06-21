@@ -1,15 +1,22 @@
 [gd_scene format=3 uid="uid://bgjhkq1n1v2tw"]
 
+[ext_resource type="Texture2D" uid="uid://cww1fm7c8aoe6" path="res://assets/sustain_ring_white.png" id="1_4daxk"]
 [ext_resource type="Script" uid="uid://dhob63b2lbkiu" path="res://systems/components/spawner/note_spawner.gd" id="1_5c656"]
 [ext_resource type="Texture2D" uid="uid://bp0rpjb8w374n" path="res://assets/placeholder_ring.png" id="1_104ba"]
 [ext_resource type="Script" uid="uid://fy2itsqbgj0q" path="res://systems/components/judgement/judge.gd" id="3_judge"]
-[ext_resource type="PackedScene" path="res://objects/note/tap_note.tscn" id="3_lchbk"]
+[ext_resource type="PackedScene" uid="uid://k00spa2y4tnk" path="res://objects/note/tap_note.tscn" id="3_lchbk"]
 [ext_resource type="PackedScene" uid="uid://d3skweb2myvk" path="res://objects/Note/hold_note.tscn" id="4_4daxk"]
 
 [node name="TesterMain" type="Node2D" unique_id=2021198008]
 position = Vector2(553, 328)
 
+[node name="Sustain_Ring" type="Sprite2D" parent="." unique_id=1182621018]
+position = Vector2(-1.0000064, -1.4999943)
+scale = Vector2(0.25999996, 0.259)
+texture = ExtResource("1_4daxk")
+
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1164667670]
+visible = false
 position = Vector2(2.7656555e-05, -2.682209e-06)
 scale = Vector2(6.417969, 6.417969)
 texture = ExtResource("1_104ba")
