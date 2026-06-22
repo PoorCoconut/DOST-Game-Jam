@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://k00spa2y4tnk"]
 
-[ext_resource type="Script" uid="uid://cy1wflpvnod8w" path="res://objects/note/tap_note.gd" id="1_6kmmr"]
+[ext_resource type="Script" uid="uid://cy1wflpvnod8w" path="res://objects/Note/tap_note.gd" id="1_6kmmr"]
 [ext_resource type="Texture2D" uid="uid://cf48cjyq1olpu" path="res://assets/placeholder_note.png" id="2_j5bbv"]
 
 [node name="Note" type="Area2D" unique_id=697545741]

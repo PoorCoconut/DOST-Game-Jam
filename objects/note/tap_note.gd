@@ -9,13 +9,21 @@ var direction_vector: Vector2 = Vector2.ZERO
 @export var miss_window: float = 0.15
 @export var HIT_RADIUS: float = 100.0
 
+func _ready() -> void:
+	visible = false
 
 func setup(p_lane: int, p_target_time: float, p_direction: Vector2) -> void:
 	lane = p_lane
 	target_time = p_target_time
 	direction_vector = p_direction.normalized()
-	
 	rotation = direction_vector.angle() + (PI / 2.0)
+	
+	var current_time = Conductor.get_time()
+	var time_until_hit = target_time - current_time
+	var distance = max((time_until_hit * scroll_speed) + HIT_RADIUS, 0.0)
+	position = direction_vector * distance
+	
+	visible = true
 
 func _process(_delta: float) -> void:
 	if judged: return
