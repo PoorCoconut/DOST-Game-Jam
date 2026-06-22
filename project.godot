@@ -18,10 +18,6 @@ config/features=PackedStringArray("4.6", "GL Compatibility")
 
 buses/default_bus_layout="uid://cur1eswi0qgdq"
 
-[audio]
-
-buses/default_bus_layout="uid://cur1eswi0qgdq"
-
 [autoload]
 
 Conductor="*uid://cvbbvhpy2p3kl"
