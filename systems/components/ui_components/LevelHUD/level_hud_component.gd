@@ -14,12 +14,14 @@ var song_name : String = "Song Name"
 var bpm : int = 0
 var music_playing : bool = true
 
+var anim : bool = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	#These processes should be automatic. Waiting for a Game Manager or a Global Singleton
 	#or something that collects The Song name and BPM and stores it in there.
 	
-	update_song_name("Hey, so...")
+	update_song_name("SOME AWESOME SONG")
 	bpm = 120 #This should be replaced with the song's BPM itself
 	
 	#Set Beat (If there's a global beat..er then use that instead)
@@ -28,7 +30,9 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	if Input.is_action_just_pressed("ui_accept"):
+		anim = true
+		$"NonUI Container/AnimationPlayer".play("enter")
 
 func update_song_name(_song_name: String) -> void:
 	label.text = _song_name
@@ -37,3 +41,10 @@ func update_song_name(_song_name: String) -> void:
 	
 	await get_tree().process_frame  # wait one frame for layout to update
 	song_panel.size.x = hbox_container.size.x + margin
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim:
+		anim = false
+		$"NonUI Container/AnimationPlayer".play("exit")
+		
