@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://d3skweb2myvk"]
 
-[ext_resource type="Script" uid="uid://cex2uuhj60vxt" path="res://objects/Note/hold_note.gd" id="1_holdnote"]
+[ext_resource type="Script" uid="uid://cex2uuhj60vxt" path="res://objects/note/hold_note.gd" id="1_holdnote"]
 
 [node name="HoldNote" type="Node2D" unique_id=905825719]
 script = ExtResource("1_holdnote")

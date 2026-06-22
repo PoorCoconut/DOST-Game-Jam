@@ -9,8 +9,10 @@ var direction_vector: Vector2 = Vector2.ZERO
 @export var miss_window: float = 0.15
 @export var HIT_RADIUS: float = 100.0
 
+
 func _ready() -> void:
 	visible = false
+
 
 func setup(p_lane: int, p_target_time: float, p_direction: Vector2) -> void:
 	lane = p_lane
@@ -25,6 +27,7 @@ func setup(p_lane: int, p_target_time: float, p_direction: Vector2) -> void:
 	
 	visible = true
 
+
 func _process(_delta: float) -> void:
 	if judged: return
 	
@@ -35,11 +38,13 @@ func _process(_delta: float) -> void:
 	if time_until_hit < -miss_window:
 		on_miss()
 
+
 func on_miss():
 	judged = true
 	ScoreSystem.register_miss()
 	queue_free()
-	
+
+
 func destroy():
 	judged = true
 	modulate = Color(0.0, 0.0, 0.0, 1)
