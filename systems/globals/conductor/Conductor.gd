@@ -13,6 +13,11 @@ var _last_reported_beat := 0
 signal beat(position)
 signal song_finished
 
+
+func _ready() -> void:
+	Input.set_use_accumulated_input(false)
+
+
 func load_song(chart: ChartData) -> void:
 	active_chart = chart
 	bpm = chart.bpm
@@ -24,13 +29,15 @@ func load_song(chart: ChartData) -> void:
 	_song_position_in_beats = 0.0
 	_last_reported_beat = 0
 	
-	print("[GLOBAL] Conductor: Loaded song ", chart.song_name)
+	print("[LEVEL] Conductor: Loaded song '", chart.song_name, "'")
+
 
 func play_song() -> void:
 	if audio_player.stream:
 		audio_player.play()
 	else:
-		push_error("[GLOBAL] Conductor: Tried to play song, but no AudioStream was found in Chart!")
+		push_error("[ERROR] Conductor: Tried to play song, but no AudioStream was found in Chart!")
+
 
 func _process(_delta):
 	if audio_player.playing:
@@ -49,6 +56,7 @@ func _process(_delta):
 		# report the beat if it's a new one
 		_report_beat()
 
+
 func _report_beat():
 	var current_beat_int = int(floor(_song_position_in_beats))
 	if _last_reported_beat < current_beat_int:
@@ -56,11 +64,13 @@ func _report_beat():
 		emit_signal("beat", _last_reported_beat)
 		
 		# comment these out if necessary
-		metronome.play()
+		# metronome.play()
 		print("[DEBUG] Beat: ", _last_reported_beat)
+
 
 func get_beat() -> float:
 	return _song_position_in_beats
-	
+
+
 func get_time() -> float:
 	return _song_position

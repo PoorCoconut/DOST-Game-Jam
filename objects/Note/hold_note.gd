@@ -23,6 +23,7 @@ var direction_vector: Vector2 = Vector2.ZERO
 func _ready() -> void:
 	visible = false
 
+
 func setup(p_lane: int, p_target_time: float, p_end_time: float, p_beat_duration: float, p_direction: Vector2) -> void:
 	lane = p_lane
 	target_time = p_target_time

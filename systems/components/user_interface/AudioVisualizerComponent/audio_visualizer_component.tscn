@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bajc4fumqtrfr"]
 
-[ext_resource type="Script" uid="uid://y0dutuwclf4k" path="res://systems/components/ui_components/AudioVisualizerComponent/audio_visualizer_component.gd" id="1_wapra"]
+[ext_resource type="Script" uid="uid://y0dutuwclf4k" path="res://systems/components/user_interface/AudioVisualizerComponent/audio_visualizer_component.gd" id="1_wapra"]
 [ext_resource type="AudioStream" uid="uid://dn2y6qgeq1xe8" path="res://sound/music/mus_breakbeat.mp3" id="2_xlqm3"]
 
 [node name="AudioVisualizerComponent" type="Control" unique_id=1170582492]

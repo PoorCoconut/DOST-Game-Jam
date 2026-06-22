@@ -14,12 +14,14 @@ var chart_resource: Resource = SceneManager.selected_chart
 var plus_angles: Array = [-90.0, 0.0, 90.0, 180.0]
 var x_angles: Array = [-45.0, 45.0, 135.0, 225.0]
 
+# Clockwise:   -45, 45, 135, 225
+# Counterwise: -135, -45, 45, 135
+
 var active_notes: Dictionary = {
 	"+": [[], [], [], []],
 	"x": [[], [], [], []],
 }
 
-# hold notes tracked separately so judge.gd can handle release events
 var active_hold_notes: Dictionary = {
 	"+": [[], [], [], []],
 	"x": [[], [], [], []],
@@ -35,6 +37,7 @@ func _ready():
 	
 	Conductor.load_song(chart_resource)
 	Conductor.play_song()
+
 
 func _process(_delta: float) -> void:
 	if chart_resource == null: return
@@ -55,15 +58,16 @@ func _process(_delta: float) -> void:
 	# if two or more notes spawn in the same beat (sync note)
 	# put logic here
 
+
 func spawn_note(data: NoteData) -> Node2D:
 	# FIX: reorganized the logic here, so lane conflicts never happen
 	
 	# capture data immediately to avoid reference issues
 	var lane_idx = data.lane
-	var is_hold = data.beat_end > data.beat_start
+	var is_hold = data.is_hold_note()
 
 	# calculate direction
-	var mode = "+" if data.mode.contains("+") else "x"
+	var mode = data.mode_type()
 	var angles = plus_angles if mode == "+" else x_angles
 	var angle_rad = deg_to_rad(angles[lane_idx])
 	var direction = Vector2(cos(angle_rad), sin(angle_rad))

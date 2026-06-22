@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dleilsmim1rix"]
 
-[ext_resource type="Script" uid="uid://c1uo6d8lr232y" path="res://systems/components/ui_components/LevelHUD/level_hud_component.gd" id="1_xjqfi"]
+[ext_resource type="Script" uid="uid://c1uo6d8lr232y" path="res://systems/components/user_interface/LevelHUD/level_hud_component.gd" id="1_xjqfi"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xjqfi"]
 content_margin_left = 0.0

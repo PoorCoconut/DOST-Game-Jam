@@ -38,6 +38,6 @@ grow_vertical = 2
 [node name="Button" type="Button" parent="CenterContainer" unique_id=1162886431]
 layout_mode = 2
 shortcut = SubResource("Shortcut_qiond")
-text = "Play"
+text = "Press Space to Play"
 
 [connection signal="pressed" from="CenterContainer/Button" to="." method="_on_play_button_pressed"]
