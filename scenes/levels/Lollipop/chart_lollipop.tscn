@@ -2,10 +2,10 @@
 
 [ext_resource type="Texture2D" uid="uid://cww1fm7c8aoe6" path="res://assets/sustain_ring_white.png" id="1_wfv8n"]
 [ext_resource type="Texture2D" uid="uid://bp0rpjb8w374n" path="res://assets/placeholder_ring.png" id="2_m1hgl"]
-[ext_resource type="Script" uid="uid://dhob63b2lbkiu" path="res://systems/components/spawner/note_spawner.gd" id="3_3h50k"]
+[ext_resource type="Script" uid="uid://dhob63b2lbkiu" path="res://systems/scripts/note_spawner.gd" id="3_3h50k"]
 [ext_resource type="PackedScene" uid="uid://k00spa2y4tnk" path="res://objects/note/tap_note.tscn" id="4_jki53"]
 [ext_resource type="PackedScene" uid="uid://d3skweb2myvk" path="res://objects/note/hold_note.tscn" id="5_1yce4"]
-[ext_resource type="Script" uid="uid://fy2itsqbgj0q" path="res://systems/components/judgement/judge.gd" id="6_eee58"]
+[ext_resource type="Script" uid="uid://fy2itsqbgj0q" path="res://systems/scripts/judgement.gd" id="6_eee58"]
 
 [node name="ChartLollipop" type="Node2D" unique_id=522122728]
 
