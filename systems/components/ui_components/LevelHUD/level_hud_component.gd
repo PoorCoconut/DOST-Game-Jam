@@ -12,6 +12,7 @@ class_name LevelHUDComponent
 
 var song_name : String = "Song Name"
 var bpm : int = 0
+var music_playing : bool = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
