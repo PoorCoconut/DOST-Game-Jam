@@ -30,6 +30,8 @@ func setup(p_lane: int, p_target_time: float, p_end_time: float, p_beat_duration
 	beat_duration = p_beat_duration
 	direction_vector = p_direction.normalized()
 	head.rotation = direction_vector.angle() + (PI / 2.0)
+	# FIX: tail must also be rotated properly
+	tail.rotation = direction_vector.angle() + (PI / 2.0)
 
 	var current_time = Conductor.get_time()
 	var time_until_head = target_time - current_time

@@ -7,7 +7,7 @@ class_name NoteData
 # 0   1   2   3
 # N   E   S   W
 # NE  SE  SW  NW
-@export var lane: int
+@export_range(0,3) var lane: int
 
 # rotation (+,x)
 @export_enum("low (+)", "high (x)") var mode: String = "low (+)"

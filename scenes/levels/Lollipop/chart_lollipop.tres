@@ -1,0 +1,86 @@
+[gd_resource type="Resource" script_class="ChartData" format=3 uid="uid://deov11alfj8w"]
+
+[ext_resource type="Script" uid="uid://dsabl2qk2n1bp" path="res://systems/components/chart/note_data.gd" id="1_oxn2f"]
+[ext_resource type="Script" uid="uid://djk7emg7xfnv6" path="res://systems/components/chart/chart_data.gd" id="2_6nwpc"]
+[ext_resource type="AudioStream" uid="uid://dbvgscnb3kmft" path="res://sound/music/Geoxor - Lollipop.mp3" id="3_6nwpc"]
+
+[sub_resource type="Resource" id="Resource_ov3j8"]
+script = ExtResource("1_oxn2f")
+beat_start = 2.0
+metadata/_custom_type_script = "uid://dsabl2qk2n1bp"
+
+[sub_resource type="Resource" id="Resource_mm4l6"]
+script = ExtResource("1_oxn2f")
+beat_start = 3.0
+lane = 1
+metadata/_custom_type_script = "uid://dsabl2qk2n1bp"
+
+[sub_resource type="Resource" id="Resource_spsy1"]
+script = ExtResource("1_oxn2f")
+beat_start = 4.0
+lane = 2
+metadata/_custom_type_script = "uid://dsabl2qk2n1bp"
+
+[sub_resource type="Resource" id="Resource_8qkw5"]
+script = ExtResource("1_oxn2f")
+beat_start = 5.0
+lane = 3
+metadata/_custom_type_script = "uid://dsabl2qk2n1bp"
+
+[sub_resource type="Resource" id="Resource_d7loc"]
+script = ExtResource("1_oxn2f")
+beat_start = 6.0
+lane = 3
+metadata/_custom_type_script = "uid://dsabl2qk2n1bp"
+
+[sub_resource type="Resource" id="Resource_c0wrf"]
+script = ExtResource("1_oxn2f")
+beat_start = 7.0
+lane = 1
+metadata/_custom_type_script = "uid://dsabl2qk2n1bp"
+
+[sub_resource type="Resource" id="Resource_emudi"]
+script = ExtResource("1_oxn2f")
+beat_start = 8.0
+metadata/_custom_type_script = "uid://dsabl2qk2n1bp"
+
+[sub_resource type="Resource" id="Resource_uqwsl"]
+script = ExtResource("1_oxn2f")
+beat_start = 9.0
+beat_end = 11.0
+lane = 2
+metadata/_custom_type_script = "uid://dsabl2qk2n1bp"
+
+[sub_resource type="Resource" id="Resource_6nwpc"]
+script = ExtResource("1_oxn2f")
+beat_start = 11.0
+lane = 1
+metadata/_custom_type_script = "uid://dsabl2qk2n1bp"
+
+[sub_resource type="Resource" id="Resource_c6jyb"]
+script = ExtResource("1_oxn2f")
+beat_start = 12.0
+beat_end = 13.0
+lane = 3
+metadata/_custom_type_script = "uid://dsabl2qk2n1bp"
+
+[sub_resource type="Resource" id="Resource_v418t"]
+script = ExtResource("1_oxn2f")
+beat_start = 14.0
+beat_end = 15.0
+metadata/_custom_type_script = "uid://dsabl2qk2n1bp"
+
+[sub_resource type="Resource" id="Resource_vuijm"]
+script = ExtResource("1_oxn2f")
+beat_start = 14.0
+beat_end = 15.0
+lane = 2
+metadata/_custom_type_script = "uid://dsabl2qk2n1bp"
+
+[resource]
+script = ExtResource("2_6nwpc")
+song_name = "Lollipop"
+bpm = 128.0
+stream = ExtResource("3_6nwpc")
+notes = Array[ExtResource("1_oxn2f")]([SubResource("Resource_ov3j8"), SubResource("Resource_mm4l6"), SubResource("Resource_spsy1"), SubResource("Resource_8qkw5"), SubResource("Resource_d7loc"), SubResource("Resource_c0wrf"), SubResource("Resource_emudi"), SubResource("Resource_uqwsl"), SubResource("Resource_6nwpc"), SubResource("Resource_c6jyb"), SubResource("Resource_v418t"), SubResource("Resource_vuijm")])
+metadata/_custom_type_script = "uid://djk7emg7xfnv6"

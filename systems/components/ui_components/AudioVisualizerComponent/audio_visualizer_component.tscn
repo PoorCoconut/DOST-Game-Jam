@@ -13,7 +13,6 @@ grow_vertical = 2
 script = ExtResource("1_wapra")
 
 [node name="BarsUp" type="MarginContainer" parent="." unique_id=1039434077]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -94,7 +93,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 8
 
 [node name="BarsDown" type="MarginContainer" parent="." unique_id=1645688729]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

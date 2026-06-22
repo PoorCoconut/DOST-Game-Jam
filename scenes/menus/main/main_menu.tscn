@@ -1,7 +1,15 @@
 [gd_scene format=3 uid="uid://clev3y13kdqt1"]
 
 [ext_resource type="Script" uid="uid://b2b8q7tr3jsa8" path="res://scenes/menus/main/main_menu.gd" id="1_uxumf"]
-[ext_resource type="Resource" uid="uid://diu8n4y6oig8m" path="res://scenes/levels/test_level.tres" id="2_qiond"]
+[ext_resource type="Resource" uid="uid://deov11alfj8w" path="res://scenes/levels/Lollipop/chart_lollipop.tres" id="2_uxumf"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_uxumf"]
+device = -1
+keycode = 32
+unicode = 32
+
+[sub_resource type="Shortcut" id="Shortcut_qiond"]
+events = [SubResource("InputEventKey_uxumf")]
 
 [node name="MainMenu" type="Control" unique_id=1585986886]
 layout_mode = 3
@@ -11,7 +19,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_uxumf")
-test_chart = ExtResource("2_qiond")
+test_chart = ExtResource("2_uxumf")
 
 [node name="CenterContainer" type="CenterContainer" parent="." unique_id=2089837925]
 layout_mode = 1
@@ -29,6 +37,7 @@ grow_vertical = 2
 
 [node name="Button" type="Button" parent="CenterContainer" unique_id=1162886431]
 layout_mode = 2
+shortcut = SubResource("Shortcut_qiond")
 text = "Play"
 
 [connection signal="pressed" from="CenterContainer/Button" to="." method="_on_play_button_pressed"]
