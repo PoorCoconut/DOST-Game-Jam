@@ -8,7 +8,8 @@ extends Node2D
 @export var spawn_ahead_beats: float = 4.0 
 @export var scroll_speed: float = 600.0
 
-@export var is_preview: bool = false #for preview control
+# --- FOR PREVIEW ---
+@export var is_preview: bool = false
 
 var chart_resource: Resource
 
@@ -37,11 +38,11 @@ func _ready():
 	else:
 		chart_resource = load("res://scenes/charts/mus_breakbeat.tres")
 
-	chart_resource.notes.sort_custom(
-		func(a, b): return a.beat_start < b.beat_start
-	)
+	chart_resource.sort_notes()
 	Conductor.load_song(chart_resource)
-	if not is_preview: # for preview control
+	
+	# --- FOR PREVIEW ---
+	if not is_preview:
 		Conductor.play_song()
 
 
@@ -62,13 +63,12 @@ func _process(_delta: float) -> void:
 		else:
 			break
 	
+	# TODO
 	# if two or more notes spawn in the same beat (sync note)
-	# put logic here
+	# put logic here (highlight each note)
 
 
 func spawn_note(data: NoteData) -> Node2D:
-	# FIX: reorganized the logic here, so lane conflicts never happen
-	
 	# capture data immediately to avoid reference issues
 	var lane_idx = data.lane
 	var is_hold = data.is_hold_note()
@@ -110,7 +110,7 @@ func spawn_note(data: NoteData) -> Node2D:
 	
 	return note_node
 
-# For preview control
+# --- FOR PREVIEW ---
 func recalculate_note_index(current_beat: float) -> void:
 	# despawn all currently active notes — they'll respawn fresh if still relevant
 	_clear_all_notes()
@@ -119,7 +119,7 @@ func recalculate_note_index(current_beat: float) -> void:
 	note_index = 0
 	while note_index < chart_resource.notes.size():
 		var data: NoteData = chart_resource.notes[note_index]
-		if current_beat < data.beat_start - spawn_ahead_beats:
+		if current_beat < data.beat_start:
 			break
 		note_index += 1
 

@@ -3,10 +3,10 @@ extends Node
 const LANE_ACTIONS: Array = ["lane1 (Top)", "lane2 (Right)", "lane3 (Bottom)", "lane4 (Left)"]
 const TRANSFORM_ACTION: String = "transform"
 
-@onready var spawner: Node = get_node("../Spawner")
-@onready var sustain_ring: Node2D = get_node("../SustainRing")
+@onready var spawner: Node2D = $"../Spawner"
+@onready var sustain_ring: Sprite2D = $"../SustainRing"
 
-# Autoplayer
+# --- AUTOPLAYER ---
 @export var autoplay: bool = false
 
 var current_mode: String = "+"
@@ -32,6 +32,8 @@ func _process(_delta: float) -> void:
 func _try_hit(lane: int) -> void:
 	var now: float = Conductor.get_time()
 	var hold_notes: Array = spawner.active_hold_notes[current_mode][lane]
+	
+	# check hold notes first
 	for note in hold_notes:
 		if not is_instance_valid(note) or note.judged:
 			continue
@@ -40,7 +42,8 @@ func _try_hit(lane: int) -> void:
 			note.on_head_pressed(diff)
 			held_notes[lane] = note
 			return
-
+	
+	# then fall through to tap notes 
 	var notes: Array = spawner.active_notes[current_mode][lane]
 	var closest_note: Node2D = null
 	var closest_diff: float = INF
@@ -68,7 +71,7 @@ func _try_release(lane: int) -> void:
 		note.on_released()
 	held_notes[lane] = null
 
-# Autoplayer
+# --- AUTOPLAYER ---
 func _run_autoplay() -> void:
 	var now: float = Conductor.get_time()
 

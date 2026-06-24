@@ -37,7 +37,7 @@ func load_song(chart: ChartData) -> void:
 	_song_position_in_beats = 0.0
 	_last_reported_beat = 0
 	
-	print("[LEVEL] Conductor: Loaded song '", chart.song_name, "'")
+	print("[LEVEL] Conductor: Loaded song '", chart.song_name, "' by ", chart.artist)
 
 
 func play_song() -> void:

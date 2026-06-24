@@ -151,7 +151,7 @@ func _draw_notes() -> void:
 			var y_top := n.beat_start * pixels_per_beat
 			var y_bottom := n.beat_end * pixels_per_beat
 			draw_rect(Rect2(x + 4, y_top, lane_width - 8, y_bottom - y_top), color * Color(1, 1, 1, 0.5))
-			draw_rect(Rect2(x + 4, y_top - 4, lane_width - 8, 8), color)  # head cap
+			draw_rect(Rect2(x + 4, y_top - 4, lane_width - 8, 8), color)
 		else:
 			var y := n.beat_start * pixels_per_beat
 			draw_rect(Rect2(x + 4, y - 4, lane_width - 8, 8), color)

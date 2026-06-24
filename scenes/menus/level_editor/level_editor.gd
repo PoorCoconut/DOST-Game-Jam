@@ -8,7 +8,6 @@ extends Node2D
 @onready var mode_label: Label = $UI/SongInfo/ModeLabel
 
 # Editor Essentials
-@onready var audio_player: AudioStreamPlayer2D = $AudioStreamPlayer2D
 @onready var grid_view: Control = $UI/ScrollContainer/GridView
 @onready var scroll_container: ScrollContainer = $UI/ScrollContainer
 @onready var scrubber: Control = $UI/Scrubber
@@ -32,7 +31,7 @@ var chart: ChartData
 
 # Gameplay Preview 
 @onready var preview_viewport: SubViewport = $UI/PreviewPanel/SubViewportContainer/PreviewViewport
-const GAMEPLAY_SCENE := preload("res://scenes/levels/test/test_level.tscn")
+const GAMEPLAY_SCENE := preload(SceneManager.GAMEPLAY_DIR)
 var preview_instance: Node = null
 
 func _ready() -> void:
@@ -61,10 +60,10 @@ func refresh_song_info() -> void:
 func _on_bpm_field_text_changed(new_text: String) -> void:
 	var value := new_text.to_float()
 	if value <= 0 or not new_text.is_valid_float():
-		bpm_field.modulate = Color.RED  # invalid/incomplete — visually obvious
+		bpm_field.modulate = Color.RED
 		return
 
-	bpm_field.modulate = Color.WHITE  # valid — reset to normal
+	bpm_field.modulate = Color.WHITE
 	chart.bpm = value
 	grid_view.update_content_size()
 	bpm_label.text = "BPM: %.1f" % value
@@ -72,7 +71,7 @@ func _on_bpm_field_text_changed(new_text: String) -> void:
 # Timeline Manager thingy
 func _on_scrubber_seek_requested(time_seconds: float) -> void:
 	paused_position = time_seconds
-	scrubber.update_progress(time_seconds)  # ← immediate visual feedback, don't wait for _process
+	scrubber.update_progress(time_seconds)
 	if is_paused or not Conductor.audio_player.playing:
 		grid_view.update_playhead(time_seconds)
 		_sync_scroll_to_beat(grid_view.playhead_beat)
@@ -111,7 +110,11 @@ func load_song(path: String) -> void:
 
 func save_chart() -> void:
 	chart.sort_notes()
-	var dir := "res://scenes/charts/"
+	
+	# FOR DEBUG
+	# change to /tests/ instead of /actual/
+	var dir := "res://scenes/levels/actual/"
+	
 	if not DirAccess.dir_exists_absolute(dir):
 		DirAccess.make_dir_absolute(dir)
 	var err := ResourceSaver.save(chart, dir + chart.song_name + ".tres")
@@ -129,7 +132,7 @@ func _update_lane_headers(mode: String) -> void:
 func _on_chart_file_dialog_file_selected(path: String) -> void:
 	var loaded: ChartData = load(path)
 	if loaded == null:
-		print("Failed to load chart at: ", path)
+		print("[ERROR] LevelEditor: failed to load chart at: ", path)
 		return
 
 	chart = loaded
@@ -138,10 +141,10 @@ func _on_chart_file_dialog_file_selected(path: String) -> void:
 	refresh_song_info()
 
 	if chart.stream:
-		Conductor.load_song(chart)              # ← was: audio_player.stream = chart.stream
+		Conductor.load_song(chart)
 		scrubber.duration = chart.stream.get_length()
 	else:
-		print("Warning: chart has no associated stream")
+		print("[ERROR] LevelEditor: chart has no associated stream")
 
 	paused_position = 0.0
 	is_paused = false
@@ -162,9 +165,9 @@ func _on_load_chart_pressed() -> void:
 func _on_bpm_field_text_submitted(new_text: String) -> void:
 	var value := new_text.to_float()
 	if value <= 0:
-		return  # ignore garbage input
+		return
 	chart.bpm = value
-	grid_view.update_content_size()  # redraw grid lines since beat spacing depends on bpm
+	grid_view.update_content_size()
 
 # Button Controls
 func _on_new_chart_pressed() -> void:
