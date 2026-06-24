@@ -1,11 +1,19 @@
 extends Node
 
-@export var active_chart: ChartData
+# SONG INFORMATION
+var active_chart: ChartData
 var bpm: float = 120.0
 var seconds_per_beat: float = 0.0
+
+# SONG TIMING
 var _song_position := 0.0
 var _song_position_in_beats := 0.0
 var _last_reported_beat := 0
+
+# GAMEPLAY TIMING
+const HIT_RADIUS: float = 67.0
+const SCROLL_SPEED: float = 600.0
+const MISS_WINDOW: float = 0.15
 
 @onready var audio_player: AudioStreamPlayer = $Music
 @onready var metronome: AudioStreamPlayer = $Beat
@@ -64,7 +72,7 @@ func _report_beat():
 		emit_signal("beat", _last_reported_beat)
 		
 		# comment these out if necessary
-		# metronome.play()
+		metronome.play()
 		print("[DEBUG] Beat: ", _last_reported_beat)
 
 

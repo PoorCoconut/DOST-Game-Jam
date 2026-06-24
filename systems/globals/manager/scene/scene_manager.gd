@@ -11,7 +11,7 @@ var is_multiplayer: bool = false
 func load_gameplay(chart: ChartData, energy: String):
 	selected_chart = chart
 	selected_energy = energy
-	get_tree().change_scene_to_file("res://scenes/levels/test/test_level.tscn")
+	get_tree().change_scene_to_file("res://scenes/menus/gameplay/gameplay.tscn")
 
 
 func quit_to_menu():

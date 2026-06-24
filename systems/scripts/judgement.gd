@@ -4,7 +4,7 @@ const LANE_ACTIONS: Array = ["lane1 (Top)", "lane2 (Right)", "lane3 (Bottom)", "
 const TRANSFORM_ACTION: String = "transform"
 
 @onready var spawner: Node = get_node("../Spawner")
-@onready var sustain_ring: Node2D = get_node("../Sustain_Ring")
+@onready var sustain_ring: Node2D = get_node("../SustainRing")
 
 var current_mode: String = "+"
 

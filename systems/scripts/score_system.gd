@@ -53,7 +53,7 @@ func register_hold_judgment(base_amps: int, beats_held: float, completed: bool) 
 	judgment_made.emit(result)
 	score_updated.emit(volts, watts)
 
-	#debug rani
+	# for debug
 	print("[DEBUG] HOLD %s | Base Amps: %d | Beats Held: %.2f | Amps: %d | Volts: %d | Watts: %d" % [
 		"COMPLETE" if completed else "EARLY", base_amps, beats_held, amps, volts, watts
 	])
