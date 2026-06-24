@@ -1,75 +1,36 @@
 [gd_scene format=3 uid="uid://dleilsmim1rix"]
 
 [ext_resource type="Script" uid="uid://c1uo6d8lr232y" path="res://systems/components/user_interface/LevelHUD/level_hud_component.gd" id="1_xjqfi"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xjqfi"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
-bg_color = Color(0.1, 0.1, 0.1, 0.6)
-skew = Vector2(-1, 0)
-border_width_right = 10
-border_color = Color(1.732707e-06, 0.9509148, 0.99946064, 1)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 5
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_xjqfi"]
+[ext_resource type="PackedScene" uid="uid://c2mumpieglk6c" path="res://systems/components/user_interface/ScoreComponent/score_component.tscn" id="2_i7i21"]
+[ext_resource type="PackedScene" uid="uid://bjcr16lvdu5g" path="res://systems/components/user_interface/KeyOverlayComponent/key_overlay_component.tscn" id="3_ilhbb"]
+[ext_resource type="PackedScene" uid="uid://djq7ncohokjby" path="res://systems/components/user_interface/FrequencyBarComponent/frequency_bar_component.tscn" id="4_42bt7"]
+[ext_resource type="PackedScene" uid="uid://b7u0kqlhcwvtg" path="res://systems/components/user_interface/JudgementRingComponent/judgement_ring_component.tscn" id="5_ilhbb"]
+[ext_resource type="PackedScene" uid="uid://ddpfdwvd0etyt" path="res://systems/components/user_interface/AccuracyMeter/accuracy_meter_component.tscn" id="6_42bt7"]
 
 [node name="LevelHUDComponent" type="CanvasLayer" unique_id=511265971]
 script = ExtResource("1_xjqfi")
 
-[node name="Control" type="Control" parent="." unique_id=1780731309]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="FrequencyBarComponent" parent="." unique_id=1123226504 instance=ExtResource("4_42bt7")]
+position = Vector2(64, 64)
 
-[node name="SongPanel" type="Panel" parent="Control" unique_id=1786299538]
+[node name="ScoreWats" parent="." unique_id=1890164845 instance=ExtResource("2_i7i21")]
+position = Vector2(992, 64)
+
+[node name="JudgementRingComponent" parent="." unique_id=575620661 instance=ExtResource("5_ilhbb")]
+
+[node name="KeyOverlayComponent" parent="." unique_id=1411056378 instance=ExtResource("3_ilhbb")]
+position = Vector2(896, 488)
+
+[node name="ScoreVolts" parent="." unique_id=576311917 instance=ExtResource("2_i7i21")]
+position = Vector2(144, 576)
+
+[node name="AccuracyMeterComponent" parent="." unique_id=1045190928 instance=ExtResource("6_42bt7")]
+position = Vector2(576, 560)
+
+[node name="SongProgress" type="ProgressBar" parent="." unique_id=706150498]
 unique_name_in_owner = true
-layout_mode = 0
-offset_left = -48.0
-offset_top = 16.0
-offset_right = 336.0
-offset_bottom = 92.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_xjqfi")
-
-[node name="MarginContainer" type="MarginContainer" parent="Control/SongPanel" unique_id=103710380]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -48.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 70
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/SongPanel/MarginContainer" unique_id=1761413100]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="ColorRect" type="TextureRect" parent="Control/SongPanel/MarginContainer/HBoxContainer" unique_id=134145752]
-custom_minimum_size = Vector2(55, 0)
-layout_mode = 2
-texture = SubResource("PlaceholderTexture2D_xjqfi")
-
-[node name="SongLabel" type="Label" parent="Control/SongPanel/MarginContainer/HBoxContainer" unique_id=1405853846]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-text = "SONG NAME"
-
-[node name="NonUI Container" type="Node" parent="." unique_id=247926633]
-
-[node name="Beat" type="Timer" parent="NonUI Container" unique_id=1128464825]
-unique_name_in_owner = true
-autostart = true
+offset_left = 64.0
+offset_top = 608.0
+offset_right = 1088.0
+offset_bottom = 619.0
+show_percentage = false
