@@ -8,7 +8,9 @@ extends Node2D
 @export var spawn_ahead_beats: float = 4.0 
 @export var scroll_speed: float = 600.0
 
-var chart_resource: Resource = load("res://scenes/charts/mus_breakbeat.tres")
+@export var is_preview: bool = false #for preview control
+
+var chart_resource: Resource
 
 # (+): N, E, S, W | (x): NE, SE, SW, NW
 var plus_angles: Array = [-90.0, 0.0, 90.0, 180.0]
@@ -30,19 +32,26 @@ var active_hold_notes: Dictionary = {
 var note_index: int = 0
 
 func _ready():
-	# ensures that notes are chronological according to beat
+	if SceneManager.selected_chart:
+		chart_resource = SceneManager.selected_chart
+	else:
+		chart_resource = load("res://scenes/charts/mus_breakbeat.tres")
+
 	chart_resource.notes.sort_custom(
 		func(a, b): return a.beat_start < b.beat_start
 	)
-	
 	Conductor.load_song(chart_resource)
-	Conductor.play_song()
+	if not is_preview: # for preview control
+		Conductor.play_song()
 
 
 func _process(_delta: float) -> void:
-	if chart_resource == null: return
-	
+	if chart_resource == null:
+		print("chart_resource is null!")
+		return
+
 	var current_beat: float = Conductor.get_beat()
+	print("Spawner beat: ", current_beat, " note_index: ", note_index, " total notes: ", chart_resource.notes.size())
 	var spawned_this_frame = []
 
 	while note_index < chart_resource.notes.size():
@@ -102,3 +111,31 @@ func spawn_note(data: NoteData) -> Node2D:
 	)
 	
 	return note_node
+
+# For preview control
+func recalculate_note_index(current_beat: float) -> void:
+	# despawn all currently active notes — they'll respawn fresh if still relevant
+	_clear_all_notes()
+
+	# find the correct index: first note whose spawn window hasn't passed yet
+	note_index = 0
+	while note_index < chart_resource.notes.size():
+		var data: NoteData = chart_resource.notes[note_index]
+		if current_beat < data.beat_start - spawn_ahead_beats:
+			break
+		note_index += 1
+
+func _clear_all_notes() -> void:
+	for mode in active_notes.keys():
+		for lane in range(active_notes[mode].size()):
+			for note in active_notes[mode][lane].duplicate():
+				if is_instance_valid(note):
+					note.queue_free()
+			active_notes[mode][lane].clear()
+
+	for mode in active_hold_notes.keys():
+		for lane in range(active_hold_notes[mode].size()):
+			for note in active_hold_notes[mode][lane].duplicate():
+				if is_instance_valid(note):
+					note.queue_free()
+			active_hold_notes[mode][lane].clear()

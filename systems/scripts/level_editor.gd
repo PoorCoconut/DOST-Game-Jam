@@ -30,7 +30,7 @@ var chart: ChartData
 @onready var chart_file_dialog: FileDialog = $UI/FileButtons/ChartFileDialog
 @onready var file_dialog: FileDialog = $UI/FileButtons/SongFileDialog
 
-# Preview
+# Gameplay Preview 
 @onready var preview_viewport: SubViewport = $UI/PreviewPanel/SubViewportContainer/PreviewViewport
 const GAMEPLAY_SCENE := preload("res://scenes/levels/test/test_level.tscn")
 var preview_instance: Node = null
@@ -47,8 +47,8 @@ func _ready() -> void:
 	new_chart()
 
 func _process(_delta: float) -> void:
-	if audio_player.playing and not audio_player.stream_paused:
-		var t := audio_player.get_playback_position()
+	if Conductor.audio_player.playing and not is_paused:
+		var t := Conductor.get_time()
 		grid_view.update_playhead(t)
 		scrubber.update_progress(t)
 		_sync_scroll_to_beat(grid_view.playhead_beat)
@@ -73,11 +73,16 @@ func _on_bpm_field_text_changed(new_text: String) -> void:
 func _on_scrubber_seek_requested(time_seconds: float) -> void:
 	paused_position = time_seconds
 	scrubber.update_progress(time_seconds)  # ← immediate visual feedback, don't wait for _process
-	if is_paused or not audio_player.playing:
+	if is_paused or not Conductor.audio_player.playing:
 		grid_view.update_playhead(time_seconds)
 		_sync_scroll_to_beat(grid_view.playhead_beat)
 	else:
-		audio_player.play(time_seconds)
+		Conductor.audio_player.play(time_seconds)
+
+	if preview_instance:
+		var spawner := preview_instance.get_node("Spawner")
+		if spawner:
+			spawner.recalculate_note_index(time_seconds * chart.bpm / 60.0)
 
 func _sync_scroll_to_beat(beat: float) -> void:
 	scroll_container.scroll_vertical = int(beat * grid_view.pixels_per_beat) - 500
@@ -92,15 +97,17 @@ func new_chart() -> void:
 	refresh_song_info()
 	mode_label.text = "Mode: low (+)"
 	_update_lane_headers("low (+)")
+	_refresh_preview()
 
 func load_song(path: String) -> void:
 	var stream: AudioStream = load(path)
 	chart.stream = stream
 	chart.song_name = path.get_file().get_basename()
-	audio_player.stream = stream
+	Conductor.load_song(chart)
 	grid_view.update_content_size()
 	refresh_song_info()
 	scrubber.duration = stream.get_length()
+	_refresh_preview()
 
 func save_chart() -> void:
 	chart.sort_notes()
@@ -131,7 +138,7 @@ func _on_chart_file_dialog_file_selected(path: String) -> void:
 	refresh_song_info()
 
 	if chart.stream:
-		audio_player.stream = chart.stream
+		Conductor.load_song(chart)              # ← was: audio_player.stream = chart.stream
 		scrubber.duration = chart.stream.get_length()
 	else:
 		print("Warning: chart has no associated stream")
@@ -140,6 +147,7 @@ func _on_chart_file_dialog_file_selected(path: String) -> void:
 	is_paused = false
 	mode_label.text = "Mode: low (+)"
 	grid_view.set_mode("low (+)")
+	_refresh_preview()
 
 func _on_snap_option_item_selected(index: int) -> void:
 	var divisor: int = snap_option.get_item_id(index)
@@ -147,7 +155,7 @@ func _on_snap_option_item_selected(index: int) -> void:
 	grid_view.queue_redraw()
 
 func _on_load_chart_pressed() -> void:
-	var abs_path := ProjectSettings.globalize_path("res://scenes/levels/charts/")
+	var abs_path := ProjectSettings.globalize_path("res://scenes/")
 	chart_file_dialog.current_dir = abs_path
 	chart_file_dialog.popup_centered()
 
@@ -187,14 +195,14 @@ func _toggle_mode() -> void:
 
 # Audio Control (Pause and Play)
 func _toggle_playback() -> void:
-	if audio_player.stream == null:
+	if Conductor.active_chart == null:
 		return
-	if is_paused or not audio_player.playing:
-		audio_player.play(paused_position)
+	if is_paused or not Conductor.audio_player.playing:
+		Conductor.audio_player.play(paused_position)
 		is_paused = false
 	else:
-		paused_position = audio_player.get_playback_position()
-		audio_player.stop()
+		paused_position = Conductor.get_time()
+		Conductor.audio_player.stop()
 		is_paused = true
 
 func _input(event: InputEvent) -> void:
@@ -208,3 +216,34 @@ func _input(event: InputEvent) -> void:
 
 func _on_play_pause_pressed() -> void:
 	_toggle_playback()
+
+func _on_preview_restart_pressed() -> void:
+	paused_position = 0.0
+	Conductor.audio_player.play(0.0)
+	is_paused = false
+	if preview_instance:
+		var spawner := preview_instance.get_node("Spawner")
+		if spawner:
+			spawner.recalculate_note_index(0.0)
+
+# Gameplay Preview
+func _refresh_preview() -> void:
+	if preview_instance:
+		preview_instance.queue_free()
+		preview_instance = null
+
+	if chart == null or chart.stream == null:
+		return
+
+	SceneManager.selected_chart = chart
+	preview_instance = GAMEPLAY_SCENE.instantiate()
+
+	var spawner := preview_instance.get_node("Spawner")
+	if spawner:
+		spawner.is_preview = true
+
+	var judge := preview_instance.get_node("Judge")
+	if judge:
+		judge.autoplay = true
+
+	preview_viewport.add_child(preview_instance)
