@@ -1,0 +1,90 @@
+[gd_resource type="Resource" script_class="ChartData" format=3]
+
+[ext_resource type="Script" path="res://systems/components/chart/note_data.gd" id="1_52rg8"]
+[ext_resource type="Script" path="res://systems/components/chart/chart_data.gd" id="2_i0qmf"]
+[ext_resource type="AudioStream" path="res://sound/music/Geoxor - Lollipop.mp3" id="3_j0snc"]
+
+[sub_resource type="Resource" id="Resource_h2078"]
+script = ExtResource("1_52rg8")
+beat_start = 5.0
+
+[sub_resource type="Resource" id="Resource_3agvk"]
+script = ExtResource("1_52rg8")
+beat_start = 6.0
+lane = 1
+
+[sub_resource type="Resource" id="Resource_vkkcq"]
+script = ExtResource("1_52rg8")
+beat_start = 7.0
+lane = 2
+
+[sub_resource type="Resource" id="Resource_rtcx2"]
+script = ExtResource("1_52rg8")
+beat_start = 8.0
+lane = 3
+
+[sub_resource type="Resource" id="Resource_002qn"]
+script = ExtResource("1_52rg8")
+beat_start = 10.0
+beat_end = 12.0
+
+[sub_resource type="Resource" id="Resource_vnjlc"]
+script = ExtResource("1_52rg8")
+beat_start = 13.0
+beat_end = 15.0
+lane = 1
+
+[sub_resource type="Resource" id="Resource_egbp5"]
+script = ExtResource("1_52rg8")
+beat_start = 16.0
+beat_end = 18.0
+lane = 2
+
+[sub_resource type="Resource" id="Resource_nfse5"]
+script = ExtResource("1_52rg8")
+beat_start = 19.0
+beat_end = 21.0
+lane = 3
+
+[sub_resource type="Resource" id="Resource_tnc2o"]
+script = ExtResource("1_52rg8")
+beat_start = 22.0
+lane = 2
+
+[sub_resource type="Resource" id="Resource_3b601"]
+script = ExtResource("1_52rg8")
+beat_start = 23.0
+lane = 1
+
+[sub_resource type="Resource" id="Resource_kyhy5"]
+script = ExtResource("1_52rg8")
+beat_start = 24.0
+
+[sub_resource type="Resource" id="Resource_wyrla"]
+script = ExtResource("1_52rg8")
+beat_start = 25.0
+lane = 3
+
+[sub_resource type="Resource" id="Resource_o028m"]
+script = ExtResource("1_52rg8")
+beat_start = 26.0
+beat_end = 27.0
+lane = 2
+
+[sub_resource type="Resource" id="Resource_uw6lb"]
+script = ExtResource("1_52rg8")
+beat_start = 28.0
+beat_end = 29.0
+lane = 1
+
+[sub_resource type="Resource" id="Resource_c8kni"]
+script = ExtResource("1_52rg8")
+beat_start = 30.0
+beat_end = 31.0
+
+[resource]
+script = ExtResource("2_i0qmf")
+song_name = "Geoxor - Lollipop"
+bpm = 120.0
+stream = ExtResource("3_j0snc")
+notes = Array[ExtResource("1_52rg8")]([SubResource("Resource_h2078"), SubResource("Resource_3agvk"), SubResource("Resource_vkkcq"), SubResource("Resource_rtcx2"), SubResource("Resource_002qn"), SubResource("Resource_vnjlc"), SubResource("Resource_egbp5"), SubResource("Resource_nfse5"), SubResource("Resource_tnc2o"), SubResource("Resource_3b601"), SubResource("Resource_kyhy5"), SubResource("Resource_wyrla"), SubResource("Resource_o028m"), SubResource("Resource_uw6lb"), SubResource("Resource_c8kni")])

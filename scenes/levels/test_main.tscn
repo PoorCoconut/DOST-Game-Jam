@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://dhob63b2lbkiu" path="res://systems/components/spawner/note_spawner.gd" id="1_5c656"]
 [ext_resource type="Texture2D" uid="uid://bp0rpjb8w374n" path="res://assets/placeholder_ring.png" id="1_104ba"]
 [ext_resource type="Script" uid="uid://fy2itsqbgj0q" path="res://systems/components/judgement/judge.gd" id="3_judge"]
-[ext_resource type="PackedScene" uid="uid://k00spa2y4tnk" path="res://objects/note/tap_note.tscn" id="3_lchbk"]
-[ext_resource type="PackedScene" uid="uid://d3skweb2myvk" path="res://objects/note/hold_note.tscn" id="4_4daxk"]
+[ext_resource type="PackedScene" uid="uid://k00spa2y4tnk" path="res://objects/Note/tap_note.tscn" id="3_lchbk"]
+[ext_resource type="PackedScene" uid="uid://d3skweb2myvk" path="res://objects/Note/hold_note.tscn" id="4_4daxk"]
 
 [node name="TesterMain" type="Node2D" unique_id=2021198008]
 position = Vector2(553, 328)

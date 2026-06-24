@@ -26,7 +26,10 @@ func setup(p_lane: int, p_target_time: float, p_end_time: float, p_beat_duration
 	end_time = p_end_time
 	beat_duration = p_beat_duration
 	direction_vector = p_direction.normalized()
-	rotation = direction_vector.angle() + (PI / 2.0)
+	# Don't rotate self — head/tail positions already encode direction.
+	# If head/tail sprites need to visually face the direction, rotate them individually instead:
+	head.rotation = direction_vector.angle() + (PI / 2.0)
+	tail.rotation = direction_vector.angle() + (PI / 2.0)
 
 
 func _process(_delta: float) -> void:

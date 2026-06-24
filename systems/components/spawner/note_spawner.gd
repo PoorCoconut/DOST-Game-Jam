@@ -8,7 +8,7 @@ extends Node2D
 @export var spawn_ahead_beats: float = 4.0 
 @export var scroll_speed: float = 600.0
 
-var chart_resource: Resource = SceneManager.selected_chart
+var chart_resource: Resource = load("res://systems/components/chart/Geoxor - Lollipop.tres")
 
 # (+): N, E, S, W | (x): NE, SE, SW, NW
 var plus_angles: Array = [-90.0, 0.0, 90.0, 180.0]

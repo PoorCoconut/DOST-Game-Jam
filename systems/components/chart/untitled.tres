@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ChartData" format=3]
+
+[ext_resource type="Script" path="res://systems/components/chart/note_data.gd" id="1_87pin"]
+[ext_resource type="Script" path="res://systems/components/chart/chart_data.gd" id="2_4ejx5"]
+
+[resource]
+script = ExtResource("2_4ejx5")
+song_name = "untitled"
+bpm = 120.0
