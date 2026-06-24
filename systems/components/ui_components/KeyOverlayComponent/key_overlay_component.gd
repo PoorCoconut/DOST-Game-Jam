@@ -20,7 +20,12 @@ class_name KeyOverlayComponent
 @onready var count_down: Label = %Count_Down
 @onready var count_right: Label = %Count_Right
 
+@onready var orientation_label: Label = %OrientationLabel
+
+var is_cardinal : bool = true #Cardinal means the direction points N, S, E, W
+
 func _ready() -> void:
+	
 	var up_panel_style = panel_up.get_theme_stylebox("panel") as StyleBoxFlat
 	var left_panel_style = panel_left.get_theme_stylebox("panel") as StyleBoxFlat
 	var right_panel_style = panel_right.get_theme_stylebox("panel") as StyleBoxFlat
@@ -78,3 +83,18 @@ func add_score(orientation : String):
 		count_right.text = str(int(count_right.text) + 1)
 	else:
 		printerr(orientation + " is not a set orientation!")
+
+func switch_orientation():
+	is_cardinal = not is_cardinal
+	if is_cardinal:
+		%UP_ARROW.text = "↑"
+		%LEFT_ARROW.text = "←"
+		%DOWN_ARRAY.text = "↓"
+		%RIGHT_ARROW.text = "→"
+		%OrientationLabel.text = "✚"
+	else:
+		%UP_ARROW.text = "↖"
+		%LEFT_ARROW.text = "↙"
+		%DOWN_ARRAY.text = "↘"
+		%RIGHT_ARROW.text = "↗"
+		%OrientationLabel.text = "✕"

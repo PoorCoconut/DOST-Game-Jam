@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://b7u0kqlhcwvtg"]
+
+[ext_resource type="Script" uid="uid://277h8i6ghlyc" path="res://systems/components/ui_components/JudgementRingComponent/judgement_ring_component.gd" id="1_8o5i6"]
+[ext_resource type="Texture2D" uid="uid://bp0rpjb8w374n" path="res://assets/placeholder_ring.png" id="2_62eii"]
+[ext_resource type="Texture2D" uid="uid://bascrkywa76n8" path="res://assets/dcb2b55a30fa32bcae5869c36edf1bcf-removebg-preview.png" id="3_xwuql"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_o8aa4"]
+size = Vector2(50, 50)
+
+[node name="JudgementRingComponent" type="Node2D" unique_id=575620661]
+script = ExtResource("1_8o5i6")
+
+[node name="CenterMark" type="Marker2D" parent="." unique_id=136988184]
+position = Vector2(576, 324)
+
+[node name="PlaceholderRing" type="Sprite2D" parent="." unique_id=1449087777]
+position = Vector2(576, 324)
+scale = Vector2(6, 6)
+texture = ExtResource("2_62eii")
+
+[node name="EnergySource" type="Sprite2D" parent="." unique_id=1430995751]
+position = Vector2(576, 324)
+texture = SubResource("PlaceholderTexture2D_o8aa4")
+
+[node name="SustainMeter" type="TextureProgressBar" parent="." unique_id=693337917]
+unique_name_in_owner = true
+texture_filter = 2
+offset_left = 501.00003
+offset_top = 249.00002
+offset_right = 1001.0
+offset_bottom = 749.0
+scale = Vector2(0.3, 0.3)
+fill_mode = 4
+texture_progress = ExtResource("3_xwuql")

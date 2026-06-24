@@ -57,7 +57,7 @@ script = ExtResource("1_u5s4m")
 layout_mode = 3
 anchors_preset = 0
 offset_right = 192.0
-offset_bottom = 128.0
+offset_bottom = 112.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control" unique_id=661161677]
 layout_mode = 1
@@ -88,6 +88,7 @@ layout_mode = 2
 alignment = 2
 
 [node name="UP_ARROW" type="Label" parent="Control/HBoxContainer/Panel_Up/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1368802099]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "↑"
@@ -126,6 +127,7 @@ layout_mode = 2
 alignment = 2
 
 [node name="LEFT_ARROW" type="Label" parent="Control/HBoxContainer/Panel_Left/MarginContainer/VBoxContainer2/HBoxContainer" unique_id=1330853792]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "←"
@@ -164,6 +166,7 @@ layout_mode = 2
 alignment = 2
 
 [node name="DOWN_ARRAY" type="Label" parent="Control/HBoxContainer/Panel_Down/MarginContainer2/VBoxContainer3/HBoxContainer" unique_id=1709283635]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "↓"
@@ -202,6 +205,7 @@ layout_mode = 2
 alignment = 2
 
 [node name="RIGHT_ARROW" type="Label" parent="Control/HBoxContainer/Panel_Right/MarginContainer3/VBoxContainer4/HBoxContainer" unique_id=338187260]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "→"
@@ -218,3 +222,19 @@ size_flags_vertical = 3
 text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="Control/HBoxContainer" unique_id=1586840979]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/HBoxContainer/PanelContainer" unique_id=886520216]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="OrientationLabel" type="Label" parent="Control/HBoxContainer/PanelContainer/MarginContainer" unique_id=105382418]
+unique_name_in_owner = true
+layout_mode = 2
+text = "+"

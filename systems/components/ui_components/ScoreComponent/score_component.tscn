@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://c2mumpieglk6c"]
+
+[ext_resource type="Texture2D" uid="uid://cf48cjyq1olpu" path="res://assets/placeholder_note.png" id="1_8tpio"]
+[ext_resource type="Script" uid="uid://bh0mg82c74pts" path="res://systems/components/ui_components/ScoreComponent/score_component.gd" id="1_j5peh"]
+
+[node name="ScoreComponent" type="Node2D" unique_id=1890164845]
+script = ExtResource("1_j5peh")
+
+[node name="Label" type="Label" parent="." unique_id=1419900993]
+offset_left = -23.0
+offset_top = -12.0
+offset_right = 23.0
+offset_bottom = 11.0
+text = "00000"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2021368204]
+position = Vector2(38, 0)
+texture = ExtResource("1_8tpio")
