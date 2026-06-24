@@ -1,16 +1,17 @@
 @tool
 extends Node2D
 
+# Info Labels
 @onready var title_label: Label = $UI/SongInfo/TitleLabel
 @onready var bpm_label: Label = $UI/SongInfo/BPMLabel
 @onready var bpm_field: LineEdit = $UI/BPMField
-@onready var audio_player: AudioStreamPlayer2D = $AudioStreamPlayer2D
-@onready var grid_view: Control = $UI/ScrollContainer/GridView  # adjust path to match your tree
-@onready var file_dialog: FileDialog = $UI/FileButtons/SongFileDialog
-@onready var scroll_container: ScrollContainer = $UI/ScrollContainer
-@onready var scrubber: Control = $UI/Scrubber  # must have the song_scrubber.gd script
-@onready var chart_file_dialog: FileDialog = $UI/FileButtons/ChartFileDialog
 @onready var mode_label: Label = $UI/SongInfo/ModeLabel
+
+# Editor Essentials
+@onready var audio_player: AudioStreamPlayer2D = $AudioStreamPlayer2D
+@onready var grid_view: Control = $UI/ScrollContainer/GridView
+@onready var scroll_container: ScrollContainer = $UI/ScrollContainer
+@onready var scrubber: Control = $UI/Scrubber
 @onready var snap_option: OptionButton = $UI/FileButtons/SnapOption
 @onready var lane_headers: Array[Label] = [
 	$UI/GridHeader/North,
@@ -18,13 +19,16 @@ extends Node2D
 	$UI/GridHeader/South,
 	$UI/GridHeader/West,
 ]
-
 const LOW_LABELS := ["        North      |", "      East       |", "    South     ", "|      West"]
 const HIGH_LABELS := ["   North-East ", "|North-West|", " South-East", "| South-West"]
 
 var is_paused: bool = false
 var paused_position: float = 0.0
 var chart: ChartData
+
+# File Handlers
+@onready var chart_file_dialog: FileDialog = $UI/FileButtons/ChartFileDialog
+@onready var file_dialog: FileDialog = $UI/FileButtons/SongFileDialog
 
 func _ready() -> void:
 	snap_option.add_item("1/1", 1)
@@ -37,11 +41,6 @@ func _ready() -> void:
 	snap_option.select(3)  # default to 1/4
 	new_chart()
 
-func _on_snap_option_item_selected(index: int) -> void:
-	var divisor: int = snap_option.get_item_id(index)
-	grid_view.snap_divisor = divisor
-	grid_view.queue_redraw()
-
 func _process(_delta: float) -> void:
 	if audio_player.playing and not audio_player.stream_paused:
 		var t := audio_player.get_playback_position()
@@ -49,18 +48,7 @@ func _process(_delta: float) -> void:
 		scrubber.update_progress(t)
 		_sync_scroll_to_beat(grid_view.playhead_beat)
 
-func _on_scrubber_seek_requested(time_seconds: float) -> void:
-	paused_position = time_seconds
-	scrubber.update_progress(time_seconds)  # ← immediate visual feedback, don't wait for _process
-	if is_paused or not audio_player.playing:
-		grid_view.update_playhead(time_seconds)
-		_sync_scroll_to_beat(grid_view.playhead_beat)
-	else:
-		audio_player.play(time_seconds)
-
-func _sync_scroll_to_beat(beat: float) -> void:
-	scroll_container.scroll_vertical = int(beat * grid_view.pixels_per_beat) - 500
-	
+# Song Info
 func refresh_song_info() -> void:
 	title_label.text = "Title: %s" % chart.song_name
 	bpm_label.text = "BPM: %.1f" % chart.bpm
@@ -76,6 +64,20 @@ func _on_bpm_field_text_changed(new_text: String) -> void:
 	grid_view.update_content_size()
 	bpm_label.text = "BPM: %.1f" % value
 
+# Timeline Manager thingy
+func _on_scrubber_seek_requested(time_seconds: float) -> void:
+	paused_position = time_seconds
+	scrubber.update_progress(time_seconds)  # ← immediate visual feedback, don't wait for _process
+	if is_paused or not audio_player.playing:
+		grid_view.update_playhead(time_seconds)
+		_sync_scroll_to_beat(grid_view.playhead_beat)
+	else:
+		audio_player.play(time_seconds)
+
+func _sync_scroll_to_beat(beat: float) -> void:
+	scroll_container.scroll_vertical = int(beat * grid_view.pixels_per_beat) - 500
+
+# Basic Functions (New Chart, Load Song, Save Chart, Load Chart)
 func new_chart() -> void:
 	chart = ChartData.new()
 	chart.song_name = "untitled"
@@ -106,14 +108,11 @@ func save_chart() -> void:
 	else:
 		print("Save failed: ", err)
 
-func _on_mode_toggle_pressed() -> void:
-	var new_mode := "high (x)" if grid_view.current_mode == "low (+)" else "low (+)"
-	grid_view.set_mode(new_mode)
-
-func _on_load_chart_pressed() -> void:
-	var abs_path := ProjectSettings.globalize_path("res://systems/components/chart/")
-	chart_file_dialog.current_dir = abs_path
-	chart_file_dialog.popup_centered()
+# Chart Editor (Lane Headers, File Handling, Grid Snapping, BPM Setting)
+func _update_lane_headers(mode: String) -> void:
+	var labels := LOW_LABELS if mode == "low (+)" else HIGH_LABELS
+	for i in range(lane_headers.size()):
+		lane_headers[i].text = labels[i]
 
 func _on_chart_file_dialog_file_selected(path: String) -> void:
 	var loaded: ChartData = load(path)
@@ -137,6 +136,24 @@ func _on_chart_file_dialog_file_selected(path: String) -> void:
 	mode_label.text = "Mode: low (+)"
 	grid_view.set_mode("low (+)")
 
+func _on_snap_option_item_selected(index: int) -> void:
+	var divisor: int = snap_option.get_item_id(index)
+	grid_view.snap_divisor = divisor
+	grid_view.queue_redraw()
+
+func _on_load_chart_pressed() -> void:
+	var abs_path := ProjectSettings.globalize_path("res://systems/components/chart/")
+	chart_file_dialog.current_dir = abs_path
+	chart_file_dialog.popup_centered()
+
+func _on_bpm_field_text_submitted(new_text: String) -> void:
+	var value := new_text.to_float()
+	if value <= 0:
+		return  # ignore garbage input
+	chart.bpm = value
+	grid_view.update_content_size()  # redraw grid lines since beat spacing depends on bpm
+
+# Button Controls
 func _on_new_chart_pressed() -> void:
 	new_chart()
 
@@ -151,21 +168,10 @@ func _on_load_song_pressed() -> void:
 func _on_song_file_dialog_file_selected(path: String) -> void:
 	load_song(path)
 
-func _on_bpm_field_text_submitted(new_text: String) -> void:
-	var value := new_text.to_float()
-	if value <= 0:
-		return  # ignore garbage input
-	chart.bpm = value
-	grid_view.update_content_size()  # redraw grid lines since beat spacing depends on bpm
-
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_select"):  # spacebar — play/pause
-		_toggle_playback()
-
-	if event is InputEventKey:
-		var key_event := event as InputEventKey
-		if key_event.pressed and key_event.keycode == KEY_ALT:
-			_toggle_mode()
+# Mode Control (High or Low)
+func _on_mode_toggle_pressed() -> void:
+	var new_mode := "high (x)" if grid_view.current_mode == "low (+)" else "low (+)"
+	grid_view.set_mode(new_mode)
 
 func _toggle_mode() -> void:
 	var new_mode := "high (x)" if grid_view.current_mode == "low (+)" else "low (+)"
@@ -174,11 +180,7 @@ func _toggle_mode() -> void:
 	mode_label.modulate = Color.ORANGE if new_mode == "high (x)" else Color.CYAN
 	_update_lane_headers(new_mode)
 
-func _update_lane_headers(mode: String) -> void:
-	var labels := LOW_LABELS if mode == "low (+)" else HIGH_LABELS
-	for i in range(lane_headers.size()):
-		lane_headers[i].text = labels[i]
-
+# Audio Control (Pause and Play)
 func _toggle_playback() -> void:
 	if audio_player.stream == null:
 		return
@@ -189,6 +191,15 @@ func _toggle_playback() -> void:
 		paused_position = audio_player.get_playback_position()
 		audio_player.stop()
 		is_paused = true
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_select"):  # spacebar — play/pause
+		_toggle_playback()
+
+	if event is InputEventKey:
+		var key_event := event as InputEventKey
+		if key_event.pressed and key_event.keycode == KEY_ALT:
+			_toggle_mode()
 
 func _on_play_pause_pressed() -> void:
 	_toggle_playback()
