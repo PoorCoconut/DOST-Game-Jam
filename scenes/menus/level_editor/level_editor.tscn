@@ -1,0 +1,172 @@
+[gd_scene format=3 uid="uid://b5yql0k0twijm"]
+
+[ext_resource type="Script" uid="uid://cin8arupbpye6" path="res://systems/scripts/level_editor.gd" id="1_b5stn"]
+[ext_resource type="Script" uid="uid://loxpie0t4byj" path="res://scenes/menus/level_editor/grid_view.gd" id="2_xbjp5"]
+[ext_resource type="Script" uid="uid://d15ap55isd3h" path="res://scenes/menus/level_editor/song_scrubber.gd" id="3_b5stn"]
+
+[node name="level_editor" type="Node2D" unique_id=383777528]
+script = ExtResource("1_b5stn")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1221345606]
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0.31400967, 2.4065375e-07, 9.62615e-08, 1)
+
+[node name="UI" type="Control" parent="." unique_id=492839053]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 4.0
+offset_right = 1140.0
+offset_bottom = 616.0
+
+[node name="FileButtons" type="VBoxContainer" parent="UI" unique_id=760030987]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="LoadSong" type="Button" parent="UI/FileButtons" unique_id=236057975]
+layout_mode = 2
+text = "Load Song"
+
+[node name="SaveChart" type="Button" parent="UI/FileButtons" unique_id=750506656]
+layout_mode = 2
+text = "Save Chart"
+
+[node name="NewChart" type="Button" parent="UI/FileButtons" unique_id=1528920538]
+layout_mode = 2
+text = "Clear Chart"
+
+[node name="LoadChart" type="Button" parent="UI/FileButtons" unique_id=2013647918]
+layout_mode = 2
+text = "Load Chart"
+
+[node name="SongFileDialog" type="FileDialog" parent="UI/FileButtons" unique_id=1258136699]
+title = "Open a File"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.ogg", "*.wav", "*.mp3")
+
+[node name="ChartFileDialog" type="FileDialog" parent="UI/FileButtons" unique_id=1324199304]
+title = "Open a File"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.tres")
+
+[node name="Play_Pause" type="Button" parent="UI/FileButtons" unique_id=484283981]
+layout_mode = 2
+text = "Play/Pause"
+
+[node name="SnapOption" type="OptionButton" parent="UI/FileButtons" unique_id=1713303777]
+layout_mode = 2
+
+[node name="BPMField" type="LineEdit" parent="UI" unique_id=338541541]
+layout_mode = 0
+offset_top = 210.0
+offset_right = 127.0
+offset_bottom = 241.0
+placeholder_text = "Set BPM"
+alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI" unique_id=495508522]
+layout_mode = 0
+offset_left = 137.0
+offset_top = 40.0
+offset_right = 610.0
+offset_bottom = 611.0
+
+[node name="GridView" type="Control" parent="UI/ScrollContainer" unique_id=2007271287]
+custom_minimum_size = Vector2(400, 16200)
+layout_mode = 2
+script = ExtResource("2_xbjp5")
+
+[node name="GridHeader" type="HBoxContainer" parent="UI" unique_id=1255203880]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 8.0
+offset_right = 479.0
+offset_bottom = 31.0
+
+[node name="North" type="Label" parent="UI/GridHeader" unique_id=484265079]
+layout_mode = 2
+
+[node name="East" type="Label" parent="UI/GridHeader" unique_id=1755510120]
+layout_mode = 2
+
+[node name="South" type="Label" parent="UI/GridHeader" unique_id=871610664]
+layout_mode = 2
+
+[node name="West" type="Label" parent="UI/GridHeader" unique_id=1153844298]
+layout_mode = 2
+
+[node name="SongInfo" type="VBoxContainer" parent="UI" unique_id=672828153]
+layout_mode = 0
+offset_left = 631.0
+offset_top = 8.0
+offset_right = 671.0
+offset_bottom = 85.0
+
+[node name="TitleLabel" type="Label" parent="UI/SongInfo" unique_id=398431317]
+layout_mode = 2
+
+[node name="ModeLabel" type="Label" parent="UI/SongInfo" unique_id=1426553530]
+layout_mode = 2
+
+[node name="BPMLabel" type="Label" parent="UI/SongInfo" unique_id=469537465]
+layout_mode = 2
+
+[node name="Scrubber" type="Control" parent="UI" unique_id=1704809627]
+anchors_preset = 0
+offset_left = 628.0
+offset_top = 104.0
+offset_right = 1124.0
+offset_bottom = 144.0
+script = ExtResource("3_b5stn")
+
+[node name="PreviewPanel" type="Control" parent="UI" unique_id=1248538424]
+clip_contents = true
+custom_minimum_size = Vector2(600, 450)
+anchors_preset = 0
+offset_left = 628.0
+offset_top = 160.0
+offset_right = 1289.3333
+offset_bottom = 757.3334
+scale = Vector2(0.75, 0.75)
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="UI/PreviewPanel" unique_id=1634317744]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -234.66666
+offset_top = -32.000004
+offset_right = 69.333374
+offset_bottom = -42.666748
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="PreviewViewport" type="SubViewport" parent="UI/PreviewPanel/SubViewportContainer" unique_id=1760385502]
+handle_input_locally = false
+size = Vector2i(965, 586)
+render_target_update_mode = 4
+
+[node name="PreviewRestart" type="Button" parent="UI/PreviewPanel" unique_id=507405584]
+layout_mode = 0
+offset_left = 266.66666
+offset_top = 565.3333
+offset_right = 396.66666
+offset_bottom = 596.3333
+text = "Preview Restart"
+
+[connection signal="pressed" from="UI/FileButtons/LoadSong" to="." method="_on_load_song_pressed"]
+[connection signal="pressed" from="UI/FileButtons/SaveChart" to="." method="_on_save_chart_pressed"]
+[connection signal="pressed" from="UI/FileButtons/NewChart" to="." method="_on_new_chart_pressed"]
+[connection signal="pressed" from="UI/FileButtons/LoadChart" to="." method="_on_load_chart_pressed"]
+[connection signal="file_selected" from="UI/FileButtons/SongFileDialog" to="." method="_on_song_file_dialog_file_selected"]
+[connection signal="file_selected" from="UI/FileButtons/ChartFileDialog" to="." method="_on_chart_file_dialog_file_selected"]
+[connection signal="pressed" from="UI/FileButtons/Play_Pause" to="." method="_on_play_pause_pressed"]
+[connection signal="item_selected" from="UI/FileButtons/SnapOption" to="." method="_on_snap_option_item_selected"]
+[connection signal="text_changed" from="UI/BPMField" to="." method="_on_bpm_field_text_changed"]
+[connection signal="text_submitted" from="UI/BPMField" to="." method="_on_bpm_field_text_submitted"]
+[connection signal="seek_requested" from="UI/Scrubber" to="." method="_on_scrubber_seek_requested"]
+[connection signal="pressed" from="UI/PreviewPanel/PreviewRestart" to="." method="_on_preview_restart_pressed"]

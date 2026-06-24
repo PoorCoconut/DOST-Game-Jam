@@ -1,0 +1,133 @@
+[gd_resource type="Resource" script_class="ChartData" format=3 uid="uid://bu2btyons4ndn"]
+
+[ext_resource type="Script" uid="uid://dsabl2qk2n1bp" path="res://systems/models/note_data.gd" id="1_nkpuf"]
+[ext_resource type="Script" uid="uid://b6mjo1vig2mgq" path="res://systems/models/chart_data.gd" id="2_qkbwu"]
+[ext_resource type="AudioStream" uid="uid://dn2y6qgeq1xe8" path="res://sound/music/mus_breakbeat.mp3" id="3_hu5nj"]
+
+[sub_resource type="Resource" id="Resource_5rld7"]
+script = ExtResource("1_nkpuf")
+beat_end = 0.5
+
+[sub_resource type="Resource" id="Resource_bahoo"]
+script = ExtResource("1_nkpuf")
+beat_start = 0.5
+beat_end = 1.0
+lane = 1
+
+[sub_resource type="Resource" id="Resource_howj0"]
+script = ExtResource("1_nkpuf")
+beat_start = 1.0
+beat_end = 1.5
+lane = 2
+
+[sub_resource type="Resource" id="Resource_rmm3w"]
+script = ExtResource("1_nkpuf")
+beat_start = 1.5
+beat_end = 2.0
+lane = 3
+
+[sub_resource type="Resource" id="Resource_uwioc"]
+script = ExtResource("1_nkpuf")
+beat_start = 2.5
+lane = 2
+
+[sub_resource type="Resource" id="Resource_887kl"]
+script = ExtResource("1_nkpuf")
+beat_start = 3.0
+lane = 1
+
+[sub_resource type="Resource" id="Resource_61lnt"]
+script = ExtResource("1_nkpuf")
+beat_start = 3.5
+lane = 2
+
+[sub_resource type="Resource" id="Resource_uqhwe"]
+script = ExtResource("1_nkpuf")
+beat_start = 4.0
+beat_end = 5.0
+mode = "high (x)"
+
+[sub_resource type="Resource" id="Resource_ggyyd"]
+script = ExtResource("1_nkpuf")
+beat_start = 5.0
+beat_end = 6.0
+lane = 2
+mode = "high (x)"
+
+[sub_resource type="Resource" id="Resource_25idx"]
+script = ExtResource("1_nkpuf")
+beat_start = 5.0
+beat_end = 6.0
+lane = 1
+mode = "high (x)"
+
+[sub_resource type="Resource" id="Resource_23rsd"]
+script = ExtResource("1_nkpuf")
+beat_start = 6.0
+beat_end = 7.0
+lane = 3
+mode = "high (x)"
+
+[sub_resource type="Resource" id="Resource_2y8gm"]
+script = ExtResource("1_nkpuf")
+beat_start = 7.0
+lane = 2
+
+[sub_resource type="Resource" id="Resource_wxgxo"]
+script = ExtResource("1_nkpuf")
+beat_start = 7.5
+lane = 1
+
+[sub_resource type="Resource" id="Resource_e00u6"]
+script = ExtResource("1_nkpuf")
+beat_start = 8.0
+lane = 2
+mode = "high (x)"
+
+[sub_resource type="Resource" id="Resource_k4elp"]
+script = ExtResource("1_nkpuf")
+beat_start = 8.0
+lane = 1
+mode = "high (x)"
+
+[sub_resource type="Resource" id="Resource_igrd4"]
+script = ExtResource("1_nkpuf")
+beat_start = 9.0
+lane = 2
+mode = "high (x)"
+
+[sub_resource type="Resource" id="Resource_fql71"]
+script = ExtResource("1_nkpuf")
+beat_start = 9.0
+lane = 1
+mode = "high (x)"
+
+[sub_resource type="Resource" id="Resource_tomx1"]
+script = ExtResource("1_nkpuf")
+beat_start = 10.0
+beat_end = 11.5
+
+[sub_resource type="Resource" id="Resource_8ayty"]
+script = ExtResource("1_nkpuf")
+beat_start = 10.0
+beat_end = 11.5
+lane = 3
+
+[sub_resource type="Resource" id="Resource_482jr"]
+script = ExtResource("1_nkpuf")
+beat_start = 12.0
+lane = 1
+mode = "high (x)"
+
+[sub_resource type="Resource" id="Resource_q4ksv"]
+script = ExtResource("1_nkpuf")
+beat_start = 12.0
+lane = 2
+mode = "high (x)"
+
+[resource]
+script = ExtResource("2_qkbwu")
+song_name = "mus_breakbeat"
+bpm = 64.0
+stream = ExtResource("3_hu5nj")
+notes = Array[ExtResource("1_nkpuf")]([SubResource("Resource_5rld7"), SubResource("Resource_bahoo"), SubResource("Resource_howj0"), SubResource("Resource_rmm3w"), SubResource("Resource_uwioc"), SubResource("Resource_887kl"), SubResource("Resource_61lnt"), SubResource("Resource_uqhwe"), SubResource("Resource_ggyyd"), SubResource("Resource_25idx"), SubResource("Resource_23rsd"), SubResource("Resource_2y8gm"), SubResource("Resource_wxgxo"), SubResource("Resource_e00u6"), SubResource("Resource_k4elp"), SubResource("Resource_igrd4"), SubResource("Resource_fql71"), SubResource("Resource_tomx1"), SubResource("Resource_8ayty"), SubResource("Resource_482jr"), SubResource("Resource_q4ksv")])
