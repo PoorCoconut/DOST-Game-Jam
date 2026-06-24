@@ -3,7 +3,63 @@
 [ext_resource type="Script" path="res://systems/components/chart/note_data.gd" id="1_87pin"]
 [ext_resource type="Script" path="res://systems/components/chart/chart_data.gd" id="2_4ejx5"]
 
+[sub_resource type="Resource" id="Resource_4w0iy"]
+script = ExtResource("1_87pin")
+beat_start = 15.0
+beat_end = 16.0
+
+[sub_resource type="Resource" id="Resource_n8ta3"]
+script = ExtResource("1_87pin")
+beat_start = 16.0
+beat_end = 17.0
+lane = 1
+
+[sub_resource type="Resource" id="Resource_527h7"]
+script = ExtResource("1_87pin")
+beat_start = 17.0
+beat_end = 18.0
+lane = 2
+
+[sub_resource type="Resource" id="Resource_7khye"]
+script = ExtResource("1_87pin")
+beat_start = 18.0
+beat_end = 19.0
+lane = 3
+
+[sub_resource type="Resource" id="Resource_kmn7j"]
+script = ExtResource("1_87pin")
+beat_start = 19.0
+beat_end = 20.0
+lane = 2
+
+[sub_resource type="Resource" id="Resource_lgdii"]
+script = ExtResource("1_87pin")
+beat_start = 20.0
+beat_end = 21.0
+lane = 1
+
+[sub_resource type="Resource" id="Resource_vep60"]
+script = ExtResource("1_87pin")
+beat_start = 21.0
+beat_end = 22.0
+mode = "high (x)"
+
+[sub_resource type="Resource" id="Resource_20exp"]
+script = ExtResource("1_87pin")
+beat_start = 22.0
+beat_end = 23.0
+lane = 1
+mode = "high (x)"
+
+[sub_resource type="Resource" id="Resource_nmb3n"]
+script = ExtResource("1_87pin")
+beat_start = 23.0
+beat_end = 25.0
+lane = 2
+mode = "high (x)"
+
 [resource]
 script = ExtResource("2_4ejx5")
 song_name = "untitled"
-bpm = 120.0
+bpm = 64.0
+notes = Array[ExtResource("1_87pin")]([SubResource("Resource_4w0iy"), SubResource("Resource_n8ta3"), SubResource("Resource_527h7"), SubResource("Resource_7khye"), SubResource("Resource_kmn7j"), SubResource("Resource_lgdii"), SubResource("Resource_vep60"), SubResource("Resource_20exp"), SubResource("Resource_nmb3n")])

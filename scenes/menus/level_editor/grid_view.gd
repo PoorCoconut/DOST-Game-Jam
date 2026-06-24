@@ -92,6 +92,7 @@ func update_playhead(time_seconds: float) -> void:
 	playhead_beat = time_seconds * chart.bpm / 60.0
 	queue_redraw()
 
+# UI
 func _draw() -> void:
 	_draw_lanes()
 	_draw_grid_lines()
@@ -136,6 +137,10 @@ func _draw_grid_lines() -> void:
 		i += 1
 		beat += step
 
+func _draw_playhead() -> void:
+	var y := playhead_beat * pixels_per_beat
+	draw_line(Vector2(0, y), Vector2(lane_count * lane_width, y), Color.RED, 2.0)
+
 func _draw_notes() -> void:
 	if chart == null:
 		return
@@ -157,7 +162,3 @@ func _draw_notes() -> void:
 		var y_top = min(drag_start_beat, drag_current_beat) * pixels_per_beat
 		var y_bottom = max(drag_start_beat, drag_current_beat) * pixels_per_beat
 		draw_rect(Rect2(x + 4, y_top, lane_width - 8, max(y_bottom - y_top, 1)), Color(1, 1, 1, 0.3))
-
-func _draw_playhead() -> void:
-	var y := playhead_beat * pixels_per_beat
-	draw_line(Vector2(0, y), Vector2(lane_count * lane_width, y), Color.RED, 2.0)

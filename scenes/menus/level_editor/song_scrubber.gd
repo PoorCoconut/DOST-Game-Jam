@@ -1,4 +1,3 @@
-# song_scrubber.gd
 extends Control
 
 signal seek_requested(time_seconds: float)
