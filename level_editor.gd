@@ -12,6 +12,15 @@ extends Node2D
 @onready var chart_file_dialog: FileDialog = $UI/FileButtons/ChartFileDialog
 @onready var mode_label: Label = $UI/SongInfo/ModeLabel
 @onready var snap_option: OptionButton = $UI/FileButtons/SnapOption
+@onready var lane_headers: Array[Label] = [
+	$UI/GridHeader/North,
+	$UI/GridHeader/East,
+	$UI/GridHeader/South,
+	$UI/GridHeader/West,
+]
+
+const LOW_LABELS := ["        North      |", "      East       |", "    South     ", "|      West"]
+const HIGH_LABELS := ["   North-East ", "|North-West|", " South-East", "| South-West"]
 
 var is_paused: bool = false
 var paused_position: float = 0.0
@@ -75,6 +84,7 @@ func new_chart() -> void:
 	grid_view.queue_redraw()
 	refresh_song_info()
 	mode_label.text = "Mode: low (+)"
+	_update_lane_headers("low (+)")
 
 func load_song(path: String) -> void:
 	var stream: AudioStream = load(path)
@@ -162,6 +172,12 @@ func _toggle_mode() -> void:
 	grid_view.set_mode(new_mode)
 	mode_label.text = "Mode: %s" % new_mode
 	mode_label.modulate = Color.ORANGE if new_mode == "high (x)" else Color.CYAN
+	_update_lane_headers(new_mode)
+
+func _update_lane_headers(mode: String) -> void:
+	var labels := LOW_LABELS if mode == "low (+)" else HIGH_LABELS
+	for i in range(lane_headers.size()):
+		lane_headers[i].text = labels[i]
 
 func _toggle_playback() -> void:
 	if audio_player.stream == null:

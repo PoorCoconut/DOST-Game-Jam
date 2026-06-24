@@ -100,11 +100,28 @@ layout_mode = 2
 
 [node name="LaneLabel" type="Label" parent="UI" unique_id=1121941494]
 layout_mode = 0
-offset_left = 157.0
+offset_left = 140.0
 offset_top = 8.0
-offset_right = 508.0
+offset_right = 491.0
 offset_bottom = 31.0
-text = "North       |       East       |      South     |       West"
+
+[node name="GridHeader" type="HBoxContainer" parent="UI" unique_id=1255203880]
+layout_mode = 0
+offset_left = 127.0
+offset_right = 167.0
+offset_bottom = 40.0
+
+[node name="North" type="Label" parent="UI/GridHeader" unique_id=484265079]
+layout_mode = 2
+
+[node name="East" type="Label" parent="UI/GridHeader" unique_id=1755510120]
+layout_mode = 2
+
+[node name="South" type="Label" parent="UI/GridHeader" unique_id=871610664]
+layout_mode = 2
+
+[node name="West" type="Label" parent="UI/GridHeader" unique_id=1153844298]
+layout_mode = 2
 
 [connection signal="pressed" from="UI/FileButtons/LoadSong" to="." method="_on_load_song_pressed"]
 [connection signal="pressed" from="UI/FileButtons/SaveChart" to="." method="_on_save_chart_pressed"]
