@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://hpw1yuapti26"
-path="res://.godot/imported/amp_curve.png-10d2a69932dba336c920c74ce330bdab.ctex"
+uid="uid://dlia5nf5ux3ln"
+path="res://.godot/imported/amp_hand.png-fbf8b5521598946920cf21ddef8fe512.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://systems/components/ui_components/AccuracyMeter/amp_curve.png"
-dest_files=["res://.godot/imported/amp_curve.png-10d2a69932dba336c920c74ce330bdab.ctex"]
+source_file="res://systems/components/user_interface/AccuracyMeter/amp_hand.png"
+dest_files=["res://.godot/imported/amp_hand.png-fbf8b5521598946920cf21ddef8fe512.ctex"]
 
 [params]
 

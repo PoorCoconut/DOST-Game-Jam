@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://djq7ncohokjby"]
 
-[ext_resource type="Script" uid="uid://cs0afpy0ghlig" path="res://systems/components/ui_components/FrequencyBarComponent/frequency_bar_component.gd" id="1_sl5ek"]
+[ext_resource type="Script" uid="uid://cs0afpy0ghlig" path="res://systems/components/user_interface/FrequencyBarComponent/frequency_bar_component.gd" id="1_sl5ek"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_sl5ek"]
 

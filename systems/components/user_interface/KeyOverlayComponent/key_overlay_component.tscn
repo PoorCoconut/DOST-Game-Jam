@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bjcr16lvdu5g"]
 
-[ext_resource type="Script" uid="uid://d0sycydfcoyjc" path="res://systems/components/ui_components/KeyOverlayComponent/key_overlay_component.gd" id="1_u5s4m"]
+[ext_resource type="Script" uid="uid://d0sycydfcoyjc" path="res://systems/components/user_interface/KeyOverlayComponent/key_overlay_component.gd" id="1_u5s4m"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u5s4m"]
 content_margin_left = 0.0

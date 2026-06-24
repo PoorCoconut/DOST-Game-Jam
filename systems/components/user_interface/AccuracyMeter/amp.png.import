@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cv0uq2r017i0h"
-path="res://.godot/imported/amp.png-da6365da6769139d6e242dbf9117f4d4.ctex"
+path="res://.godot/imported/amp.png-8f611a4d70c98327a2187bcc358b2144.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://systems/components/ui_components/AccuracyMeter/amp.png"
-dest_files=["res://.godot/imported/amp.png-da6365da6769139d6e242dbf9117f4d4.ctex"]
+source_file="res://systems/components/user_interface/AccuracyMeter/amp.png"
+dest_files=["res://.godot/imported/amp.png-8f611a4d70c98327a2187bcc358b2144.ctex"]
 
 [params]
 

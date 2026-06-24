@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c2mumpieglk6c"]
 
 [ext_resource type="Texture2D" uid="uid://cf48cjyq1olpu" path="res://assets/placeholder_note.png" id="1_8tpio"]
-[ext_resource type="Script" uid="uid://bh0mg82c74pts" path="res://systems/components/ui_components/ScoreComponent/score_component.gd" id="1_j5peh"]
+[ext_resource type="Script" uid="uid://bh0mg82c74pts" path="res://systems/components/user_interface/ScoreComponent/score_component.gd" id="1_j5peh"]
 
 [node name="ScoreComponent" type="Node2D" unique_id=1890164845]
 script = ExtResource("1_j5peh")

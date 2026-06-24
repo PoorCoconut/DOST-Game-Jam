@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://dleilsmim1rix"]
 
-[ext_resource type="Script" uid="uid://c1uo6d8lr232y" path="res://systems/components/ui_components/LevelHUD/level_hud_component.gd" id="1_xjqfi"]
-[ext_resource type="PackedScene" uid="uid://c2mumpieglk6c" path="res://systems/components/ui_components/ScoreComponent/score_component.tscn" id="2_i7i21"]
-[ext_resource type="PackedScene" uid="uid://bjcr16lvdu5g" path="res://systems/components/ui_components/KeyOverlayComponent/key_overlay_component.tscn" id="3_ilhbb"]
-[ext_resource type="PackedScene" uid="uid://djq7ncohokjby" path="res://systems/components/ui_components/FrequencyBarComponent/frequency_bar_component.tscn" id="4_42bt7"]
-[ext_resource type="PackedScene" uid="uid://b7u0kqlhcwvtg" path="res://systems/components/ui_components/JudgementRingComponent/judgement_ring_component.tscn" id="5_ilhbb"]
-[ext_resource type="PackedScene" uid="uid://ddpfdwvd0etyt" path="res://systems/components/ui_components/AccuracyMeter/accuracy_meter_component.tscn" id="6_42bt7"]
+[ext_resource type="Script" uid="uid://c1uo6d8lr232y" path="res://systems/components/user_interface/LevelHUD/level_hud_component.gd" id="1_xjqfi"]
+[ext_resource type="PackedScene" uid="uid://c2mumpieglk6c" path="res://systems/components/user_interface/ScoreComponent/score_component.tscn" id="2_i7i21"]
+[ext_resource type="PackedScene" uid="uid://bjcr16lvdu5g" path="res://systems/components/user_interface/KeyOverlayComponent/key_overlay_component.tscn" id="3_ilhbb"]
+[ext_resource type="PackedScene" uid="uid://djq7ncohokjby" path="res://systems/components/user_interface/FrequencyBarComponent/frequency_bar_component.tscn" id="4_42bt7"]
+[ext_resource type="PackedScene" uid="uid://b7u0kqlhcwvtg" path="res://systems/components/user_interface/JudgementRingComponent/judgement_ring_component.tscn" id="5_ilhbb"]
+[ext_resource type="PackedScene" uid="uid://ddpfdwvd0etyt" path="res://systems/components/user_interface/AccuracyMeter/accuracy_meter_component.tscn" id="6_42bt7"]
 
 [node name="LevelHUDComponent" type="CanvasLayer" unique_id=511265971]
 script = ExtResource("1_xjqfi")

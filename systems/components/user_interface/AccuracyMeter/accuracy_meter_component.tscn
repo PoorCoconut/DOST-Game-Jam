@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ddpfdwvd0etyt"]
 
-[ext_resource type="Script" uid="uid://bg4k1mksb27ow" path="res://systems/components/ui_components/AccuracyMeter/accuracy_meter_component.gd" id="1_vn0wc"]
-[ext_resource type="Texture2D" uid="uid://hpw1yuapti26" path="res://systems/components/ui_components/AccuracyMeter/amp_curve.png" id="2_mv1pg"]
+[ext_resource type="Script" uid="uid://bg4k1mksb27ow" path="res://systems/components/user_interface/AccuracyMeter/accuracy_meter_component.gd" id="1_vn0wc"]
+[ext_resource type="Texture2D" uid="uid://hpw1yuapti26" path="res://systems/components/user_interface/AccuracyMeter/amp_curve.png" id="2_mv1pg"]
 
 [sub_resource type="Curve" id="Curve_mr3qb"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]

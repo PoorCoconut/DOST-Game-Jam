@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b7u0kqlhcwvtg"]
 
-[ext_resource type="Script" uid="uid://277h8i6ghlyc" path="res://systems/components/ui_components/JudgementRingComponent/judgement_ring_component.gd" id="1_8o5i6"]
+[ext_resource type="Script" uid="uid://277h8i6ghlyc" path="res://systems/components/user_interface/JudgementRingComponent/judgement_ring_component.gd" id="1_8o5i6"]
 [ext_resource type="Texture2D" uid="uid://bp0rpjb8w374n" path="res://assets/placeholder_ring.png" id="2_62eii"]
 [ext_resource type="Texture2D" uid="uid://bascrkywa76n8" path="res://assets/dcb2b55a30fa32bcae5869c36edf1bcf-removebg-preview.png" id="3_xwuql"]
 
