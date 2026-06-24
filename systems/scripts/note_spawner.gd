@@ -47,11 +47,9 @@ func _ready():
 
 func _process(_delta: float) -> void:
 	if chart_resource == null:
-		print("chart_resource is null!")
 		return
 
 	var current_beat: float = Conductor.get_beat()
-	print("Spawner beat: ", current_beat, " note_index: ", note_index, " total notes: ", chart_resource.notes.size())
 	var spawned_this_frame = []
 
 	while note_index < chart_resource.notes.size():
