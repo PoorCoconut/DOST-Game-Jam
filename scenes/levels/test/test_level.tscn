@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://bgjhkq1n1v2tw"]
+
+[ext_resource type="Texture2D" uid="uid://cww1fm7c8aoe6" path="res://assets/sustain_ring_white.png" id="1_n8gxi"]
+[ext_resource type="Texture2D" uid="uid://bp0rpjb8w374n" path="res://assets/placeholder_ring.png" id="2_g0uot"]
+[ext_resource type="Script" uid="uid://dhob63b2lbkiu" path="res://systems/scripts/note_spawner.gd" id="3_imjoa"]
+[ext_resource type="PackedScene" uid="uid://k00spa2y4tnk" path="res://objects/note/tap_note.tscn" id="4_5o7fv"]
+[ext_resource type="PackedScene" uid="uid://d3skweb2myvk" path="res://objects/note/hold_note.tscn" id="5_3od56"]
+[ext_resource type="Script" uid="uid://fy2itsqbgj0q" path="res://systems/scripts/judgement.gd" id="6_6g3f0"]
+
+[node name="TesterMain" type="Node2D" unique_id=2021198008]
+position = Vector2(553, 328)
+
+[node name="Sustain_Ring" type="Sprite2D" parent="." unique_id=1182621018]
+position = Vector2(-1.0000064, -1.4999943)
+scale = Vector2(0.25999996, 0.259)
+texture = ExtResource("1_n8gxi")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1164667670]
+visible = false
+position = Vector2(2.7656555e-05, -2.682209e-06)
+scale = Vector2(6.417969, 6.417969)
+texture = ExtResource("2_g0uot")
+
+[node name="Spawner" type="Node2D" parent="." unique_id=1804340144]
+script = ExtResource("3_imjoa")
+note_scene = ExtResource("4_5o7fv")
+hold_note_scene = ExtResource("5_3od56")
+
+[node name="Judge" type="Node" parent="." unique_id=1133349636]
+script = ExtResource("6_6g3f0")

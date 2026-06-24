@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://dosburh3smec0"]
+
+[ext_resource type="Texture2D" uid="uid://cww1fm7c8aoe6" path="res://assets/sustain_ring_white.png" id="1_wfv8n"]
+[ext_resource type="Texture2D" uid="uid://bp0rpjb8w374n" path="res://assets/placeholder_ring.png" id="2_m1hgl"]
+[ext_resource type="Script" uid="uid://dhob63b2lbkiu" path="res://systems/scripts/note_spawner.gd" id="3_3h50k"]
+[ext_resource type="PackedScene" uid="uid://k00spa2y4tnk" path="res://objects/note/tap_note.tscn" id="4_jki53"]
+[ext_resource type="PackedScene" uid="uid://d3skweb2myvk" path="res://objects/note/hold_note.tscn" id="5_1yce4"]
+[ext_resource type="Script" uid="uid://fy2itsqbgj0q" path="res://systems/scripts/judgement.gd" id="6_eee58"]
+
+[node name="ChartLollipop" type="Node2D" unique_id=522122728]
+
+[node name="Sustain_Ring" type="Sprite2D" parent="." unique_id=1225224101]
+position = Vector2(-1.0000064, -1.4999943)
+scale = Vector2(0.25999996, 0.259)
+texture = ExtResource("1_wfv8n")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1076032939]
+visible = false
+position = Vector2(2.7656555e-05, -2.682209e-06)
+scale = Vector2(6.417969, 6.417969)
+texture = ExtResource("2_m1hgl")
+
+[node name="Spawner" type="Node2D" parent="." unique_id=750816048]
+script = ExtResource("3_3h50k")
+note_scene = ExtResource("4_jki53")
+hold_note_scene = ExtResource("5_1yce4")
+
+[node name="Judge" type="Node" parent="." unique_id=900125319]
+script = ExtResource("6_eee58")

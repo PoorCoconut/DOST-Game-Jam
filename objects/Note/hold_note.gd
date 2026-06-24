@@ -20,13 +20,32 @@ var direction_vector: Vector2 = Vector2.ZERO
 @onready var body: Line2D = $Body
 
 
+func _ready() -> void:
+	visible = false
+
+
 func setup(p_lane: int, p_target_time: float, p_end_time: float, p_beat_duration: float, p_direction: Vector2) -> void:
 	lane = p_lane
 	target_time = p_target_time
 	end_time = p_end_time
 	beat_duration = p_beat_duration
 	direction_vector = p_direction.normalized()
-	rotation = direction_vector.angle() + (PI / 2.0)
+	head.rotation = direction_vector.angle() + (PI / 2.0)
+	# FIX: tail must also be rotated properly
+	tail.rotation = direction_vector.angle() + (PI / 2.0)
+
+	var current_time = Conductor.get_time()
+	var time_until_head = target_time - current_time
+	head.position = direction_vector * max((time_until_head * scroll_speed) + HIT_RADIUS, HIT_RADIUS)
+
+	var time_until_tail = end_time - current_time
+	tail.position = direction_vector * max((time_until_tail * scroll_speed) + HIT_RADIUS, HIT_RADIUS)
+
+	body.clear_points()
+	body.add_point(head.position)
+	body.add_point(tail.position)
+
+	visible = true
 
 
 func _process(_delta: float) -> void:
