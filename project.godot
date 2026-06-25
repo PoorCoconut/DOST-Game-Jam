@@ -35,9 +35,9 @@ window/stretch/mode="canvas_items"
 folder_colors={
 "res://assets/": "red",
 "res://objects/": "orange",
-"res://scenes/": "yellow",
+"res://scene/": "yellow",
 "res://sound/": "green",
-"res://systems/": "blue",
+"res://system/": "blue",
 "res://vfx/": "purple"
 }
 
