@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://vwumpp0njlov"]
+
+[ext_resource type="Script" uid="uid://bga2wgrppf5wa" path="res://systems/globals/manager/sound/sound_manager.gd" id="1_nsopr"]
+[ext_resource type="AudioStream" uid="uid://cgguq77w8nkw" path="res://sound/sfx/osu-hit-sound.mp3" id="2_5pkyb"]
+
+[node name="SoundManager" type="Node" unique_id=120271999]
+script = ExtResource("1_nsopr")
+hitsound = ExtResource("2_5pkyb")
+
+[node name="Menu" type="AudioStreamPlayer" parent="." unique_id=222444021]
+
+[node name="UI" type="AudioStreamPlayer" parent="." unique_id=291008831]
