@@ -6,7 +6,7 @@ var selected_energy: String = "Solar"
 # maybe future LAN logic goes here
 var is_multiplayer: bool = false
 
-const GAMEPLAY_DIR: String = "res://scenes/menus/gameplay/gameplay.tscn"
+const GAMEPLAY_DIR: String = "res://scenes/menus/gameplay/world_gameplay.tscn"
 const MENU_DIR: String     = "res://scenes/menus/main/main_menu.tscn"
 
 func load_gameplay(chart: ChartData, energy: String):

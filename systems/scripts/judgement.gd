@@ -3,8 +3,8 @@ extends Node
 const LANE_ACTIONS: Array = ["lane1 (Top)", "lane2 (Right)", "lane3 (Bottom)", "lane4 (Left)"]
 const TRANSFORM_ACTION: String = "transform"
 
-@onready var spawner: Node2D = $"../Spawner"
-@onready var sustain_ring: Sprite2D = $"../SustainRing"
+@onready var spawner: Node2D = %NoteSpawner
+@onready var sustain_ring: Sprite2D = %SustainRing
 
 # --- AUTOPLAYER ---
 @export var autoplay: bool = false
@@ -13,37 +13,26 @@ var current_mode: String = "+"
 var held_notes: Array = [null, null, null, null]
 
 
-# switched from _process to _input, for real this time
-# this handles input latency much better, not depending on the machine's frame rate
-func _input(event: InputEvent) -> void:
+func _process(_delta: float) -> void:
 	if autoplay:
 		_run_autoplay()
 		return
 	
-	# handle rotation
-	if event.is_action_pressed(TRANSFORM_ACTION):
+	if Input.is_action_just_pressed(TRANSFORM_ACTION):
 		_toggle_mode()
-
-	# handle lanes
-	for i in range(LANE_ACTIONS.size()):
-		var action = LANE_ACTIONS[i]
-		
-		# this only triggers once per press
-		if event.is_action_pressed(action):
-			if SoundManager.has_method("play_hitsound"):
-				SoundManager.play_hitsound(i)
-			
-			_try_hit(i)
-		
-		# handle key releases
-		elif event.is_action_released(action):
-			_try_release(i)
+	
+	for lane in range(LANE_ACTIONS.size()):
+		if Input.is_action_just_pressed(LANE_ACTIONS[lane]):
+			SoundManager.play_hitsound(lane)
+			_try_hit(lane)
+		elif Input.is_action_just_released(LANE_ACTIONS[lane]):
+			_try_release(lane)
 
 
-func _toggle_mode():
+func _toggle_mode() -> void:
 	current_mode = "x" if current_mode == "+" else "+"
 	sustain_ring.rotation_degrees = 45.0 if current_mode == "x" else 0.0
-	print("[LEVEL] Mode Switched: ", current_mode)
+	print("[JUDGE] Mode Switched: ", current_mode)
 
 
 func _try_hit(lane: int) -> void:

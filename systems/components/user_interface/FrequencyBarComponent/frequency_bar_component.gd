@@ -20,7 +20,7 @@ var target_ratio: float = 1.0  #hp_ratio lerps toward this. Set this when HP cha
 @onready var frequency_line: Line2D = %Frequency
 
 func _ready():
-	print("HP: ", CUR_HP, " / ", MAX_HP)
+	print("[STATS] HP: ", CUR_HP, " / ", MAX_HP)
 	_redraw()
 
 #Example [very simple] hp setter
@@ -35,7 +35,7 @@ func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("ui_accept"):
 		CUR_HP -= 5
 		set_hp(CUR_HP - 5)
-		print("HP: ",CUR_HP, " / ", MAX_HP)
+		print("[STATS] HP: ",CUR_HP, " / ", MAX_HP)
 
 func _process(delta: float) -> void:
 	hp_ratio = lerp(hp_ratio, target_ratio, delta * lerp_speed) #Changes the hp ratio with an interpolation

@@ -59,13 +59,18 @@ func _process(_delta: float) -> void:
 		if current_beat >= data.beat_start - spawn_ahead_beats:
 			var note = spawn_note(data)
 			spawned_this_frame.append(note)
+			
+			var mode = "+" if data.mode.contains("+") else "x"
+			VisualEffects.setup_note_visuals(note, mode)
+			
 			note_index += 1
 		else:
 			break
 	
-	# TODO
-	# if two or more notes spawn in the same beat (sync note)
-	# put logic here (highlight each note)
+	# SYNC LOGIC
+	# if two or more notes spawn in the same beat, highlight them
+	if spawned_this_frame.size() > 1:
+		VisualEffects.apply_sync_visuals(spawned_this_frame)
 
 
 func spawn_note(data: NoteData) -> Node2D:

@@ -32,7 +32,7 @@ func register_judgment(time_diff: float) -> String:
 	score_updated.emit(volts, watts)
 
 	# for debug
-	print("[DEBUG] %s | Amps: %d | Volts: %d | Watts: %d" % [result.to_upper(), amps, volts, watts])
+	print("[SCORE] %s | Amps: %d | Volts: %d | Watts: %d" % [result.to_upper(), amps, volts, watts])
 
 	return result
 
@@ -54,7 +54,7 @@ func register_hold_judgment(base_amps: int, beats_held: float, completed: bool) 
 	score_updated.emit(volts, watts)
 
 	# for debug
-	print("[DEBUG] HOLD %s | Base Amps: %d | Beats Held: %.2f | Amps: %d | Volts: %d | Watts: %d" % [
+	print("[SCORE] HOLD %s | Base Amps: %d | Beats Held: %.2f | Amps: %d | Volts: %d | Watts: %d" % [
 		"COMPLETE" if completed else "EARLY", base_amps, beats_held, amps, volts, watts
 	])
 

@@ -11,9 +11,9 @@ var _song_position_in_beats := 0.0
 var _last_reported_beat := 0
 
 # GAMEPLAY TIMING
-const HIT_RADIUS: float = 67.0 # this was a coincidence okay
-const SCROLL_SPEED: float = 600.0
-const MISS_WINDOW: float = 0.15
+const HIT_RADIUS: float = 67.0       # this was a coincidence okay
+const SCROLL_SPEED: float = 500.0    # old: 600
+const MISS_WINDOW: float = 0.10      # old: 0.15
 
 @onready var audio_player: AudioStreamPlayer = $Music
 @onready var metronome: AudioStreamPlayer = $Beat
@@ -38,14 +38,14 @@ func load_song(chart: ChartData) -> void:
 	_song_position_in_beats = 0.0
 	_last_reported_beat = 0
 	
-	print("[LEVEL] Conductor: Loaded song '", chart.song_name, "' by ", chart.artist)
+	print("[AUDIO] Loaded song '", chart.song_name, "' by ", chart.artist)
 
 
 func play_song() -> void:
 	if audio_player.stream:
 		audio_player.play()
 	else:
-		push_error("[ERROR] Conductor: Tried to play song, but no AudioStream was found in Chart!")
+		push_error("[ERROR] Tried to play song, but no AudioStream was found in Chart!")
 
 
 func _process(_delta):
@@ -74,7 +74,7 @@ func _report_beat():
 		
 		# comment these out if necessary
 		# metronome.play()
-		print("[DEBUG] Beat: ", _last_reported_beat)
+		# print("[DEBUG] Beat: ", _last_reported_beat)
 
 
 func get_beat() -> float:
