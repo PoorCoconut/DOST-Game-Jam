@@ -7,6 +7,7 @@ class_name ChartData
 @export var stream: AudioStream          # the music file
 @export var notes: Array[NoteData] = []  # list of NoteData resources
 
+
 func add_note(beat_start: float, lane: int, mode: String, beat_end: float = 0.0) -> NoteData:
 	var note := NoteData.new()
 	note.beat_start = beat_start
@@ -17,11 +18,14 @@ func add_note(beat_start: float, lane: int, mode: String, beat_end: float = 0.0)
 	sort_notes()
 	return note
 
+
 func remove_note(note: NoteData) -> void:
 	notes.erase(note)
 
+
 func sort_notes() -> void:
 	notes.sort_custom(func(a, b): return a.beat_start < b.beat_start)
+
 
 func get_note_at(beat: float, lane: int, mode: String, tolerance: float = 0.05) -> NoteData:
 	for n in notes:

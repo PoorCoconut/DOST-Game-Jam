@@ -11,7 +11,7 @@ var _song_position_in_beats := 0.0
 var _last_reported_beat := 0
 
 # GAMEPLAY TIMING
-const HIT_RADIUS: float = 67.0
+const HIT_RADIUS: float = 67.0 # this was a coincidence okay
 const SCROLL_SPEED: float = 600.0
 const MISS_WINDOW: float = 0.15
 
@@ -23,6 +23,7 @@ signal song_finished
 
 
 func _ready() -> void:
+	# disables input buffering
 	Input.set_use_accumulated_input(false)
 
 
@@ -32,7 +33,7 @@ func load_song(chart: ChartData) -> void:
 	seconds_per_beat = 60.0 / bpm
 	audio_player.stream = chart.stream
 	
-	# Reset tracking
+	# reset tracking
 	_song_position = 0.0
 	_song_position_in_beats = 0.0
 	_last_reported_beat = 0
@@ -72,7 +73,7 @@ func _report_beat():
 		emit_signal("beat", _last_reported_beat)
 		
 		# comment these out if necessary
-		metronome.play()
+		# metronome.play()
 		print("[DEBUG] Beat: ", _last_reported_beat)
 
 

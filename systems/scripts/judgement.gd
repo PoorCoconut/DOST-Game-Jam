@@ -12,22 +12,39 @@ const TRANSFORM_ACTION: String = "transform"
 var current_mode: String = "+"
 var held_notes: Array = [null, null, null, null]
 
-func _process(_delta: float) -> void:
+
+# switched from _process to _input, for real this time
+# this handles input latency much better, not depending on the machine's frame rate
+func _input(event: InputEvent) -> void:
 	if autoplay:
 		_run_autoplay()
 		return
+	
+	# handle rotation
+	if event.is_action_pressed(TRANSFORM_ACTION):
+		_toggle_mode()
 
-	if Input.is_action_just_pressed(TRANSFORM_ACTION):
-		current_mode = "x" if current_mode == "+" else "+"
-		print("Transform → ", "High Current"  if current_mode == "x" else "Low Current")
-		sustain_ring.rotation_degrees = 45.0 if current_mode == "x" else 0.0
+	# handle lanes
+	for i in range(LANE_ACTIONS.size()):
+		var action = LANE_ACTIONS[i]
+		
+		# this only triggers once per press
+		if event.is_action_pressed(action):
+			if SoundManager.has_method("play_hitsound"):
+				SoundManager.play_hitsound(i)
+			
+			_try_hit(i)
+		
+		# handle key releases
+		elif event.is_action_released(action):
+			_try_release(i)
 
-	for lane in range(LANE_ACTIONS.size()):
-		if Input.is_action_just_pressed(LANE_ACTIONS[lane]):
-			SoundManager.play_hitsound(lane)
-			_try_hit(lane)
-		elif Input.is_action_just_released(LANE_ACTIONS[lane]):
-			_try_release(lane)
+
+func _toggle_mode():
+	current_mode = "x" if current_mode == "+" else "+"
+	sustain_ring.rotation_degrees = 45.0 if current_mode == "x" else 0.0
+	print("[LEVEL] Mode Switched: ", current_mode)
+
 
 func _try_hit(lane: int) -> void:
 	var now: float = Conductor.get_time()
@@ -54,10 +71,10 @@ func _try_hit(lane: int) -> void:
 		if diff < closest_diff:
 			closest_diff = diff
 			closest_note = note
-
+	
 	if closest_note == null or closest_diff > ScoreSystem.GOOD_WINDOW:
 		return
-
+	
 	closest_note.judged = true
 	ScoreSystem.register_judgment(closest_diff)
 	if closest_note.has_method("destroy"):
@@ -65,21 +82,23 @@ func _try_hit(lane: int) -> void:
 	else:
 		closest_note.queue_free()
 
+
 func _try_release(lane: int) -> void:
 	var note = held_notes[lane]
 	if note != null and is_instance_valid(note):
 		note.on_released()
 	held_notes[lane] = null
 
+
 # --- AUTOPLAYER ---
 func _run_autoplay() -> void:
 	var now: float = Conductor.get_time()
-
+	
 	for lane in range(LANE_ACTIONS.size()):
 		# check both modes for upcoming notes in this lane, switch mode just-in-time, then hit
 		for mode in ["+", "x"]:
 			var hit_something := false
-
+			
 			for note in spawner.active_hold_notes[mode][lane]:
 				if not is_instance_valid(note) or note.judged:
 					continue
@@ -89,7 +108,7 @@ func _run_autoplay() -> void:
 					_try_hit(lane)
 					hit_something = true
 					break
-
+			
 			if not hit_something:
 				for note in spawner.active_notes[mode][lane]:
 					if not is_instance_valid(note) or note.judged:
@@ -99,11 +118,12 @@ func _run_autoplay() -> void:
 						SoundManager.play_hitsound(lane)
 						_try_hit(lane)
 						break
-
+		
 		# release held notes exactly at their end_time
 		var held = held_notes[lane]
 		if held != null and is_instance_valid(held) and now >= held.end_time:
 			_try_release(lane)
+
 
 func _auto_switch_mode(target_mode: String) -> void:
 	if current_mode != target_mode:
