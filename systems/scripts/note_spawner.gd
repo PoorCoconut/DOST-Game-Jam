@@ -41,6 +41,7 @@ func _ready():
 		func(a, b): return a.beat_start < b.beat_start
 	)
 	Conductor.load_song(chart_resource)
+	ScoreSystem.load_chart(chart_resource)
 	if not is_preview: # for preview control
 		Conductor.play_song()
 

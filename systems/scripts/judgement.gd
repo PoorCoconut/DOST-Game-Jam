@@ -7,7 +7,7 @@ const TRANSFORM_ACTION: String = "transform"
 @onready var sustain_ring: Node2D = get_node("../Sustain_Ring")
 
 # Autoplayer
-@export var autoplay: bool = false
+@export var autoplay: bool = true
 
 var current_mode: String = "+"
 var held_notes: Array = [null, null, null, null]
