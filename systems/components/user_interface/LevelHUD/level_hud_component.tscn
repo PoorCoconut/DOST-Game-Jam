@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://dleilsmim1rix"]
+
+[ext_resource type="Script" uid="uid://c1uo6d8lr232y" path="res://systems/components/user_interface/LevelHUD/level_hud_component.gd" id="1_xjqfi"]
+[ext_resource type="PackedScene" uid="uid://c2mumpieglk6c" path="res://systems/components/user_interface/ScoreComponent/score_component.tscn" id="2_i7i21"]
+[ext_resource type="PackedScene" uid="uid://bjcr16lvdu5g" path="res://systems/components/user_interface/KeyOverlayComponent/key_overlay_component.tscn" id="3_ilhbb"]
+[ext_resource type="PackedScene" uid="uid://djq7ncohokjby" path="res://systems/components/user_interface/FrequencyBarComponent/frequency_bar_component.tscn" id="4_42bt7"]
+[ext_resource type="PackedScene" uid="uid://b7u0kqlhcwvtg" path="res://systems/components/user_interface/JudgementRingComponent/judgement_ring_component.tscn" id="5_ilhbb"]
+[ext_resource type="PackedScene" uid="uid://ddpfdwvd0etyt" path="res://systems/components/user_interface/AccuracyMeter/accuracy_meter_component.tscn" id="6_42bt7"]
+
+[node name="LevelHUDComponent" type="CanvasLayer" unique_id=511265971]
+script = ExtResource("1_xjqfi")
+
+[node name="FrequencyBarComponent" parent="." unique_id=1123226504 instance=ExtResource("4_42bt7")]
+position = Vector2(64, 64)
+
+[node name="ScoreWats" parent="." unique_id=1890164845 instance=ExtResource("2_i7i21")]
+position = Vector2(992, 64)
+
+[node name="JudgementRingComponent" parent="." unique_id=575620661 instance=ExtResource("5_ilhbb")]
+
+[node name="KeyOverlayComponent" parent="." unique_id=1411056378 instance=ExtResource("3_ilhbb")]
+position = Vector2(896, 488)
+
+[node name="ScoreVolts" parent="." unique_id=576311917 instance=ExtResource("2_i7i21")]
+position = Vector2(144, 576)
+
+[node name="AccuracyMeterComponent" parent="." unique_id=1045190928 instance=ExtResource("6_42bt7")]
+position = Vector2(576, 560)
+
+[node name="SongProgress" type="ProgressBar" parent="." unique_id=706150498]
+unique_name_in_owner = true
+offset_left = 64.0
+offset_top = 608.0
+offset_right = 1088.0
+offset_bottom = 619.0
+show_percentage = false
