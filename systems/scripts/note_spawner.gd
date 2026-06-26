@@ -39,6 +39,7 @@ func _ready():
 		chart_resource = load("res://scenes/charts/mus_breakbeat.tres")
 
 	chart_resource.sort_notes()
+	ScoreSystem.load_chart(chart_resource)
 	Conductor.load_song(chart_resource)
 	
 	# --- FOR PREVIEW ---
