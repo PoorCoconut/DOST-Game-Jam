@@ -1,4 +1,3 @@
-@tool
 extends Node2D
 
 # Info Labels
@@ -35,6 +34,7 @@ const GAMEPLAY_SCENE := preload(SceneManager.GAMEPLAY_DIR)
 var preview_instance: Node = null
 
 func _ready() -> void:
+	snap_option.clear()
 	snap_option.add_item("1/1", 1)
 	snap_option.add_item("1/2 (halves)", 2)
 	snap_option.add_item("1/3 (thirds)", 3)

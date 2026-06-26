@@ -17,6 +17,12 @@ var playhead_beat: float = 0.0
 func _ready() -> void:
 	update_content_size()
 
+
+func _process(delta: float) -> void:
+	if Engine.is_editor_hint(): 
+		return
+
+
 func update_content_size() -> void:
 	var total_beats := 200.0
 	if chart and chart.stream and chart.bpm > 0:

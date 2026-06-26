@@ -84,7 +84,6 @@ func _process(_delta: float) -> void:
 	
 	# auto-resolve if held through the tail
 	if is_held and now >= end_time:
-		_play_sound()
 		_resolve(beat_duration)
 	
 	# deactivated
@@ -93,6 +92,8 @@ func _process(_delta: float) -> void:
 
 func _resolve(beats_held: float) -> void:
 	is_held = false
+	# Hitsound must be here, to account for autoplay
+	_play_sound()
 	ScoreSystem.register_hold_judgment(base_amps, beats_held, beats_held >= beat_duration)
 	VisualEffects.play_note_hit(self)
 	await get_tree().create_timer(0.15).timeout
