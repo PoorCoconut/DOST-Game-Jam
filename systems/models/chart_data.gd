@@ -1,11 +1,12 @@
 extends Resource
 class_name ChartData
 
-@export var song_name: String
-@export var artist: String
-@export var bpm: float
-@export var stream: AudioStream
-@export var notes: Array[NoteData] = []  # typed array, catches mistakes early
+@export var song_name: String            # song title
+@export var artist: String               # artist name
+@export var bpm: float                   # the 'real' bpm of the song (search it)
+@export var stream: AudioStream          # the music file
+@export var notes: Array[NoteData] = []  # list of NoteData resources
+
 
 func add_note(beat_start: float, lane: int, mode: String, beat_end: float = 0.0) -> NoteData:
 	var note := NoteData.new()
@@ -17,11 +18,14 @@ func add_note(beat_start: float, lane: int, mode: String, beat_end: float = 0.0)
 	sort_notes()
 	return note
 
+
 func remove_note(note: NoteData) -> void:
 	notes.erase(note)
 
+
 func sort_notes() -> void:
 	notes.sort_custom(func(a, b): return a.beat_start < b.beat_start)
+
 
 func get_note_at(beat: float, lane: int, mode: String, tolerance: float = 0.05) -> NoteData:
 	for n in notes:

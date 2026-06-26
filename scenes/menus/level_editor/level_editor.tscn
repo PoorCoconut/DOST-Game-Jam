@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://b5yql0k0twijm"]
 
-[ext_resource type="Script" uid="uid://cin8arupbpye6" path="res://systems/scripts/level_editor.gd" id="1_b5stn"]
-[ext_resource type="Script" uid="uid://loxpie0t4byj" path="res://scenes/menus/level_editor/grid_view.gd" id="2_xbjp5"]
-[ext_resource type="Script" uid="uid://d15ap55isd3h" path="res://scenes/menus/level_editor/song_scrubber.gd" id="3_b5stn"]
+[ext_resource type="Script" uid="uid://cin8arupbpye6" path="res://scenes/menus/level_editor/level_editor.gd" id="1_b5stn"]
+[ext_resource type="Script" uid="uid://loxpie0t4byj" path="res://scenes/menus/level_editor/level_grid_view.gd" id="2_xbjp5"]
+[ext_resource type="Script" uid="uid://d15ap55isd3h" path="res://systems/scripts/song_scrubber.gd" id="3_b5stn"]
 
 [node name="level_editor" type="Node2D" unique_id=383777528]
 script = ExtResource("1_b5stn")
@@ -10,7 +10,7 @@ script = ExtResource("1_b5stn")
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1221345606]
 offset_right = 1152.0
 offset_bottom = 648.0
-color = Color(0.31400967, 2.4065375e-07, 9.62615e-08, 1)
+color = Color(0.5096, 0.4592, 0.56, 1)
 
 [node name="UI" type="Control" parent="." unique_id=492839053]
 layout_mode = 3
@@ -137,17 +137,17 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -234.66666
-offset_top = -32.000004
-offset_right = 69.333374
-offset_bottom = -42.666748
+offset_left = -131.99994
+offset_top = -4.0
+offset_right = 130.31537
+offset_bottom = -40.0
 grow_horizontal = 2
 grow_vertical = 2
 stretch = true
 
 [node name="PreviewViewport" type="SubViewport" parent="UI/PreviewPanel/SubViewportContainer" unique_id=1760385502]
 handle_input_locally = false
-size = Vector2i(965, 586)
+size = Vector2i(923, 561)
 render_target_update_mode = 4
 
 [node name="PreviewRestart" type="Button" parent="UI/PreviewPanel" unique_id=507405584]

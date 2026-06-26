@@ -8,7 +8,8 @@ extends Node2D
 @export var spawn_ahead_beats: float = 4.0 
 @export var scroll_speed: float = 600.0
 
-@export var is_preview: bool = false #for preview control
+# --- FOR PREVIEW ---
+@export var is_preview: bool = false
 
 var chart_resource: Resource
 
@@ -37,11 +38,11 @@ func _ready():
 	else:
 		chart_resource = load("res://scenes/charts/mus_breakbeat.tres")
 
-	chart_resource.notes.sort_custom(
-		func(a, b): return a.beat_start < b.beat_start
-	)
+	chart_resource.sort_notes()
 	Conductor.load_song(chart_resource)
-	if not is_preview: # for preview control
+	
+	# --- FOR PREVIEW ---
+	if not is_preview:
 		Conductor.play_song()
 
 
@@ -50,25 +51,35 @@ func _process(_delta: float) -> void:
 		return
 
 	var current_beat: float = Conductor.get_beat()
-	var spawned_this_frame = []
+	var beat_groups = {}
 
 	while note_index < chart_resource.notes.size():
 		var data: NoteData = chart_resource.notes[note_index]
 		
 		if current_beat >= data.beat_start - spawn_ahead_beats:
 			var note = spawn_note(data)
-			spawned_this_frame.append(note)
+			var b_key = data.beat_start
+			
+			if not beat_groups.has(b_key):
+				beat_groups[b_key] = []
+			beat_groups[b_key].append(note)
+			
+			var mode = "+" if data.mode.contains("+") else "x"
+			VisualEffects.setup_note_visuals(note, mode)
+			
 			note_index += 1
 		else:
 			break
 	
-	# if two or more notes spawn in the same beat (sync note)
-	# put logic here
+	# SYNC LOGIC
+	# if two or more notes spawn in the same beat, highlight them
+	for b in beat_groups:
+		var group = beat_groups[b]
+		if group.size() > 1:
+			VisualEffects.apply_sync_visuals(group)
 
 
 func spawn_note(data: NoteData) -> Node2D:
-	# FIX: reorganized the logic here, so lane conflicts never happen
-	
 	# capture data immediately to avoid reference issues
 	var lane_idx = data.lane
 	var is_hold = data.is_hold_note()
@@ -90,7 +101,7 @@ func spawn_note(data: NoteData) -> Node2D:
 		active_notes[mode][lane_idx].append(note_node)
 
 	# instantiate
-	add_child(note_node)
+	get_parent().add_child(note_node)
 
 	# setup note
 	var target_time = data.beat_start * Conductor.seconds_per_beat
@@ -110,7 +121,7 @@ func spawn_note(data: NoteData) -> Node2D:
 	
 	return note_node
 
-# For preview control
+# --- FOR PREVIEW ---
 func recalculate_note_index(current_beat: float) -> void:
 	# despawn all currently active notes — they'll respawn fresh if still relevant
 	_clear_all_notes()
@@ -119,7 +130,7 @@ func recalculate_note_index(current_beat: float) -> void:
 	note_index = 0
 	while note_index < chart_resource.notes.size():
 		var data: NoteData = chart_resource.notes[note_index]
-		if current_beat < data.beat_start - spawn_ahead_beats:
+		if current_beat < data.beat_start:
 			break
 		note_index += 1
 
