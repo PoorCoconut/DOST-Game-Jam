@@ -32,3 +32,14 @@ func get_note_at(beat: float, lane: int, mode: String, tolerance: float = 0.05) 
 		if n.lane == lane and n.mode == mode and abs(n.beat_start - beat) <= tolerance:
 			return n
 	return null
+
+
+func total_notes() -> int:
+	# tap notes count as 1, hold notes count as beat_duration slices
+	var count: int = 0
+	for note in notes:
+		if note.is_hold_note():
+			count += int(round(note.beat_end - note.beat_start))
+		else:
+			count += 1
+	return count
