@@ -13,6 +13,11 @@ var current_mode: String = "+"
 var held_notes: Array = [null, null, null, null]
 
 
+func _play_sound(lane: int) -> void:
+	if SoundManager.has_method("play_hitsound"):
+		SoundManager.play_hitsound(lane)
+
+
 func _process(_delta: float) -> void:
 	if autoplay:
 		_run_autoplay()
@@ -93,7 +98,7 @@ func _run_autoplay() -> void:
 					continue
 				if now >= note.target_time:
 					_auto_switch_mode(mode)
-					SoundManager.play_hitsound(lane)
+					_play_sound(lane)
 					_try_hit(lane)
 					hit_something = true
 					break
@@ -104,7 +109,7 @@ func _run_autoplay() -> void:
 						continue
 					if now >= note.target_time:
 						_auto_switch_mode(mode)
-						SoundManager.play_hitsound(lane)
+						_play_sound(lane)
 						_try_hit(lane)
 						break
 		
