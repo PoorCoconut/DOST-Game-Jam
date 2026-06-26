@@ -51,14 +51,18 @@ func _process(_delta: float) -> void:
 		return
 
 	var current_beat: float = Conductor.get_beat()
-	var spawned_this_frame = []
+	var beat_groups = {}
 
 	while note_index < chart_resource.notes.size():
 		var data: NoteData = chart_resource.notes[note_index]
 		
 		if current_beat >= data.beat_start - spawn_ahead_beats:
 			var note = spawn_note(data)
-			spawned_this_frame.append(note)
+			var b_key = data.beat_start
+			
+			if not beat_groups.has(b_key):
+				beat_groups[b_key] = []
+			beat_groups[b_key].append(note)
 			
 			var mode = "+" if data.mode.contains("+") else "x"
 			VisualEffects.setup_note_visuals(note, mode)
@@ -69,8 +73,10 @@ func _process(_delta: float) -> void:
 	
 	# SYNC LOGIC
 	# if two or more notes spawn in the same beat, highlight them
-	if spawned_this_frame.size() > 1:
-		VisualEffects.apply_sync_visuals(spawned_this_frame)
+	for b in beat_groups:
+		var group = beat_groups[b]
+		if group.size() > 1:
+			VisualEffects.apply_sync_visuals(group)
 
 
 func spawn_note(data: NoteData) -> Node2D:
@@ -95,7 +101,7 @@ func spawn_note(data: NoteData) -> Node2D:
 		active_notes[mode][lane_idx].append(note_node)
 
 	# instantiate
-	add_child(note_node)
+	get_parent().add_child(note_node)
 
 	# setup note
 	var target_time = data.beat_start * Conductor.seconds_per_beat

@@ -21,14 +21,13 @@ func setup(p_lane: int, p_target_time: float, p_direction: Vector2) -> void:
 
 
 func _process(_delta: float) -> void:
-	#if not get_parent().global_scale == parent_scale:
-	#	parent_scale = get_parent().global_scale
-	#	global_scale = global_scale / parent_scale 
+	global_scale = Vector2.ONE
 	if judged: return
 	
 	var current_time = Conductor.get_time()
+	var parent_scale = get_parent().global_scale.x
 	var time_until_hit = target_time - current_time
-	var distance = (time_until_hit * Conductor.SCROLL_SPEED) + Conductor.HIT_RADIUS
+	var distance = (time_until_hit * Conductor.SCROLL_SPEED) + Conductor.HIT_RADIUS / parent_scale
 	position = direction_vector * distance
 	if time_until_hit < -Conductor.MISS_WINDOW:
 		on_miss()

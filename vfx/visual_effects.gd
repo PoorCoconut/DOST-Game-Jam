@@ -40,8 +40,9 @@ func play_note_hit(note: Node2D):
 	note.set_process(false) 
 	
 	var tween = create_tween().set_parallel(true)
+	var parent_scale = note.get_parent().global_scale
 	
-	tween.tween_property(note, "scale", Vector2(1.3, 1.3), 0.15)\
+	tween.tween_property(note, "scale", Vector2(1.3, 1.3) / parent_scale, 0.15)\
 		.set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_OUT)
 	
 	tween.tween_property(note, "modulate", Color(2, 2, 2, 1), 0.05)

@@ -79,7 +79,7 @@ func _on_scrubber_seek_requested(time_seconds: float) -> void:
 		Conductor.audio_player.play(time_seconds)
 
 	if preview_instance:
-		var spawner := preview_instance.get_node("Spawner")
+		var spawner := preview_instance.get_node("PlayfieldContainer/NoteMask/NoteSpawner")
 		if spawner:
 			spawner.recalculate_note_index(time_seconds * chart.bpm / 60.0)
 
@@ -225,7 +225,7 @@ func _on_preview_restart_pressed() -> void:
 	Conductor.audio_player.play(0.0)
 	is_paused = false
 	if preview_instance:
-		var spawner := preview_instance.get_node("Spawner")
+		var spawner := preview_instance.get_node("PlayfieldContainer/NoteMask/NoteSpawner")
 		if spawner:
 			spawner.recalculate_note_index(0.0)
 
@@ -241,7 +241,7 @@ func _refresh_preview() -> void:
 	SceneManager.selected_chart = chart
 	preview_instance = GAMEPLAY_SCENE.instantiate()
 
-	var spawner := preview_instance.get_node("Spawner")
+	var spawner := preview_instance.get_node("PlayfieldContainer/NoteMask/NoteSpawner")
 	if spawner:
 		spawner.is_preview = true
 

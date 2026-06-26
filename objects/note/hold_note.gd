@@ -10,7 +10,6 @@ var is_held: bool = false                     # true while player is holding
 var base_amps: int = 0                        # amps earned from head press accuracy
 var press_time: float = 0.0                   # when the player pressed the head
 var last_tick_beat: float = 0.0               # tracks the last sustain tick
-# @onready var parent_scale = get_parent().global_scale
 
 @onready var head: Node2D = $Head
 @onready var tail: Node2D = $Tail
@@ -56,9 +55,8 @@ func _play_sound_on_tick() -> void:
 
 
 func _process(_delta: float) -> void:
-	#if not get_parent().global_scale == parent_scale:
-	#	parent_scale = get_parent().global_scale
-	#	global_scale = global_scale / parent_scale 
+	global_scale = Vector2.ONE
+	var parent_scale = get_parent().global_scale.x
 	var now: float = Conductor.get_time()
 
 	# once held, lock the head at the hit radius instead of overshooting
@@ -66,7 +64,7 @@ func _process(_delta: float) -> void:
 		head.position = direction_vector * Conductor.HIT_RADIUS
 	else:
 		var time_until_head: float = target_time - now
-		var head_distance: float = (time_until_head * Conductor.SCROLL_SPEED) + Conductor.HIT_RADIUS
+		var head_distance: float = (time_until_head * Conductor.SCROLL_SPEED) + Conductor.HIT_RADIUS / parent_scale
 		head.position = direction_vector * head_distance
 	
 	# tail keeps moving inward until it reaches the hit radius
