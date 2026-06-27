@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://ex5jj1tkdv8w"]
+
+[ext_resource type="Texture2D" uid="uid://cf48cjyq1olpu" path="res://assets/placeholder_note.png" id="1_be1k8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xjqfi"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+skew = Vector2(-1, 0)
+border_width_right = 10
+border_color = Color(1.732707e-06, 0.9509148, 0.99946064, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[node name="SongRibbonComponent" type="Control" unique_id=1631734178]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SongPanel" type="Panel" parent="." unique_id=2019258615]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(1, 0)
+layout_mode = 0
+offset_left = -424.0
+offset_top = 16.0
+offset_right = -39.999634
+offset_bottom = 92.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_xjqfi")
+
+[node name="MarginContainer" type="MarginContainer" parent="SongPanel" unique_id=823800105]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -48.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 70
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SongPanel/MarginContainer" unique_id=376246345]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ColorRect" type="TextureRect" parent="SongPanel/MarginContainer/HBoxContainer" unique_id=2019491080]
+custom_minimum_size = Vector2(55, 0)
+layout_mode = 2
+
+[node name="SongLabel" type="Label" parent="SongPanel/MarginContainer/HBoxContainer" unique_id=1696344211]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "SONG NAME"
+
+[node name="Sprite2D" type="Sprite2D" parent="SongPanel/MarginContainer/HBoxContainer" unique_id=1907478528]
+position = Vector2(34, 30)
+scale = Vector2(2, 2)
+texture = ExtResource("1_be1k8")
+
+[node name="BPM_Label" type="Label" parent="SongPanel" unique_id=1703565770]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 48.0
+offset_top = 80.0
+offset_right = 97.0
+offset_bottom = 103.0
+text = "BPM 0"
