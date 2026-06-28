@@ -1,0 +1,178 @@
+extends Node
+
+var spawner: Node2D
+var sustain_ring: Sprite2D
+var judge: Node
+
+var _replay: ReplayData = null
+var _entry_index: int = 0
+var current_mode: String = "+"
+
+var _pending_releases: Array = []
+var _pending_holds: Array = []
+
+const HOLD_FIRE_EARLY: float = 0.05
+
+
+func _ready() -> void:
+	var root = get_parent()
+	judge = root.get_node("Judge")
+	sustain_ring = root.get_node("SustainRing")
+	spawner = root.get_node("PlayfieldContainer/NoteMask/NoteSpawner")
+	print("[REPLAYER] judge: ", judge, " | spawner: ", spawner, " | sustain_ring: ", sustain_ring)
+
+
+func load_replay(replay: ReplayData) -> void:
+	_replay = replay
+	_entry_index = 0
+	current_mode = "+"
+	_pending_releases = []
+	_pending_holds = []
+
+
+func _process(_delta: float) -> void:
+	if _replay == null:
+		return
+
+	var now: float = Conductor.get_time()
+	while _entry_index < _replay.entries.size():
+		var entry = _replay.entries[_entry_index]
+
+		if not entry is Dictionary:
+			_entry_index += 1
+			continue
+
+		var ideal_target_time: float = entry["beat_start"] * Conductor.seconds_per_beat
+		var scheduled_press_time: float = ideal_target_time + entry["time_offset"]
+
+		if entry.get("is_hold", false):
+			var fire_time: float = ideal_target_time - HOLD_FIRE_EARLY
+			if now < fire_time:
+				break
+			_pending_holds.append(entry)
+			_entry_index += 1
+		else:
+			if now < scheduled_press_time:
+				break
+			_fire_tap(entry, scheduled_press_time)
+			_entry_index += 1
+
+	# --- Stage 2: fire pending holds ---
+	var i = _pending_holds.size() - 1
+	while i >= 0:
+		var entry = _pending_holds[i]
+		var ideal_target_time: float = entry["beat_start"] * Conductor.seconds_per_beat
+		var fire_time: float = ideal_target_time - HOLD_FIRE_EARLY
+		if now >= fire_time:
+			var scheduled_press_time: float = ideal_target_time + entry["time_offset"]
+			_fire_hold(entry, scheduled_press_time)
+			_pending_holds.remove_at(i)
+		i -= 1
+
+	# --- Stage 3: drain pending releases ---
+	i = _pending_releases.size() - 1
+	while i >= 0:
+		var pending = _pending_releases[i]
+		if now >= pending["release_time"]:
+			judge._try_release(pending["lane"])
+			_pending_releases.remove_at(i)
+		i -= 1
+
+
+func _fire_tap(entry: Dictionary, scheduled_press_time: float) -> void:
+	print("[DEBUG-REPLAYER] _fire_entry called -> is_hold: false | judgment: %s | lane: %d | mode: %s" % [entry.get("judgment", "??"), entry.get("lane", -1), entry.get("mode", "??")])
+
+	var lane: int = entry["lane"]
+	var mode: String = entry["mode"]
+	var judgment: String = entry["judgment"]
+
+	if current_mode != mode:
+		current_mode = mode
+		sustain_ring.rotation_degrees = 45.0 if mode == "x" else 0.0
+
+	if judgment == "miss":
+		return
+
+	var notes: Array = spawner.active_notes[mode][lane]
+	var closest_note: Node2D = null
+	var closest_diff: float = INF
+
+	for note in notes:
+		if not is_instance_valid(note) or note.judged:
+			continue
+		var diff: float = abs(note.target_time - scheduled_press_time)
+		if diff < closest_diff:
+			closest_diff = diff
+			closest_note = note
+
+	if closest_note != null:
+		closest_note.judged = true
+		ScoreSystem.register_judgment(abs(entry["time_offset"]))
+
+		if SoundManager.has_method("play_hitsound"):
+			SoundManager.play_hitsound(lane)
+
+		if closest_note.has_method("destroy"):
+			closest_note.destroy()
+		else:
+			closest_note.queue_free()
+
+
+func _fire_hold(entry: Dictionary, scheduled_press_time: float) -> void:
+	print("[DEBUG-REPLAYER] _fire_entry called -> is_hold: true | judgment: %s | lane: %d | mode: %s" % [entry.get("judgment", "??"), entry.get("lane", -1), entry.get("mode", "??")])
+
+	var lane: int = entry["lane"]
+	var mode: String = entry["mode"]
+	var judgment: String = entry["judgment"]
+
+	if current_mode != mode:
+		current_mode = mode
+		sustain_ring.rotation_degrees = 45.0 if mode == "x" else 0.0
+
+	if judgment == "miss":
+		return
+
+	var ideal_target_time: float = entry["beat_start"] * Conductor.seconds_per_beat
+	print("[DEBUG-REPLAYER] Firing HOLD entry -> Lane: %d | Mode: %s | Target: %.3f" % [lane, mode, ideal_target_time])
+
+	var hold_note = _find_hold_note(mode, lane, ideal_target_time)
+	if hold_note == null:
+		print("[DEBUG-REPLAYER] WARNING: Could not find hold note for Lane %d | Mode: %s | Target: %.3f" % [lane, mode, ideal_target_time])
+		return
+
+	print("[DEBUG-REPLAYER] Found hold note -> target_time: %.3f" % hold_note.target_time)
+
+	var diff: float = abs(hold_note.target_time - scheduled_press_time)
+	hold_note.on_head_pressed(diff)
+
+	judge.held_notes[lane] = hold_note
+	judge.held_note_data[lane] = entry["beat_start"]
+	judge.held_note_modes[lane] = mode
+
+	if not hold_note.auto_resolved.is_connected(judge._on_hold_auto_resolved):
+		hold_note.auto_resolved.connect(judge._on_hold_auto_resolved)
+
+	var beat_end: float = entry.get("beat_end", -1.0)
+	var release_offset: float = entry.get("time_of_release_offset", 0.0)
+	if beat_end >= 0.0:
+		var scheduled_release_time = (beat_end * Conductor.seconds_per_beat) + release_offset
+		print("[DEBUG-REPLAYER] Scheduling release -> Lane: %d | Release at: %.3f" % [lane, scheduled_release_time])
+		_pending_releases.append({"lane": lane, "release_time": scheduled_release_time})
+	else:
+		print("[DEBUG-REPLAYER] WARNING: No beat_end in hold entry for lane %d!" % lane)
+
+
+func _find_hold_note(mode: String, lane: int, ideal_target_time: float) -> Node2D:
+	var best_note: Node2D = null
+	var best_diff: float = 0.25
+
+	var hold_notes: Array = spawner.active_hold_notes[mode][lane]
+	for note in hold_notes:
+		if not is_instance_valid(note) or note.judged:
+			continue
+		var diff: float = abs(note.target_time - ideal_target_time)
+		if diff < best_diff:
+			best_diff = diff
+			best_note = note
+
+	return best_note

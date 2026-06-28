@@ -2,6 +2,7 @@ extends Node2D
 
 @export_group("Note Scenes")
 @export var note_scene: PackedScene
+@onready var replay_recorder: Node = %ReplayRecorder
 @export var hold_note_scene: PackedScene
 
 @export_group("Chart Stats")
@@ -40,6 +41,7 @@ func _ready():
 
 	chart_resource.sort_notes()
 	ScoreSystem.load_chart(chart_resource)
+	replay_recorder.start_recording(chart_resource)
 	Conductor.load_song(chart_resource)
 	
 	# --- FOR PREVIEW ---

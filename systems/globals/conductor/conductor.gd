@@ -23,8 +23,9 @@ signal song_finished
 
 
 func _ready() -> void:
-	# disables input buffering
 	Input.set_use_accumulated_input(false)
+	audio_player.finished.connect(_on_song_finished)
+	print("[CONDUCTOR] finished signal connected: ", audio_player.finished.is_connected(_on_song_finished))
 
 
 func load_song(chart: ChartData) -> void:
@@ -75,6 +76,11 @@ func _report_beat():
 		# comment these out if necessary
 		# metronome.play()
 		# print("[DEBUG] Beat: ", _last_reported_beat)
+
+
+func _on_song_finished() -> void:
+	print("[CONDUCTOR] song_finished emitted")
+	emit_signal("song_finished")
 
 
 func get_beat() -> float:

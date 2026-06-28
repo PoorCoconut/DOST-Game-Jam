@@ -44,12 +44,13 @@ func on_miss():
 	judged = true
 	ScoreSystem.register_miss()
 	VisualEffects.play_note_miss(self)
+	if not is_inside_tree(): return  # add this
 	await get_tree().create_timer(0.15).timeout
 	queue_free()
-
 
 func destroy():
 	judged = true
 	VisualEffects.play_note_hit(self)
+	if not is_inside_tree(): return  # add this
 	await get_tree().create_timer(0.15).timeout
 	queue_free()

@@ -5,12 +5,20 @@ const TRANSFORM_ACTION: String = "transform"
 
 @onready var spawner: Node2D = %NoteSpawner
 @onready var sustain_ring: Sprite2D = %SustainRing
+@onready var replay_recorder: Node = %ReplayRecorder
 
 # --- AUTOPLAYER ---
 @export var autoplay: bool = false
 
 var current_mode: String = "+"
 var held_notes: Array = [null, null, null, null]
+var held_note_data: Array = [null, null, null, null]  # stores beat_start for held notes
+# Stores the mode each held note was hit in, so auto_resolved can record correctly
+var held_note_modes: Array = ["", "", "", ""]
+
+
+func _ready() -> void:
+	print("[JUDGE] replay_recorder is null: ", replay_recorder == null)
 
 
 func _play_sound(lane: int) -> void:
@@ -44,17 +52,25 @@ func _try_hit(lane: int) -> void:
 	var now: float = Conductor.get_time()
 	var hold_notes: Array = spawner.active_hold_notes[current_mode][lane]
 	
-	# check hold notes first
 	for note in hold_notes:
 		if not is_instance_valid(note) or note.judged:
 			continue
+			
 		var diff: float = abs(note.target_time - now)
+		print("[DEBUG-JUDGE] Checking Hold Note -> Lane: %d | Target Time: %f | Now: %f | Diff: %f | Good Window: %f" % [lane, note.target_time, now, diff, ScoreSystem.GOOD_WINDOW])
+		
 		if diff <= ScoreSystem.GOOD_WINDOW:
 			note.on_head_pressed(diff)
 			held_notes[lane] = note
+			held_note_data[lane] = note.target_time / Conductor.seconds_per_beat
+			held_note_modes[lane] = current_mode
+			print("[DEBUG-JUDGE] SUCCESS! Hold note assigned to held_notes array.")
+			
+			if not note.auto_resolved.is_connected(_on_hold_auto_resolved):
+				note.auto_resolved.connect(_on_hold_auto_resolved)
 			return
 	
-	# then fall through to tap notes 
+	# fall through to tap notes
 	var notes: Array = spawner.active_notes[current_mode][lane]
 	var closest_note: Node2D = null
 	var closest_diff: float = INF
@@ -70,18 +86,69 @@ func _try_hit(lane: int) -> void:
 		return
 	
 	closest_note.judged = true
-	ScoreSystem.register_judgment(closest_diff)
+	var result = ScoreSystem.register_judgment(closest_diff)
+	var time_offset: float = now - closest_note.target_time
+	var beat_start = closest_note.target_time / Conductor.seconds_per_beat
+	
+	if replay_recorder != null:
+		replay_recorder.record_tap(beat_start, lane, current_mode, result, time_offset)
+	else:
+		print("[JUDGE] WARNING: replay_recorder is null, tap not recorded")
+
 	if closest_note.has_method("destroy"):
 		closest_note.destroy()
 	else:
 		closest_note.queue_free()
 
 
+func _on_hold_auto_resolved(note: Node2D) -> void:
+	var lane: int = note.lane
+	var beat_start = held_note_data[lane]
+	if beat_start == null:
+		return
+
+	var press_offset: float = note.press_time - note.target_time
+	var release_offset: float = Conductor.get_time() - note.end_time
+	var beat_end = note.end_time / Conductor.seconds_per_beat
+	# Use the stored mode for this lane, not current_mode (avoids mode-switch corruption)
+	var note_mode: String = held_note_modes[lane]
+
+	if replay_recorder != null:
+		replay_recorder.record_hold(beat_start, lane, note_mode, note.head_judgment, press_offset, release_offset, beat_end)
+
+	held_notes[lane] = null
+	held_note_data[lane] = null
+	held_note_modes[lane] = ""
+
+
 func _try_release(lane: int) -> void:
 	var note = held_notes[lane]
-	if note != null and is_instance_valid(note):
-		note.on_released()
+	# null means already handled by _on_hold_auto_resolved — skip to avoid double-record
+	if note == null or not is_instance_valid(note):
+		held_notes[lane] = null
+		held_note_data[lane] = null
+		held_note_modes[lane] = ""
+		return
+
+	var now: float = Conductor.get_time()
+	var judgment = note.head_judgment
+	var beat_start = held_note_data[lane]
+	var note_mode: String = held_note_modes[lane]
+
+	var press_offset: float = note.press_time - note.target_time
+	var release_offset: float = now - note.end_time
+	var note_beat_end = note.end_time / Conductor.seconds_per_beat
+
+	note.on_released()
+
+	if replay_recorder != null:
+		replay_recorder.record_hold(beat_start, lane, note_mode, judgment, press_offset, release_offset, note_beat_end)
+	else:
+		print("[JUDGE] WARNING: replay_recorder is null, hold not recorded")
+
 	held_notes[lane] = null
+	held_note_data[lane] = null
+	held_note_modes[lane] = ""
 
 
 # --- AUTOPLAYER ---
@@ -89,7 +156,6 @@ func _run_autoplay() -> void:
 	var now: float = Conductor.get_time()
 	
 	for lane in range(LANE_ACTIONS.size()):
-		# check both modes for upcoming notes in this lane, switch mode just-in-time, then hit
 		for mode in ["+", "x"]:
 			var hit_something := false
 			
@@ -112,11 +178,6 @@ func _run_autoplay() -> void:
 						_play_sound(lane)
 						_try_hit(lane)
 						break
-		
-		# release held notes exactly at their end_time
-		var held = held_notes[lane]
-		if held != null and is_instance_valid(held) and now >= held.end_time:
-			_try_release(lane)
 
 
 func _auto_switch_mode(target_mode: String) -> void:
