@@ -85,7 +85,10 @@ func _process(_delta: float) -> void:
 	body.add_point(tail.position)
 
 	# auto-miss if head passes without being pressed
+	# During replay, never auto-miss — the replayer hits notes on its own schedule
 	if not judged and now > target_time + Conductor.MISS_WINDOW:
+		if SceneManager.is_replay:
+			return
 		_on_miss()
 		return
 
@@ -128,7 +131,6 @@ func on_head_pressed(time_diff: float) -> void:
 	press_time = Conductor.get_time()
 	head_judgment = ScoreSystem._get_judgment(time_diff)
 
-	# score the head press as the first slice
 	ScoreSystem.register_hold_slice(head_judgment)
 	_play_sound()
 	slices_hit = 1
@@ -146,14 +148,12 @@ func on_released() -> void:
 	var now: float = Conductor.get_time()
 
 	if now >= end_time:
-		# full hold — already resolved via _process / auto_resolved signal
 		_play_sound()
 		VisualEffects.play_note_hit(self)
 		if not is_inside_tree(): return
 		await get_tree().create_timer(0.15).timeout
 		queue_free()
 	else:
-		# early release — score remaining slices as miss
 		while slices_hit < slices_total:
 			ScoreSystem.register_hold_slice("miss")
 			slices_hit += 1
