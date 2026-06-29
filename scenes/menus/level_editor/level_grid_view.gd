@@ -25,6 +25,19 @@ var drag_current_beat: float = 0.0
 var current_mode: String = "low (+)"
 var playhead_beat: float = 0.0
 
+# Ring Scale
+var selected_ring_event: ScaleEvent = null
+var ring_dragging: bool = false
+var ring_drag_event: ScaleEvent = null
+var ring_drag_start_beat: float = 0.0
+var ring_drag_current_beat: float = 0.0
+var ring_drag_old_duration: float = 0.0
+var ring_is_new_event: bool = false
+
+const RING_COLUMN_WIDTH := 60.0
+const RING_MIN_PERCENT := 50.0
+const RING_MAX_PERCENT := 210.0
+
 # Selection
 var selecting: bool = false
 var select_start: Vector2 = Vector2.ZERO
@@ -45,6 +58,8 @@ var redo_stack: Array[Dictionary] = []
 # Offset calibration feedback
 var offset_feedback_timer: float = 0.0
 
+# Signals
+signal ring_event_selected(ev: ScaleEvent)
 signal seek_requested(time_seconds: float)
 
 
@@ -64,7 +79,8 @@ func update_content_size() -> void:
 	var total_beats := 200.0
 	if chart and chart.stream and chart.bpm > 0:
 		total_beats = chart.stream.get_length() * chart.bpm / 60.0
-	custom_minimum_size = Vector2(lane_count * lane_width, total_beats * pixels_per_beat + 200)
+	var total_width := lane_count * lane_width + RING_COLUMN_WIDTH + 20.0
+	custom_minimum_size = Vector2(total_width, total_beats * pixels_per_beat + 200)
 	queue_redraw()
 
 
@@ -98,7 +114,7 @@ func _gui_input(event: InputEvent) -> void:
 				accept_event()
 				return
 		
-		# SHIFT + MOUSE BUTTON (select)
+		# SHIFT + MOUSE BUTTON -> select
 		if mb.pressed and mb.shift_pressed:
 				selecting = true
 				select_start = mb.position
@@ -107,20 +123,25 @@ func _gui_input(event: InputEvent) -> void:
 				queue_redraw()
 				return
 		
-		# NOT MOUSE LEFT (no use for right)
-		if mb.button_index != MOUSE_BUTTON_LEFT:
-			return
-		
-		# MOUSE CLICK/HOLD
+		# OTHER MOUSE CLICK/HOLD
 		if mb.pressed:
-			# not within the correct grid
+			# (energy ring edit)
+			if _in_ring_column(mb.position.x):
+				_handle_ring_press(mb)
+				return
+			
+			# (not mouse left)
+			if mb.button_index != MOUSE_BUTTON_LEFT:
+				return
+			
+			# (not within the correct grid)
 			var lane := int(mb.position.x / lane_width)
 			if lane < 0 or lane >= lane_count:
 				return
 			
 			var raw_beat := mb.position.y / pixels_per_beat
 			
-			# for resizing tail
+			# -> for resizing tail
 			var resize_target := _find_resize_handle(raw_beat, lane)
 			if resize_target:
 				resizing = true
@@ -128,7 +149,7 @@ func _gui_input(event: InputEvent) -> void:
 				resize_old_end = resize_target.beat_end
 				return
 			
-			# for deleting a note (undo/redo)
+			# -> for deleting a note (undo/redo)
 			var existing := _find_note_near(raw_beat, lane, current_mode)
 			if existing:
 				var removed_note := existing
@@ -149,7 +170,9 @@ func _gui_input(event: InputEvent) -> void:
 			drag_start_beat = snap_beat(mb.position.y / pixels_per_beat)
 			drag_current_beat = drag_start_beat
 		else:
-			if selecting:
+			if ring_dragging:
+				_finish_ring_drag()
+			elif selecting:
 				_finish_select()
 			elif dragging:
 				_finish_drag()
@@ -170,7 +193,15 @@ func _gui_input(event: InputEvent) -> void:
 	# IF MOUSE DRAG
 	elif event is InputEventMouseMotion:
 		var mm := event as InputEventMouseMotion
-		if selecting:
+		if ring_dragging:
+			var snapped_beat: float = snap_beat(mm.position.y / pixels_per_beat)
+			ring_drag_current_beat = snapped_beat
+			if resizing:
+				ring_drag_event.duration_beats = max(snapped_beat - ring_drag_event.beat, 0.0)
+			else:
+				ring_drag_current_beat = max(snapped_beat, ring_drag_start_beat)
+			queue_redraw()
+		elif selecting:
 			select_current = mm.position
 			queue_redraw()
 		elif dragging:
@@ -178,9 +209,9 @@ func _gui_input(event: InputEvent) -> void:
 			queue_redraw()
 		elif resizing:
 			var raw_beat: float = mm.position.y / pixels_per_beat
-			var snapped: float = snap_beat(raw_beat)
+			var snapped_beat: float = snap_beat(raw_beat)
 			var min_end: float = resize_note.beat_start + (1.0 / snap_divisor)
-			resize_note.beat_end = max(snapped, min_end)
+			resize_note.beat_end = max(snapped_beat, min_end)
 			queue_redraw()
 
 
@@ -368,6 +399,15 @@ func redo() -> void:
 	print("[REDO] %d left" % redo_stack.size())
 
 
+func clear_clipboard() -> void:
+	if clipboard.is_empty():
+		print("[CLIPBOARD] Already empty")
+		return
+	clipboard.clear()
+	queue_redraw()
+	print("[CLIPBOARD] Cleared")
+
+
 func flash_offset_feedback() -> void:
 	offset_feedback_timer = 1.0
 	queue_redraw()
@@ -402,24 +442,15 @@ func _find_resize_handle(raw_beat: float, lane: int) -> NoteData:
 	return null
 
 
-func _place_or_remove_note(beat: float, lane: int) -> void:
-	var existing := chart.get_note_at(beat, lane, current_mode)
-	if existing:
-		chart.remove_note(existing)
-	else:
-		chart.add_note(beat, lane, current_mode)
-	queue_redraw()
-
-
 func set_mode(mode: String) -> void:
 	current_mode = mode
 	queue_redraw()
 
 
 func update_playhead(time_seconds: float) -> void:
-	if chart == null or chart.bpm <= 0:
+	if chart == null or chart.bpm <= 0 or Conductor.seconds_per_beat <= 0:
 		return
-	playhead_beat = time_seconds * chart.bpm / 60.0
+	playhead_beat = Conductor.time_to_beat(time_seconds)
 	queue_redraw()
 
 
@@ -431,6 +462,7 @@ func _draw() -> void:
 	_draw_selection()
 	_draw_clipboard_preview()
 	_draw_playhead()
+	_draw_ring_events()
 
 
 func _draw_lanes() -> void:
@@ -445,11 +477,23 @@ func _draw_grid_lines() -> void:
 	var total_beats := 200.0
 	if chart.stream:
 		total_beats = chart.stream.get_length() * chart.bpm / 60.0
-
+	
 	var step := 1.0 / snap_divisor
-	var i := 0
-	var beat := 0.0
-	while beat <= total_beats:
+	
+	var visible_top_beat := 0.0
+	var visible_bottom_beat := total_beats
+	var scroll_parent := get_parent()
+	if scroll_parent is ScrollContainer:
+		var sc := scroll_parent as ScrollContainer
+		var buffer_beats := 4.0
+		visible_top_beat = max((float(sc.scroll_vertical) / pixels_per_beat) - buffer_beats, 0.0)
+		visible_bottom_beat = min(((float(sc.scroll_vertical) + sc.size.y) / pixels_per_beat) + buffer_beats, total_beats)
+	
+	var start_beat: float = floor(visible_top_beat / step) * step
+	var index: int = int(round(start_beat / step))
+	var beat := start_beat
+	
+	while beat <= visible_bottom_beat:
 		var y := beat * pixels_per_beat
 		var is_downbeat := fmod(beat, 1.0) < 0.001
 		
@@ -464,13 +508,14 @@ func _draw_grid_lines() -> void:
 		
 		draw_line(Vector2(0, y), Vector2(lane_count * lane_width, y), color, width)
 		
-		# label the subdivision fraction so you can visually confirm snap is correct
 		if not is_downbeat:
-			var frac_label := "%d/%d" % [i % snap_divisor, snap_divisor]
+			var frac_index := index % snap_divisor
+			var frac_label := "%d/%d" % [frac_index, snap_divisor]
 			draw_string(ThemeDB.fallback_font, Vector2(lane_count * lane_width + 8, y + 4), frac_label, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color(1,1,1,0.5))
 		
-		i += 1
+		index += 1
 		beat += step
+
 
 
 func _draw_playhead() -> void:
@@ -495,8 +540,7 @@ func _draw_notes() -> void:
 			var y_bottom := n.beat_end * pixels_per_beat
 			draw_rect(Rect2(x + 4, y_top, lane_width - 8, y_bottom - y_top), color * Color(1, 1, 1, 0.5))
 			draw_rect(Rect2(x + 4, y_top - 4, lane_width - 8, 8), color)
-			if n.mode == current_mode:
-				draw_rect(Rect2(x + lane_width / 2.0 - 4, y_bottom - 4, 8, 8), Color.WHITE)
+			
 		else:
 			var y := n.beat_start * pixels_per_beat
 			draw_rect(Rect2(x + 4, y - 4, lane_width - 8, 8), color)
@@ -514,6 +558,153 @@ func _draw_notes() -> void:
 		draw_rect(Rect2(x + lane_width / 2.0 - 5, y - 5, 10, 10), Color.RED)
 
 
+func _draw_ring_events() -> void:
+	if chart == null:
+		return
+	var x := _ring_column_x() + RING_COLUMN_WIDTH / 2.0
+	
+	for ev in chart.scale_events:
+		if ring_dragging and ev == ring_drag_event:
+			continue
+		_draw_single_ring_event(ev.beat, ev.duration_beats, ev.target_scale, x, ev == selected_ring_event)
+	
+	if ring_dragging and ring_drag_event:
+		var live_duration = max(ring_drag_current_beat - ring_drag_start_beat, 0.0)
+		_draw_single_ring_event(ring_drag_start_beat, live_duration, ring_drag_event.target_scale, x, true)
+
+
+func _draw_single_ring_event(beat: float, duration_beats: float, target_scale: float, x: float, is_selected: bool) -> void:
+	var y_head := beat * pixels_per_beat
+	var y_tail := (beat + duration_beats) * pixels_per_beat
+	var color := Color.YELLOW if is_selected else Color(0.7, 0.4, 1.0)
+	
+	if y_tail > y_head:
+		draw_line(Vector2(x, y_head), Vector2(x, y_tail), Color(color.r, color.g, color.b, 0.5), 4.0)
+		draw_circle(Vector2(x, y_tail), 5, color)
+	
+	draw_circle(Vector2(x, y_head), 8, color)
+	draw_string(ThemeDB.fallback_font, Vector2(x + 12, y_head + 4), "%.0f%%" % (target_scale * 100.0), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color.WHITE)
+	
+	if is_selected:
+		var handle_size = 8.0
+		draw_rect(Rect2(x - handle_size/2.0, y_tail - handle_size/2.0, handle_size, handle_size), Color.WHITE)
+
+
+# Ring Scaler
+func _in_ring_column(x: float) -> bool:
+	var col_x := _ring_column_x()
+	return x >= col_x and x <= col_x + RING_COLUMN_WIDTH
+
+
+func _handle_ring_press(mb: InputEventMouseButton) -> void:
+	var raw_beat := mb.position.y / pixels_per_beat
+	var snapped_beat := snap_beat(raw_beat)
+	var existing := chart.get_scale_event_at(snapped_beat)
+	
+	# DELETION
+	if mb.button_index == MOUSE_BUTTON_RIGHT:
+		if existing:
+			var removed_ev = existing
+			if selected_ring_event == existing:
+				selected_ring_event = null
+				ring_event_selected.emit(null)
+				
+			var undo_fn := func(): chart.scale_events.append(removed_ev)
+			var redo_fn := func(): chart.remove_scale_event(removed_ev)
+			_push_undo(undo_fn, redo_fn)
+			
+			chart.remove_scale_event(existing)
+			queue_redraw()
+		return
+	
+	# Check for resizing
+	var resize_target = _find_ring_resize_handle(raw_beat)
+	if resize_target:
+		ring_dragging = true
+		resizing = true
+		ring_drag_event = resize_target
+		ring_drag_start_beat = resize_target.beat
+		ring_drag_current_beat = resize_target.beat + resize_target.duration_beats
+		ring_drag_old_duration = resize_target.duration_beats
+		ring_is_new_event = false
+		selected_ring_event = resize_target
+		queue_redraw()
+		return
+	
+	if mb.button_index != MOUSE_BUTTON_LEFT:
+		return
+	
+	# CREATION
+	if existing:
+		ring_dragging = true
+		ring_drag_event = existing
+		ring_drag_start_beat = existing.beat
+		ring_drag_current_beat = existing.beat + existing.duration_beats
+		ring_drag_old_duration = existing.duration_beats
+		ring_is_new_event = false
+		selected_ring_event = existing
+	else:
+		var new_event := chart.add_scale_event(snapped_beat, 1.0, 0.0)
+		ring_dragging = true
+		ring_drag_event = new_event
+		ring_drag_start_beat = snapped_beat
+		ring_drag_current_beat = snapped_beat
+		ring_drag_old_duration = 0.0
+		ring_is_new_event = true
+		selected_ring_event = new_event
+	
+	ring_event_selected.emit(selected_ring_event)
+	queue_redraw()
+
+
+func _finish_ring_drag() -> void:
+	if ring_drag_event:
+		var ev = ring_drag_event
+		var new_dur = max(ring_drag_current_beat - ring_drag_start_beat, 0.0)
+		ev.duration_beats = new_dur
+		
+		if ring_is_new_event:
+			# UNDO: remove scale
+			var undo_fn := func(): chart.remove_scale_event(ev)
+			var redo_fn := func(): 
+				chart.scale_events.append(ev)
+				chart.scale_events.sort_custom(func(a,b): return a.beat < b.beat)
+			_push_undo(undo_fn, redo_fn)
+		else:
+			# UNDO: revert duration
+			var old_dur = ring_drag_old_duration
+			if not is_equal_approx(old_dur, new_dur):
+				var undo_fn := func(): ev.duration_beats = old_dur
+				var redo_fn := func(): ev.duration_beats = new_dur
+				_push_undo(undo_fn, redo_fn)
+	ring_dragging = false
+	ring_drag_event = null
+	queue_redraw()
+
+
+func _ring_column_x() -> float:
+	return lane_count * lane_width + 10.0
+
+
+func set_ring_event_percent(percent: float) -> void:
+	if selected_ring_event == null:
+		return
+	var clamped = clamp(percent, RING_MIN_PERCENT, RING_MAX_PERCENT)
+	selected_ring_event.target_scale = clamped / 100.0
+	queue_redraw()
+
+
+func _find_ring_resize_handle(raw_beat: float) -> ScaleEvent:
+	# Use the same tolerance constant you used for notes
+	var tolerance := RESIZE_HANDLE_TOLERANCE_PX / pixels_per_beat
+	for ev in chart.scale_events:
+		var end_beat = ev.beat + ev.duration_beats
+		# Only allow resizing if it actually has a tail (or is very close to the head)
+		if abs(end_beat - raw_beat) <= tolerance:
+			return ev
+	return null
+
+
 func _draw_selection() -> void:
 	if selecting:
 		var x1: float = min(select_start.x, select_current.x)
@@ -522,7 +713,7 @@ func _draw_selection() -> void:
 		var y2: float = max(select_start.y, select_current.y)
 		draw_rect(Rect2(x1, y1, x2 - x1, y2 - y1), Color(1, 1, 0, 0.15))
 		draw_rect(Rect2(x1, y1, x2 - x1, y2 - y1), Color(1, 1, 0, 0.6), false, 1.5)
-
+	
 	for n in selected_notes:
 		var x := n.lane * lane_width
 		var y_top := n.beat_start * pixels_per_beat

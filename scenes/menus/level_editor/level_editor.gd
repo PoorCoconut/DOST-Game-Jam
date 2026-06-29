@@ -40,6 +40,9 @@ var paused_position: float = 0.0
 var chart: ChartData
 var _removed_accept_events: Array[InputEvent] = []
 
+# Ring Scaler
+@onready var ring_percent_field: LineEdit = $UI/RingPercentField  # adjust path
+
 # File Handlers
 @onready var chart_file_dialog: FileDialog = $UI/FileButtons/ChartFileDialog
 @onready var file_dialog: FileDialog = $UI/FileButtons/SongFileDialog
@@ -68,6 +71,9 @@ func _ready() -> void:
 	new_chart()
 	
 	grid_view.seek_requested.connect(_on_scrubber_seek_requested)
+	grid_view.ring_event_selected.connect(_on_ring_event_selected)
+	ring_percent_field.editable = false
+	ring_percent_field.placeholder_text = "Set Ring Scale"
 
 
 func _exit_tree() -> void:
@@ -114,8 +120,11 @@ func _on_scrubber_seek_requested(time_seconds: float) -> void:
 
 	if preview_instance:
 		var spawner := preview_instance.get_node("PlayfieldContainer/NoteMask/NoteSpawner")
+		var ring := preview_instance.get_node("PlayfieldContainer")
 		if spawner:
 			spawner.recalculate_note_index(Conductor.time_to_beat(time_seconds))
+		if ring:
+			ring.recalculate_for_beat(Conductor.time_to_beat(time_seconds))
 
 
 func _sync_scroll_to_beat(beat: float) -> void:
@@ -163,7 +172,7 @@ func save_chart() -> void:
 		print("Save failed: ", err)
 
 
-# Chart Editor (Lane Headers, File Handling, Grid Snapping, BPM Setting)
+# Chart Editor (Lane Headers, File Handling, Grid Snapping, BPM Setting, Ring Scaling)
 func _update_lane_headers(mode: String) -> void:
 	var labels := LOW_LABELS if mode == "low (+)" else HIGH_LABELS
 	for i in range(lane_headers.size()):
@@ -180,7 +189,9 @@ func _on_chart_file_dialog_file_selected(path: String) -> void:
 	grid_view.chart = chart
 	grid_view.update_content_size()
 	refresh_song_info()
-	
+	bpm_field.text = "%.1f" % chart.bpm
+	bpm_field.modulate = Color.WHITE
+
 	if chart.stream:
 		Conductor.load_song(chart)
 		scrubber.duration = chart.stream.get_length()
@@ -207,11 +218,7 @@ func _on_load_chart_pressed() -> void:
 
 
 func _on_bpm_field_text_submitted(new_text: String) -> void:
-	var value := new_text.to_float()
-	if value <= 0:
-		return
-	chart.bpm = value
-	grid_view.update_content_size()
+	_on_bpm_field_text_changed(new_text)
 
 
 # Button Controls
@@ -301,6 +308,9 @@ func _input(event: InputEvent) -> void:
 			KEY_DELETE, KEY_BACKSPACE: 
 				grid_view.delete_selected()
 			
+			KEY_X:
+				grid_view.clear_clipboard()
+			
 			_: # default case
 				if LANE_KEYS.has(event.keycode):
 					_place_note_live(LANE_KEYS[event.keycode])
@@ -346,12 +356,37 @@ func _on_play_pause_pressed() -> void:
 
 func _on_preview_restart_pressed() -> void:
 	paused_position = 0.0
-	Conductor.audio_player.play(0.0)
+	Conductor.play_song()
 	is_paused = false
 	if preview_instance:
 		var spawner := preview_instance.get_node("PlayfieldContainer/NoteMask/NoteSpawner")
+		var ring := preview_instance.get_node("PlayfieldContainer")
 		if spawner:
 			spawner.recalculate_note_index(0.0)
+		if ring:
+			ring.reset_to_default()
+
+
+# Ring Scaler
+func _on_ring_event_selected(ev: ScaleEvent) -> void:
+	if ev == null:
+		ring_percent_field.text = ""
+		ring_percent_field.editable = false
+	else:
+		ring_percent_field.text = "%.0f" % (ev.target_scale * 100.0)
+		ring_percent_field.editable = true
+
+
+func _on_ring_percent_field_text_submitted(new_text: String) -> void:
+	if grid_view.selected_ring_event == null:
+		ring_percent_field.text = ""
+		ring_percent_field.editable = false
+		return
+	var value := new_text.to_float()
+	if value <= 0 or not new_text.is_valid_float():
+		return
+	grid_view.set_ring_event_percent(value)
+	ring_percent_field.text = "%.0f" % (grid_view.selected_ring_event.target_scale * 100.0)
 
 
 # Gameplay Preview

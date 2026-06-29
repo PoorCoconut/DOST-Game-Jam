@@ -92,6 +92,8 @@ func get_time() -> float:
 
 
 func time_to_beat(time: float) -> float:
+	if seconds_per_beat <= 0:
+		return 0.0
 	return (time - offset) / seconds_per_beat
 
 
