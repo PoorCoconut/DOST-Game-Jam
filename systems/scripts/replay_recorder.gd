@@ -5,20 +5,22 @@ var _chart: ChartData = null
 
 
 func start_recording(chart: ChartData) -> void:
+	# Never record during replay playback
+	if SceneManager.is_replay:
+		return
+
 	print("[REPLAY] start_recording called for: ", chart.song_name)
 	_chart = chart
 	_current_replay = ReplayData.new()
 	_current_replay.chart = chart
 	_current_replay.entries = []
 
-	# Listen for standard song completion
 	if not Conductor.song_finished.is_connected(_on_song_finished):
 		Conductor.song_finished.connect(_on_song_finished)
 		print("[REPLAY] connected to Conductor.song_finished")
 	else:
 		print("[REPLAY] already connected to Conductor.song_finished")
 
-	# NEW: Listen for player failure so data saves immediately before scene changes
 	if not ScoreSystem.player_failed.is_connected(_on_song_finished):
 		ScoreSystem.player_failed.connect(_on_song_finished)
 		print("[REPLAY] connected to ScoreSystem.player_failed")
@@ -27,13 +29,13 @@ func start_recording(chart: ChartData) -> void:
 func record_tap(beat_start: float, lane: int, mode: String, judgment: String, time_diff: float) -> void:
 	if _current_replay == null:
 		return
-		
+
 	var entry := {
 		"beat_start": beat_start,
 		"lane": lane,
 		"mode": mode,
 		"judgment": judgment,
-		"time_offset": time_diff, 
+		"time_offset": time_diff,
 		"is_hold": false,
 		"time_of_release": -1.0
 	}
@@ -44,7 +46,7 @@ func record_hold(beat_start: float, lane: int, mode: String, judgment: String, t
 	print("[REC_DEBUG] Recording Hold -> StartBeat: %f | EndBeat: %f | PressOffset: %f | ReleaseOffset: %f" % [beat_start, beat_end, time_of_press_offset, time_of_release_offset])
 	if _current_replay == null:
 		return
-		
+
 	var entry := {
 		"beat_start": beat_start,
 		"beat_end": beat_end,
@@ -63,8 +65,7 @@ func _on_song_finished() -> void:
 	if _current_replay == null or _chart == null:
 		print("[REPLAY] replay or chart is null, aborting save")
 		return
-		
-	# snapshot final score state
+
 	_current_replay.final_watts = roundi(ScoreSystem.watts)
 	_current_replay.final_volts = ScoreSystem.volts
 	_current_replay.final_rank = ScoreSystem.get_rank()
@@ -80,8 +81,10 @@ func _save_replay() -> void:
 	if not DirAccess.dir_exists_absolute(dir):
 		DirAccess.make_dir_recursive_absolute(dir)
 
-	# named as songname_replay.tres, overwrites previous run
-	var file_name = _chart.song_name.to_lower().replace(" ", "_") + "_replay.tres"
+	# Timestamped filename so each run is preserved
+	var timestamp = Time.get_datetime_string_from_system().replace(":", "-").replace(" ", "_")
+	var song_slug = _chart.song_name.to_lower().replace(" ", "_")
+	var file_name = song_slug + "_" + timestamp + ".tres"
 	var path = dir + file_name
 
 	var err = ResourceSaver.save(_current_replay, path)
