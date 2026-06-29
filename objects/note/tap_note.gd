@@ -4,12 +4,13 @@ var lane: int = 0                             # which lane the note starts
 var direction_vector: Vector2 = Vector2.ZERO  # direction line of the note
 var target_time: float = 0.0                  # when the note should be hit
 var judged: bool = false                      # true once head is pressed or missed
-# @onready var parent_scale = get_parent().global_scale
+var is_lite: bool = false                     # needs to be pressed, not "just pressed"
 
-func setup(p_lane: int, p_target_time: float, p_direction: Vector2) -> void:
+func setup(p_lane: int, p_target_time: float, p_direction: Vector2, p_is_lite: bool) -> void:
 	lane = p_lane
 	target_time = p_target_time
 	direction_vector = p_direction.normalized()
+	is_lite = p_is_lite
 	rotation = direction_vector.angle() + (PI / 2.0)
 	
 	var current_time = Conductor.get_time()

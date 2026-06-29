@@ -79,7 +79,7 @@ func _report_beat():
 		emit_signal("beat", _last_reported_beat)
 		
 		# comment these out if necessary
-		# metronome.play()
+		metronome.play()
 		# print("[DEBUG] Beat: ", _last_reported_beat)
 
 

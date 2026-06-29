@@ -13,14 +13,19 @@ extends Node
 @export var plus_color: Color = Color.WHITE
 @export var x_color:    Color = Color(0.49, 0.745, 1.0, 1.0)
 @export var sync_color: Color = Color(2.0, 1.5, 0.0)
-
+@export var lite_color: Color = Color(0.75, 0.45, 1.0) 
 
 func setup_note_visuals(note: Node2D, mode: String) -> void:
 	note.global_scale = Vector2.ONE
-	if mode == "+":
-		note.modulate = plus_color
+	
+	if note.get("is_lite") == true:
+		note.modulate = lite_color
+		note.modulate.a = 0.7 
 	else:
-		note.modulate = x_color
+		if mode == "+":
+			note.modulate = plus_color
+		else:
+			note.modulate = x_color
 
 
 func apply_sync_visuals(note_group: Array) -> void:

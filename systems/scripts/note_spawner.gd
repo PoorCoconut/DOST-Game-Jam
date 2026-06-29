@@ -100,7 +100,7 @@ func spawn_note(data: NoteData) -> Node2D:
 		# tap note
 		note_node = note_scene.instantiate()
 		active_notes[mode][lane_idx].append(note_node)
-
+	
 	# instantiate
 	get_parent().add_child(note_node)
 
@@ -110,10 +110,10 @@ func spawn_note(data: NoteData) -> Node2D:
 		# hold note setup
 		var end_time = data.beat_end * Conductor.seconds_per_beat
 		var duration = data.beat_end - data.beat_start
-		note_node.setup(lane_idx, target_time, end_time, duration, direction)
+		note_node.setup(lane_idx, target_time, end_time, duration, direction, data.is_lite)
 	else:
 		# tap note setup
-		note_node.setup(lane_idx, target_time, direction)
+		note_node.setup(lane_idx, target_time, direction, data.is_lite)
 
 	note_node.tree_exited.connect(func(): 
 		if is_hold: active_hold_notes[mode][lane_idx].erase(note_node)

@@ -10,6 +10,7 @@ var is_held: bool = false                     # true while player is holding
 var head_judgment: String = "miss"            # judgment from head press
 var press_time: float = 0.0                   # when the player pressed the head
 var last_tick_beat: float = 0.0               # tracks the last sustain tick
+var is_lite: bool = false                     # head needs to be pressed, not "just pressed"
 
 # beat slice tracking
 var slices_total: int = 0          # total beat slices for this hold note
@@ -20,12 +21,14 @@ var next_slice_beat: float = 0.0   # the beat time of the next slice to score
 @onready var tail: Node2D = $Tail
 @onready var body: Line2D = $Body
 
-func setup(p_lane: int, p_target_time: float, p_end_time: float, p_beat_duration: float, p_direction: Vector2) -> void:
+
+func setup(p_lane: int, p_target_time: float, p_end_time: float, p_beat_duration: float, p_direction: Vector2, p_is_lite: bool) -> void:
 	lane = p_lane
 	target_time = p_target_time
 	end_time = p_end_time
 	beat_duration = p_beat_duration
 	direction_vector = p_direction.normalized()
+	is_lite = p_is_lite
 	slices_total = int(round(p_beat_duration))
 
 	head.rotation = direction_vector.angle() + (PI / 2.0)
@@ -41,9 +44,11 @@ func setup(p_lane: int, p_target_time: float, p_end_time: float, p_beat_duration
 	body.add_point(tail.position)
 	visible = true
 
+
 func _play_sound() -> void:
 	if SoundManager.has_method("play_hitsound"):
 		SoundManager.play_hitsound(lane)
+
 
 # okay this sounds bad, this is deactivated (in _process) by default for now
 func _play_sound_on_tick() -> void:
@@ -52,6 +57,7 @@ func _play_sound_on_tick() -> void:
 		if current_beat >= last_tick_beat + 1.0:
 			SoundManager.play_tick(lane)
 			last_tick_beat = floor(current_beat)
+
 
 func _process(_delta: float) -> void:
 	global_scale = Vector2.ONE
@@ -109,6 +115,7 @@ func _on_miss() -> void:
 	await get_tree().create_timer(0.15).timeout
 	queue_free()
 
+
 func on_head_pressed(time_diff: float) -> void:
 	judged = true
 	is_held = true
@@ -123,6 +130,7 @@ func on_head_pressed(time_diff: float) -> void:
 	# next slice is one beat after the head beat
 	var head_beat: float = target_time / Conductor.seconds_per_beat
 	next_slice_beat = head_beat + 1.0
+
 
 func on_released() -> void:
 	if not is_held:

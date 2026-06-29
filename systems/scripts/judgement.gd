@@ -27,11 +27,16 @@ func _process(_delta: float) -> void:
 		_toggle_mode()
 	
 	for lane in range(LANE_ACTIONS.size()):
-		if Input.is_action_just_pressed(LANE_ACTIONS[lane]):
+		var action = LANE_ACTIONS[lane]
+		if Input.is_action_just_pressed(action):
 			SoundManager.play_hitsound(lane)
 			_try_hit(lane)
-		elif Input.is_action_just_released(LANE_ACTIONS[lane]):
+		elif Input.is_action_just_released(action):
 			_try_release(lane)
+		
+		# LITE NOTES
+		if Input.is_action_pressed(action):
+			_try_lite_hit(lane)
 
 
 func _toggle_mode() -> void:
@@ -75,6 +80,31 @@ func _try_hit(lane: int) -> void:
 		closest_note.destroy()
 	else:
 		closest_note.queue_free()
+
+
+func _try_lite_hit(lane: int) -> void:
+	var now: float = Conductor.get_time()
+	
+	# Check for Lite HOLD HEADS
+	var hold_notes: Array = spawner.active_hold_notes[current_mode][lane]
+	for note in hold_notes:
+		if is_instance_valid(note) and not note.judged and note.is_lite:
+			if abs(note.target_time - now) <= ScoreSystem.PERFECT_WINDOW:
+				note.on_head_pressed(0.0) # force perfect
+				held_notes[lane] = note
+				SoundManager.play_hitsound(lane)
+				return
+
+	# Check for Lite TAP NOTES
+	var tap_notes: Array = spawner.active_notes[current_mode][lane]
+	for note in tap_notes:
+		if is_instance_valid(note) and not note.judged and note.is_lite:
+			if abs(note.target_time - now) <= ScoreSystem.PERFECT_WINDOW:
+				note.judged = true
+				ScoreSystem.register_judgment(0.0) # force perfect
+				SoundManager.play_hitsound(lane)
+				note.destroy()
+				return
 
 
 func _try_release(lane: int) -> void:
