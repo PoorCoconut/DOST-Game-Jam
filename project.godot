@@ -26,6 +26,7 @@ SceneManager="*uid://wd8jaoonho3o"
 SkillSystem="*uid://clanyirc2ig8i"
 ScoreSystem="*uid://blp5kqsfd5c2b"
 VisualEffects="*uid://f5j76tnobxhw"
+Settings="*uid://dmykiroelaq8v"
 
 [display]
 

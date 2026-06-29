@@ -1,24 +1,32 @@
 extends Node
 
-const LANE_ACTIONS: Array = ["lane1 (Top)", "lane2 (Right)", "lane3 (Bottom)", "lane4 (Left)"]
-const TRANSFORM_ACTION: String = "transform"
+# Lane action names are now generated dynamically from Settings.
+# + mode: lane1..lane4
+# x mode: lane_x1..lane_x4
+# These match what Settings.apply_keybinds() registers in InputMap.
 
-@onready var spawner: Node2D = %NoteSpawner
+@onready var spawner: Node2D       = %NoteSpawner
 @onready var sustain_ring: Sprite2D = %SustainRing
-@onready var replay_recorder: Node = %ReplayRecorder
+@onready var replay_recorder: Node  = %ReplayRecorder
 
 # --- AUTOPLAYER ---
 @export var autoplay: bool = false
 
 var current_mode: String = "+"
-var held_notes: Array = [null, null, null, null]
-var held_note_data: Array = [null, null, null, null]  # stores beat_start for held notes
-# Stores the mode each held note was hit in, so auto_resolved can record correctly
+var held_notes: Array     = [null, null, null, null]
+var held_note_data: Array = [null, null, null, null]
 var held_note_modes: Array = ["", "", "", ""]
 
 
 func _ready() -> void:
 	print("[JUDGE] replay_recorder is null: ", replay_recorder == null)
+
+
+func _get_lane_action(lane: int) -> String:
+	if current_mode == "+":
+		return "lane%d" % (lane + 1)
+	else:
+		return "lane_x%d" % (lane + 1)
 
 
 func _play_sound(lane: int) -> void:
@@ -30,15 +38,29 @@ func _process(_delta: float) -> void:
 	if autoplay:
 		_run_autoplay()
 		return
-	
-	if Input.is_action_just_pressed(TRANSFORM_ACTION):
+
+	# Quick Retry
+	if Input.is_action_just_pressed(Settings.QUICK_RETRY_ACTION):
+		_quick_retry()
+		return
+
+	# Transform (mode switch)
+	if Input.is_action_just_pressed(Settings.TRANSFORM_ACTION):
 		_toggle_mode()
-	
-	for lane in range(LANE_ACTIONS.size()):
-		if Input.is_action_just_pressed(LANE_ACTIONS[lane]):
+
+	# Lane inputs — always check both + and x action names so a press
+	# registers regardless of which mode the player is currently in.
+	for lane in range(4):
+		var plus_action := "lane%d" % (lane + 1)
+		var x_action    := "lane_x%d" % (lane + 1)
+
+		var just_pressed  := Input.is_action_just_pressed(plus_action)  or Input.is_action_just_pressed(x_action)
+		var just_released := Input.is_action_just_released(plus_action) or Input.is_action_just_released(x_action)
+
+		if just_pressed:
 			SoundManager.play_hitsound(lane)
 			_try_hit(lane)
-		elif Input.is_action_just_released(LANE_ACTIONS[lane]):
+		elif just_released:
 			_try_release(lane)
 
 
@@ -48,32 +70,61 @@ func _toggle_mode() -> void:
 	print("[JUDGE] Mode Switched: ", current_mode)
 
 
+func _quick_retry() -> void:
+	# Reset Conductor
+	Conductor.audio_player.stop()
+	Conductor._song_position = 0.0
+	Conductor._song_position_in_beats = 0.0
+	Conductor._last_reported_beat = 0
+
+	# Reset NoteSpawner
+	spawner._clear_all_notes()
+	spawner.note_index = 0
+
+	# Reset held note state
+	held_notes     = [null, null, null, null]
+	held_note_data = [null, null, null, null]
+	held_note_modes = ["", "", "", ""]
+	current_mode = "+"
+	sustain_ring.rotation_degrees = 0.0
+
+	# Reset ScoreSystem
+	if ScoreSystem.has_method("reset"):
+		ScoreSystem.reset()
+
+	# Reset replay recorder
+	if replay_recorder != null and replay_recorder.has_method("start_recording"):
+		replay_recorder.start_recording(spawner.chart_resource)
+
+	# Restart song
+	Conductor.play_song()
+	print("[JUDGE] Quick Retry triggered.")
+
+
 func _try_hit(lane: int) -> void:
 	var now: float = Conductor.get_time()
 	var hold_notes: Array = spawner.active_hold_notes[current_mode][lane]
-	
+
 	for note in hold_notes:
 		if not is_instance_valid(note) or note.judged:
 			continue
-			
+
 		var diff: float = abs(note.target_time - now)
-		print("[DEBUG-JUDGE] Checking Hold Note -> Lane: %d | Target Time: %f | Now: %f | Diff: %f | Good Window: %f" % [lane, note.target_time, now, diff, ScoreSystem.GOOD_WINDOW])
-		
 		if diff <= ScoreSystem.GOOD_WINDOW:
 			note.on_head_pressed(diff)
-			held_notes[lane] = note
-			held_note_data[lane] = note.target_time / Conductor.seconds_per_beat
+			held_notes[lane]      = note
+			held_note_data[lane]  = note.target_time / Conductor.seconds_per_beat
 			held_note_modes[lane] = current_mode
-			print("[DEBUG-JUDGE] SUCCESS! Hold note assigned to held_notes array.")
-			
+
 			if not note.auto_resolved.is_connected(_on_hold_auto_resolved):
 				note.auto_resolved.connect(_on_hold_auto_resolved)
 			return
-	
+
 	# fall through to tap notes
 	var notes: Array = spawner.active_notes[current_mode][lane]
 	var closest_note: Node2D = null
-	var closest_diff: float = INF
+	var closest_diff: float  = INF
+
 	for note in notes:
 		if not is_instance_valid(note) or note.judged:
 			continue
@@ -81,15 +132,15 @@ func _try_hit(lane: int) -> void:
 		if diff < closest_diff:
 			closest_diff = diff
 			closest_note = note
-	
+
 	if closest_note == null or closest_diff > ScoreSystem.GOOD_WINDOW:
 		return
-	
+
 	closest_note.judged = true
 	var result = ScoreSystem.register_judgment(closest_diff)
 	var time_offset: float = now - closest_note.target_time
 	var beat_start = closest_note.target_time / Conductor.seconds_per_beat
-	
+
 	if replay_recorder != null:
 		replay_recorder.record_tap(beat_start, lane, current_mode, result, time_offset)
 	else:
@@ -102,42 +153,39 @@ func _try_hit(lane: int) -> void:
 
 
 func _on_hold_auto_resolved(note: Node2D) -> void:
-	var lane: int = note.lane
-	var beat_start = held_note_data[lane]
+	var lane: int      = note.lane
+	var beat_start     = held_note_data[lane]
 	if beat_start == null:
 		return
 
-	var press_offset: float = note.press_time - note.target_time
+	var press_offset: float   = note.press_time - note.target_time
 	var release_offset: float = Conductor.get_time() - note.end_time
 	var beat_end = note.end_time / Conductor.seconds_per_beat
-	# Use the stored mode for this lane, not current_mode (avoids mode-switch corruption)
 	var note_mode: String = held_note_modes[lane]
 
 	if replay_recorder != null:
 		replay_recorder.record_hold(beat_start, lane, note_mode, note.head_judgment, press_offset, release_offset, beat_end)
 
-	held_notes[lane] = null
-	held_note_data[lane] = null
+	held_notes[lane]      = null
+	held_note_data[lane]  = null
 	held_note_modes[lane] = ""
 
 
 func _try_release(lane: int) -> void:
 	var note = held_notes[lane]
-	# null means already handled by _on_hold_auto_resolved — skip to avoid double-record
 	if note == null or not is_instance_valid(note):
-		held_notes[lane] = null
-		held_note_data[lane] = null
+		held_notes[lane]      = null
+		held_note_data[lane]  = null
 		held_note_modes[lane] = ""
 		return
 
-	var now: float = Conductor.get_time()
-	var judgment = note.head_judgment
-	var beat_start = held_note_data[lane]
-	var note_mode: String = held_note_modes[lane]
-
-	var press_offset: float = note.press_time - note.target_time
+	var now: float            = Conductor.get_time()
+	var judgment              = note.head_judgment
+	var beat_start            = held_note_data[lane]
+	var note_mode: String     = held_note_modes[lane]
+	var press_offset: float   = note.press_time - note.target_time
 	var release_offset: float = now - note.end_time
-	var note_beat_end = note.end_time / Conductor.seconds_per_beat
+	var note_beat_end         = note.end_time / Conductor.seconds_per_beat
 
 	note.on_released()
 
@@ -146,19 +194,19 @@ func _try_release(lane: int) -> void:
 	else:
 		print("[JUDGE] WARNING: replay_recorder is null, hold not recorded")
 
-	held_notes[lane] = null
-	held_note_data[lane] = null
+	held_notes[lane]      = null
+	held_note_data[lane]  = null
 	held_note_modes[lane] = ""
 
 
 # --- AUTOPLAYER ---
 func _run_autoplay() -> void:
 	var now: float = Conductor.get_time()
-	
-	for lane in range(LANE_ACTIONS.size()):
+
+	for lane in range(4):
 		for mode in ["+", "x"]:
 			var hit_something := false
-			
+
 			for note in spawner.active_hold_notes[mode][lane]:
 				if not is_instance_valid(note) or note.judged:
 					continue
@@ -168,7 +216,7 @@ func _run_autoplay() -> void:
 					_try_hit(lane)
 					hit_something = true
 					break
-			
+
 			if not hit_something:
 				for note in spawner.active_notes[mode][lane]:
 					if not is_instance_valid(note) or note.judged:

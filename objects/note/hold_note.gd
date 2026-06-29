@@ -22,6 +22,10 @@ signal auto_resolved(note)
 @onready var body: Line2D = $Body
 
 
+func _actual_speed() -> float:
+	return Conductor.BASE_SCROLL_SPEED * Settings.current_scroll_speed
+
+
 func setup(p_lane: int, p_target_time: float, p_end_time: float, p_beat_duration: float, p_direction: Vector2) -> void:
 	lane = p_lane
 	target_time = p_target_time
@@ -34,10 +38,11 @@ func setup(p_lane: int, p_target_time: float, p_end_time: float, p_beat_duration
 	tail.rotation = direction_vector.angle() + (PI / 2.0)
 
 	var current_time = Conductor.get_time()
+	var spd := _actual_speed()
 	var time_until_head = target_time - current_time
-	head.position = direction_vector * max((time_until_head * Conductor.SCROLL_SPEED) + Conductor.HIT_RADIUS, Conductor.HIT_RADIUS)
+	head.position = direction_vector * max((time_until_head * spd) + Conductor.HIT_RADIUS, Conductor.HIT_RADIUS)
 	var time_until_tail = end_time - current_time
-	tail.position = direction_vector * max((time_until_tail * Conductor.SCROLL_SPEED) + Conductor.HIT_RADIUS, Conductor.HIT_RADIUS)
+	tail.position = direction_vector * max((time_until_tail * spd) + Conductor.HIT_RADIUS, Conductor.HIT_RADIUS)
 	body.clear_points()
 	body.add_point(head.position)
 	body.add_point(tail.position)
@@ -53,30 +58,29 @@ func _process(_delta: float) -> void:
 	global_scale = Vector2.ONE
 	var parent_scale = get_parent().global_scale.x
 	var now: float = Conductor.get_time()
+	var spd := _actual_speed()
 
 	# Lock head at hit radius while held, otherwise scroll toward center
 	if is_held:
 		head.position = direction_vector * Conductor.HIT_RADIUS
 	else:
 		var time_until_head: float = target_time - now
-		var head_distance: float = (time_until_head * Conductor.SCROLL_SPEED) + Conductor.HIT_RADIUS / parent_scale
+		var head_distance: float = (time_until_head * spd) + Conductor.HIT_RADIUS / parent_scale
 		head.position = direction_vector * head_distance
 
 	# Tail scrolls inward until it reaches the hit radius
 	var time_until_tail: float = end_time - now
-	var tail_distance: float = max((time_until_tail * Conductor.SCROLL_SPEED) + Conductor.HIT_RADIUS, Conductor.HIT_RADIUS)
+	var tail_distance: float = max((time_until_tail * spd) + Conductor.HIT_RADIUS, Conductor.HIT_RADIUS)
 	tail.position = direction_vector * tail_distance
 
 	body.clear_points()
 	body.add_point(head.position)
 	body.add_point(tail.position)
 
-	# Auto-miss if head passes without being pressed.
-	# During replay: only suppress auto-miss during the head window.
-	# Once the tail passes end_time on an unheld note, clean it up normally.
+	# Auto-miss if head passes without being pressed
 	if not judged and now > target_time + Conductor.MISS_WINDOW:
 		if SceneManager.is_replay and now < end_time:
-			return  # still waiting for replayer to hit the head
+			return
 		_on_miss()
 		return
 
@@ -111,7 +115,7 @@ func _on_miss() -> void:
 
 func on_head_pressed(time_diff: float) -> void:
 	judged = true
-	is_held = true  # set immediately so _process locks the head on the same frame
+	is_held = true
 	press_time = Conductor.get_time()
 	head_judgment = ScoreSystem._get_judgment(time_diff)
 
