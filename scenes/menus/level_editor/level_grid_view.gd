@@ -33,7 +33,6 @@ var ring_drag_start_beat: float = 0.0
 var ring_drag_current_beat: float = 0.0
 var ring_drag_old_duration: float = 0.0
 var ring_is_new_event: bool = false
-
 const RING_COLUMN_WIDTH := 60.0
 const RING_MIN_PERCENT := 50.0
 const RING_MAX_PERCENT := 210.0
