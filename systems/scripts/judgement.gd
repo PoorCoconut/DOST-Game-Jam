@@ -89,7 +89,7 @@ func _try_lite_hit(lane: int) -> void:
 	var hold_notes: Array = spawner.active_hold_notes[current_mode][lane]
 	for note in hold_notes:
 		if is_instance_valid(note) and not note.judged and note.is_lite:
-			if abs(note.target_time - now) <= ScoreSystem.PERFECT_WINDOW:
+			if now >= note.target_time:
 				note.on_head_pressed(0.0) # force perfect
 				held_notes[lane] = note
 				SoundManager.play_hitsound(lane)
@@ -99,7 +99,7 @@ func _try_lite_hit(lane: int) -> void:
 	var tap_notes: Array = spawner.active_notes[current_mode][lane]
 	for note in tap_notes:
 		if is_instance_valid(note) and not note.judged and note.is_lite:
-			if abs(note.target_time - now) <= ScoreSystem.PERFECT_WINDOW:
+			if now >= note.target_time:
 				note.judged = true
 				ScoreSystem.register_judgment(0.0) # force perfect
 				SoundManager.play_hitsound(lane)
