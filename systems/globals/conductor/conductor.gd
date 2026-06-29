@@ -3,6 +3,7 @@ extends Node
 # SONG INFORMATION
 var active_chart: ChartData
 var bpm: float = 120.0
+var offset: float = 0.0
 var seconds_per_beat: float = 0.0
 
 # SONG TIMING
@@ -29,9 +30,9 @@ func _ready() -> void:
 
 func load_song(chart: ChartData) -> void:
 	active_chart = chart
-	bpm = chart.bpm
-	seconds_per_beat = 60.0 / bpm
+	offset = chart.offset
 	audio_player.stream = chart.stream
+	update_song_bpm(chart.bpm)
 	
 	# reset tracking
 	_song_position = 0.0
@@ -48,6 +49,11 @@ func play_song() -> void:
 		push_error("[ERROR] Tried to play song, but no AudioStream was found in Chart!")
 
 
+func update_song_bpm(value: float) -> void:
+	bpm = value
+	seconds_per_beat = 60.0 / value
+
+
 func _process(_delta):
 	if audio_player.playing:
 		# get the raw position from the audio player
@@ -59,8 +65,8 @@ func _process(_delta):
 		# subtract the output latency
 		_song_position -= AudioServer.get_output_latency()
 		
-		# calculate what beat we are on
-		_song_position_in_beats = _song_position / seconds_per_beat
+		# calculate what beat we are on, corrected for lead-in offset
+		_song_position_in_beats = (_song_position - offset) / seconds_per_beat
 		
 		# report the beat if it's a new one
 		_report_beat()
@@ -83,3 +89,11 @@ func get_beat() -> float:
 
 func get_time() -> float:
 	return _song_position
+
+
+func time_to_beat(time: float) -> float:
+	return (time - offset) / seconds_per_beat
+
+
+func beat_to_time(beat: float) -> float:
+	return beat * seconds_per_beat + offset

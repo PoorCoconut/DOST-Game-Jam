@@ -6,6 +6,7 @@ class_name ChartData
 @export var bpm: float                   # the 'real' bpm of the song (search it)
 @export var stream: AudioStream          # the music file
 @export var notes: Array[NoteData] = []  # list of NoteData resources
+@export var offset: float = 0.0
 
 
 func add_note(beat_start: float, lane: int, mode: String, beat_end: float = 0.0) -> NoteData:
@@ -27,15 +28,16 @@ func sort_notes() -> void:
 	notes.sort_custom(func(a, b): return a.beat_start < b.beat_start)
 
 
-func get_note_at(beat: float, lane: int, mode: String, tolerance: float = 0.05) -> NoteData:
+func get_note_at(beat: float, lane: int, mode: String) -> NoteData:
 	for n in notes:
-		if n.lane == lane and n.mode == mode and abs(n.beat_start - beat) <= tolerance:
+		if n.lane == lane and n.mode == mode and is_equal_approx(n.beat_start, beat):
 			return n
 	return null
 
 
 func total_notes() -> int:
-	# tap notes count as 1, hold notes count as beat_duration slices
+	# tap notes count as 1
+	# hold notes count as beat_duration slices
 	var count: int = 0
 	for note in notes:
 		if note.is_hold_note():

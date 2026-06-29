@@ -17,12 +17,28 @@ extends Node2D
 	$UI/GridHeader/South,
 	$UI/GridHeader/West,
 ]
+
 const LOW_LABELS := ["        North      |", "      East       |", "    South     ", "|      West"]
 const HIGH_LABELS := ["   North-East ", "|South-East |", "South-West", "| North-West"]
+
+# Live note-capture keybinds.
+const LANE_KEYS := {
+	KEY_F: 0, # North
+	KEY_K: 1, # East
+	KEY_J: 2, # South
+	KEY_D: 3, # West
+}
+
+# Offset calibration keybinds.
+# [ / ] = nudge offset by a fixed step. Hold Shift for a finer 1ms step. But doesn't work. Dead weight. maybe
+const OFFSET_SET_KEY := KEY_O
+const OFFSET_NUDGE_STEP := 0.01
+const OFFSET_NUDGE_STEP_FINE := 0.001
 
 var is_paused: bool = false
 var paused_position: float = 0.0
 var chart: ChartData
+var _removed_accept_events: Array[InputEvent] = []
 
 # File Handlers
 @onready var chart_file_dialog: FileDialog = $UI/FileButtons/ChartFileDialog
@@ -33,7 +49,13 @@ var chart: ChartData
 const GAMEPLAY_SCENE := preload(SceneManager.GAMEPLAY_DIR)
 var preview_instance: Node = null
 
+
 func _ready() -> void:
+	for evt in InputMap.action_get_events("ui_accept"):
+		if evt is InputEventKey and (evt.physical_keycode == KEY_SPACE or evt.keycode == KEY_SPACE):
+			InputMap.action_erase_event("ui_accept", evt)
+			_removed_accept_events.append(evt)
+	
 	snap_option.clear()
 	snap_option.add_item("1/1", 1)
 	snap_option.add_item("1/2 (halves)", 2)
@@ -44,6 +66,14 @@ func _ready() -> void:
 	snap_option.add_item("1/8 (eighths)", 8)
 	snap_option.select(3)  # default to 1/4
 	new_chart()
+	
+	grid_view.seek_requested.connect(_on_scrubber_seek_requested)
+
+
+func _exit_tree() -> void:
+	for evt in _removed_accept_events:
+		InputMap.action_add_event("ui_accept", evt)
+
 
 func _process(_delta: float) -> void:
 	if Conductor.audio_player.playing and not is_paused:
@@ -52,21 +82,25 @@ func _process(_delta: float) -> void:
 		scrubber.update_progress(t)
 		_sync_scroll_to_beat(grid_view.playhead_beat)
 
+
 # Song Info
 func refresh_song_info() -> void:
 	title_label.text = "Title: %s" % chart.song_name
 	bpm_label.text = "BPM: %.1f" % chart.bpm
+
 
 func _on_bpm_field_text_changed(new_text: String) -> void:
 	var value := new_text.to_float()
 	if value <= 0 or not new_text.is_valid_float():
 		bpm_field.modulate = Color.RED
 		return
-
+	
 	bpm_field.modulate = Color.WHITE
 	chart.bpm = value
+	Conductor.update_song_bpm(value)
 	grid_view.update_content_size()
 	bpm_label.text = "BPM: %.1f" % value
+
 
 # Timeline Manager thingy
 func _on_scrubber_seek_requested(time_seconds: float) -> void:
@@ -81,22 +115,26 @@ func _on_scrubber_seek_requested(time_seconds: float) -> void:
 	if preview_instance:
 		var spawner := preview_instance.get_node("PlayfieldContainer/NoteMask/NoteSpawner")
 		if spawner:
-			spawner.recalculate_note_index(time_seconds * chart.bpm / 60.0)
+			spawner.recalculate_note_index(Conductor.time_to_beat(time_seconds))
+
 
 func _sync_scroll_to_beat(beat: float) -> void:
 	scroll_container.scroll_vertical = int(beat * grid_view.pixels_per_beat) - 500
+
 
 # Basic Functions (New Chart, Load Song, Save Chart, Load Chart)
 func new_chart() -> void:
 	chart = ChartData.new()
 	chart.song_name = "untitled"
 	chart.bpm = 120.0
+	chart.offset = 0.0
 	grid_view.chart = chart
 	grid_view.queue_redraw()
 	refresh_song_info()
 	mode_label.text = "Mode: low (+)"
 	_update_lane_headers("low (+)")
 	_refresh_preview()
+
 
 func load_song(path: String) -> void:
 	var stream: AudioStream = load(path)
@@ -107,6 +145,7 @@ func load_song(path: String) -> void:
 	refresh_song_info()
 	scrubber.duration = stream.get_length()
 	_refresh_preview()
+
 
 func save_chart() -> void:
 	chart.sort_notes()
@@ -123,44 +162,49 @@ func save_chart() -> void:
 	else:
 		print("Save failed: ", err)
 
+
 # Chart Editor (Lane Headers, File Handling, Grid Snapping, BPM Setting)
 func _update_lane_headers(mode: String) -> void:
 	var labels := LOW_LABELS if mode == "low (+)" else HIGH_LABELS
 	for i in range(lane_headers.size()):
 		lane_headers[i].text = labels[i]
 
+
 func _on_chart_file_dialog_file_selected(path: String) -> void:
 	var loaded: ChartData = load(path)
 	if loaded == null:
 		print("[ERROR] LevelEditor: failed to load chart at: ", path)
 		return
-
+	
 	chart = loaded
 	grid_view.chart = chart
 	grid_view.update_content_size()
 	refresh_song_info()
-
+	
 	if chart.stream:
 		Conductor.load_song(chart)
 		scrubber.duration = chart.stream.get_length()
 	else:
 		print("[ERROR] LevelEditor: chart has no associated stream")
-
+	
 	paused_position = 0.0
 	is_paused = false
 	mode_label.text = "Mode: low (+)"
 	grid_view.set_mode("low (+)")
 	_refresh_preview()
 
+
 func _on_snap_option_item_selected(index: int) -> void:
 	var divisor: int = snap_option.get_item_id(index)
 	grid_view.snap_divisor = divisor
 	grid_view.queue_redraw()
 
+
 func _on_load_chart_pressed() -> void:
 	var abs_path := ProjectSettings.globalize_path("res://scenes/")
 	chart_file_dialog.current_dir = abs_path
 	chart_file_dialog.popup_centered()
+
 
 func _on_bpm_field_text_submitted(new_text: String) -> void:
 	var value := new_text.to_float()
@@ -169,25 +213,31 @@ func _on_bpm_field_text_submitted(new_text: String) -> void:
 	chart.bpm = value
 	grid_view.update_content_size()
 
+
 # Button Controls
 func _on_new_chart_pressed() -> void:
 	new_chart()
 
+
 func _on_save_chart_pressed() -> void:
 	save_chart()
+
 
 func _on_load_song_pressed() -> void:
 	var abs_path := ProjectSettings.globalize_path("res://sound/music/")
 	file_dialog.current_dir = abs_path
 	file_dialog.popup_centered()
 
+
 func _on_song_file_dialog_file_selected(path: String) -> void:
 	load_song(path)
+
 
 # Mode Control (High or Low)
 func _on_mode_toggle_pressed() -> void:
 	var new_mode := "high (x)" if grid_view.current_mode == "low (+)" else "low (+)"
 	grid_view.set_mode(new_mode)
+
 
 func _toggle_mode() -> void:
 	var new_mode := "high (x)" if grid_view.current_mode == "low (+)" else "low (+)"
@@ -195,6 +245,7 @@ func _toggle_mode() -> void:
 	mode_label.text = "Mode: %s" % new_mode
 	mode_label.modulate = Color.ORANGE if new_mode == "high (x)" else Color.CYAN
 	_update_lane_headers(new_mode)
+
 
 # Audio Control (Pause and Play)
 func _toggle_playback() -> void:
@@ -208,17 +259,90 @@ func _toggle_playback() -> void:
 		Conductor.audio_player.stop()
 		is_paused = true
 
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_select"):  # spacebar — play/pause
-		_toggle_playback()
 
-	if event is InputEventKey:
-		var key_event := event as InputEventKey
-		if key_event.pressed and key_event.keycode == KEY_ALT:
-			_toggle_mode()
+
+func _input(event: InputEvent) -> void:
+	# If a text field has focus, let it handle all keys untouched —
+	# stops Backspace/Ctrl+C/Ctrl+V/letter-keys from also triggering editor shortcuts.
+	if get_viewport().gui_get_focus_owner() is LineEdit:
+		return
+
+	# Handle Spacebar (UI Select) separately
+	if event.is_action_pressed("ui_select"):
+		_toggle_playback()
+		return
+
+	# Handle Key Events
+	if event is InputEventKey and event.pressed and not event.echo:
+		
+		# Handle CTRL Shortcuts first
+		if event.ctrl_pressed:
+			match event.keycode:
+				KEY_C: grid_view.copy_selected()
+				KEY_V: grid_view.paste_at_anchor()
+				KEY_Z: grid_view.undo()
+				KEY_Y: grid_view.redo()
+			return # Exit early if a Ctrl combo was handled
+
+		# Handle everything else
+		match event.keycode:
+			KEY_ALT: 
+				_toggle_mode()
+			
+			OFFSET_SET_KEY: 
+				_calibrate_offset()
+			
+			KEY_BRACKETLEFT, KEY_BRACKETRIGHT:
+				_handle_nudge(event)
+				
+			KEY_ESCAPE: 
+				grid_view.deselect_notes()
+			
+			KEY_DELETE, KEY_BACKSPACE: 
+				grid_view.delete_selected()
+			
+			_: # default case
+				if LANE_KEYS.has(event.keycode):
+					_place_note_live(LANE_KEYS[event.keycode])
+
+
+# Helper function for offset nudge
+func _handle_nudge(event: InputEventKey):
+	var step = OFFSET_NUDGE_STEP_FINE if event.shift_pressed else OFFSET_NUDGE_STEP
+	var direction = -1 if event.keycode == KEY_BRACKETLEFT else 1
+	_nudge_offset(direction * step)
+
+
+func _place_note_live(lane: int) -> void:
+	if chart == null or not Conductor.audio_player.playing:
+		return
+	var raw_beat: float = Conductor.time_to_beat(Conductor.get_time())
+	var beat: float = grid_view.snap_beat(raw_beat)
+	chart.add_note(beat, lane, grid_view.current_mode)
+	grid_view.queue_redraw()
+
+
+func _calibrate_offset() -> void:
+	if chart == null or not Conductor.audio_player.playing:
+		return
+	chart.offset = Conductor.get_time()
+	Conductor.offset = chart.offset
+	grid_view.flash_offset_feedback()
+	print("[OFFSET] Set to %.3fs" % chart.offset)
+
+
+func _nudge_offset(delta: float) -> void:
+	if chart == null:
+		return
+	chart.offset += delta
+	Conductor.offset = chart.offset
+	grid_view.flash_offset_feedback()
+	print("[OFFSET] Now %.3fs" % chart.offset)
+
 
 func _on_play_pause_pressed() -> void:
 	_toggle_playback()
+
 
 func _on_preview_restart_pressed() -> void:
 	paused_position = 0.0
@@ -229,24 +353,25 @@ func _on_preview_restart_pressed() -> void:
 		if spawner:
 			spawner.recalculate_note_index(0.0)
 
+
 # Gameplay Preview
 func _refresh_preview() -> void:
 	if preview_instance:
 		preview_instance.queue_free()
 		preview_instance = null
-
+	
 	if chart == null or chart.stream == null:
 		return
-
+	
 	SceneManager.selected_chart = chart
 	preview_instance = GAMEPLAY_SCENE.instantiate()
-
+	
 	var spawner := preview_instance.get_node("PlayfieldContainer/NoteMask/NoteSpawner")
 	if spawner:
 		spawner.is_preview = true
-
+	
 	var judge := preview_instance.get_node("Judge")
 	if judge:
 		judge.autoplay = true
-
+	
 	preview_viewport.add_child(preview_instance)
