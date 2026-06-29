@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://cvbbvhpy2p3kl"]
+[gd_scene format=3 uid="uid://ba27x7vtf4fqf"]
 
 [ext_resource type="Script" uid="uid://qhgal6864715" path="res://systems/globals/conductor/conductor.gd" id="1_y2nr7"]
 [ext_resource type="AudioStream" uid="uid://dbvgscnb3kmft" path="res://sound/music/Geoxor - Lollipop.mp3" id="2_5jk86"]
