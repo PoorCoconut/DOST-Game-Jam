@@ -3,6 +3,7 @@ extends Node2D
 @export_group("Note Scenes")
 @export var note_scene: PackedScene
 @export var hold_note_scene: PackedScene
+@export var special_note_scene: PackedScene
 
 @export_group("Chart Stats")
 @export var spawn_ahead_beats: float = 4.0 
@@ -41,6 +42,12 @@ func _ready():
 	chart_resource.sort_notes()
 	Conductor.load_song(chart_resource)
 	
+	var bg := get_node_or_null("%CoverBackground")
+	if bg and chart_resource.background:
+		bg.texture = chart_resource.background
+		bg.visible = true
+		bg.global_position = get_viewport_rect().size / 2.0
+
 	# --- FOR PREVIEW ---
 	if not is_preview:
 		Conductor.play_song()
@@ -91,7 +98,9 @@ func spawn_note(data: NoteData) -> Node2D:
 	var direction = Vector2(cos(angle_rad), sin(angle_rad))
 
 	var note_node
-	if is_hold:
+	if data.is_special:
+		note_node = special_note_scene.instantiate()
+	elif is_hold:
 		# hold note
 		note_node = hold_note_scene.instantiate()
 		active_hold_notes[mode][lane_idx].append(note_node)

@@ -4,10 +4,12 @@
 [ext_resource type="Texture2D" uid="uid://cww1fm7c8aoe6" path="res://assets/sustain_ring_white.png" id="2_q0nmq"]
 [ext_resource type="Script" uid="uid://fy2itsqbgj0q" path="res://systems/scripts/judgement.gd" id="3_kc66f"]
 [ext_resource type="Texture2D" uid="uid://qdd1dkqbxvyt" path="res://assets/energy_ring.png" id="4_8k7nv"]
+[ext_resource type="Script" uid="uid://dnuw5luy30sep" path="res://systems/scripts/ring_scale_controller.gd" id="4_q0nmq"]
 [ext_resource type="Texture2D" uid="uid://1gsm04pemx5x" path="res://assets/energy_mask.png" id="5_fn7vn"]
 [ext_resource type="Script" uid="uid://dhob63b2lbkiu" path="res://systems/scripts/note_spawner.gd" id="6_lr7i6"]
 [ext_resource type="PackedScene" uid="uid://k00spa2y4tnk" path="res://objects/note/tap_note.tscn" id="7_07rdt"]
 [ext_resource type="PackedScene" uid="uid://d3skweb2myvk" path="res://objects/note/hold_note.tscn" id="8_a5bbv"]
+[ext_resource type="PackedScene" uid="uid://b885va7i3xbk6" path="res://objects/note/special_note.tscn" id="10_kc66f"]
 
 [node name="WorldGameplay" type="Node2D" unique_id=1726405357]
 
@@ -30,6 +32,7 @@ texture = ExtResource("2_q0nmq")
 script = ExtResource("3_kc66f")
 
 [node name="PlayfieldContainer" type="Node2D" parent="." unique_id=1553197630]
+script = ExtResource("4_q0nmq")
 
 [node name="EnergyRing" type="Sprite2D" parent="PlayfieldContainer" unique_id=451023611]
 scale = Vector2(1.3, 1.3)
@@ -45,8 +48,8 @@ unique_name_in_owner = true
 script = ExtResource("6_lr7i6")
 note_scene = ExtResource("7_07rdt")
 hold_note_scene = ExtResource("8_a5bbv")
+special_note_scene = ExtResource("10_kc66f")
 
 [node name="CoverBackground" type="Sprite2D" parent="." unique_id=865344590]
-visible = false
+unique_name_in_owner = true
 z_index = -10
-scale = Vector2(1.3, 1.3)
