@@ -1,0 +1,362 @@
+[gd_scene format=3 uid="uid://mjjvugmhjvje"]
+
+[ext_resource type="Script" uid="uid://v67gl8unf17j" path="res://scenes/menus/settings/settings_overlay.gd" id="1_b7qag"]
+
+[node name="SettingsOverlay" type="Control" unique_id=690435023]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_b7qag")
+
+[node name="DimBackground" type="ColorRect" parent="." unique_id=1682610321]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 664.0
+color = Color(0, 0, 0, 0.4117647)
+
+[node name="Panel" type="PanelContainer" parent="." unique_id=1203174002]
+layout_mode = 1
+offset_top = 144.0
+offset_right = 1152.0
+offset_bottom = 576.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=227086209]
+layout_mode = 2
+
+[node name="Header" type="MarginContainer" parent="Panel/VBoxContainer" unique_id=1441100456]
+layout_mode = 2
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HeaderRow" type="HBoxContainer" parent="Panel/VBoxContainer/Header" unique_id=955217238]
+layout_mode = 2
+alignment = 1
+
+[node name="PlaceholderBorderR2" type="Label" parent="Panel/VBoxContainer/Header/HeaderRow" unique_id=1622723666]
+layout_mode = 2
+text = "---|"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/Header/HeaderRow" unique_id=1001233544]
+layout_mode = 2
+text = "     Settings     "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlaceholderBorderR" type="Label" parent="Panel/VBoxContainer/Header/HeaderRow" unique_id=1951975101]
+layout_mode = 2
+text = "|---"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="Panel/VBoxContainer/Header/HeaderRow" unique_id=1355153715]
+visible = false
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer" unique_id=2056048030]
+custom_minimum_size = Vector2(0, 365)
+layout_mode = 2
+theme_override_constants/margin_left = 200
+theme_override_constants/margin_right = 200
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/VBoxContainer/MarginContainer" unique_id=750880236]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer" unique_id=1429604859]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Audio" type="MarginContainer" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer" unique_id=168262259]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="Audio" type="VBoxContainer" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Audio" unique_id=1574003378]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="AudioLabel" type="Label" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Audio/Audio" unique_id=1939174589]
+layout_mode = 2
+text = "Audio"
+horizontal_alignment = 1
+
+[node name="ScrollSpeedRow" type="HBoxContainer" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Audio/Audio" unique_id=562927200]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Audio/Audio/ScrollSpeedRow" unique_id=884575934]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Scroll speed"
+
+[node name="HSlider" type="HSlider" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Audio/Audio/ScrollSpeedRow" unique_id=1360054658]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+rounded = true
+
+[node name="ValueLabel" type="Label" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Audio/Audio/ScrollSpeedRow" unique_id=774313060]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="AudioOffsetRow" type="HBoxContainer" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Audio/Audio" unique_id=246532266]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Audio/Audio/AudioOffsetRow" unique_id=355300579]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Audio offset"
+
+[node name="HSlider" type="HSlider" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Audio/Audio/AudioOffsetRow" unique_id=2077984547]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="ValueLabel" type="Label" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Audio/Audio/AudioOffsetRow" unique_id=1141474859]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="Volume" type="MarginContainer" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer" unique_id=642486458]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="Volume" type="VBoxContainer" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Volume" unique_id=1608926835]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="VolumeLabel" type="Label" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Volume/Volume" unique_id=810503008]
+layout_mode = 2
+text = "Volume"
+horizontal_alignment = 1
+
+[node name="MasterRow" type="HBoxContainer" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Volume/Volume" unique_id=219480809]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Volume/Volume/MasterRow" unique_id=632791149]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Master"
+
+[node name="HSlider" type="HSlider" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Volume/Volume/MasterRow" unique_id=758694945]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="ValueLabel" type="Label" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Volume/Volume/MasterRow" unique_id=2121895463]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="MusicRow" type="HBoxContainer" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Volume/Volume" unique_id=482928581]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Volume/Volume/MusicRow" unique_id=569690289]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Music"
+
+[node name="HSlider" type="HSlider" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Volume/Volume/MusicRow" unique_id=668951848]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="ValueLabel" type="Label" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Volume/Volume/MusicRow" unique_id=659418659]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="SFXRow" type="HBoxContainer" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Volume/Volume" unique_id=1746278308]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Volume/Volume/SFXRow" unique_id=767002058]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "SFX"
+
+[node name="HSlider" type="HSlider" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Volume/Volume/SFXRow" unique_id=254522927]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="ValueLabel" type="Label" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Volume/Volume/SFXRow" unique_id=221594322]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="Keybinds" type="MarginContainer" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer" unique_id=1666279295]
+layout_mode = 2
+theme_override_constants/margin_bottom = 20
+
+[node name="Keybinds" type="VBoxContainer" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Keybinds" unique_id=1675273614]
+layout_mode = 2
+
+[node name="KeybindsLabel" type="Label" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Keybinds/Keybinds" unique_id=885958868]
+layout_mode = 2
+text = "Keybinds"
+horizontal_alignment = 1
+
+[node name="KeybindsRings" type="MarginContainer" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Keybinds/Keybinds" unique_id=32874529]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="KeybindsRings" type="HBoxContainer" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Keybinds/Keybinds/KeybindsRings" unique_id=1900867407]
+layout_mode = 2
+theme_override_constants/separation = 125
+alignment = 1
+
+[node name="LowRing" type="Control" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Keybinds/Keybinds/KeybindsRings/KeybindsRings" unique_id=1391958931]
+custom_minimum_size = Vector2(200, 150)
+layout_mode = 2
+
+[node name="LaneTop" type="Button" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Keybinds/Keybinds/KeybindsRings/KeybindsRings/LowRing" unique_id=588873819]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -8.5
+offset_right = 8.5
+offset_bottom = 31.0
+grow_horizontal = 2
+text = "F"
+
+[node name="LaneRight" type="Button" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Keybinds/Keybinds/KeybindsRings/KeybindsRings/LowRing" unique_id=1751927496]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -19.0
+offset_top = -15.5
+offset_bottom = 15.5
+grow_horizontal = 0
+grow_vertical = 2
+text = "K"
+
+[node name="LaneBottom" type="Button" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Keybinds/Keybinds/KeybindsRings/KeybindsRings/LowRing" unique_id=1954020895]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = -8.0
+offset_right = 4.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "J"
+
+[node name="LaneLeft" type="Button" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Keybinds/Keybinds/KeybindsRings/KeybindsRings/LowRing" unique_id=547196350]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -15.5
+offset_right = 20.0
+offset_bottom = 15.5
+grow_vertical = 2
+text = "D"
+
+[node name="HighRing" type="Control" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Keybinds/Keybinds/KeybindsRings/KeybindsRings" unique_id=1701119450]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+
+[node name="LaneTopRight" type="Button" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Keybinds/Keybinds/KeybindsRings/KeybindsRings/HighRing" unique_id=1747662373]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -17.0
+offset_bottom = 31.0
+grow_horizontal = 0
+text = "F"
+
+[node name="LaneBottomRight" type="Button" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Keybinds/Keybinds/KeybindsRings/KeybindsRings/HighRing" unique_id=945819830]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -19.0
+offset_top = -31.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "K"
+
+[node name="LaneBottomLeft" type="Button" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Keybinds/Keybinds/KeybindsRings/KeybindsRings/HighRing" unique_id=1971711103]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -31.0
+offset_right = 13.0
+grow_vertical = 0
+text = "J"
+
+[node name="LaneTopLeft" type="Button" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Keybinds/Keybinds/KeybindsRings/KeybindsRings/HighRing" unique_id=439191668]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 1
+offset_right = 20.0
+offset_bottom = 31.0
+text = "D"
+
+[node name="Transform_Retry" type="HBoxContainer" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Keybinds/Keybinds" unique_id=1558305347]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 187
+alignment = 1
+
+[node name="TransformRow" type="VBoxContainer" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Keybinds/Keybinds/Transform_Retry" unique_id=1259319823]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Keybinds/Keybinds/Transform_Retry/TransformRow" unique_id=432653246]
+layout_mode = 2
+text = "Transform"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RebindButton" type="Button" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Keybinds/Keybinds/Transform_Retry/TransformRow" unique_id=859373020]
+layout_mode = 2
+text = " "
+
+[node name="QuickRetryRow" type="VBoxContainer" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Keybinds/Keybinds/Transform_Retry" unique_id=187380941]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Keybinds/Keybinds/Transform_Retry/QuickRetryRow" unique_id=733524244]
+layout_mode = 2
+text = "Quick Retry"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RebindButton" type="Button" parent="Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Keybinds/Keybinds/Transform_Retry/QuickRetryRow" unique_id=917342595]
+layout_mode = 2
+text = " "

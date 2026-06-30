@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="ChartData" format=3 uid="uid://deov11alfj8w"]
 
 [ext_resource type="Script" uid="uid://dsabl2qk2n1bp" path="res://systems/models/note_data.gd" id="1_6nwpc"]
+[ext_resource type="Script" uid="uid://beyqdqwx6i7ep" path="res://systems/scripts/scale_event.gd" id="2_kv3wd"]
 [ext_resource type="Script" uid="uid://b6mjo1vig2mgq" path="res://systems/models/chart_data.gd" id="2_ov3j8"]
 [ext_resource type="AudioStream" uid="uid://dbvgscnb3kmft" path="res://sound/music/Geoxor - Lollipop.mp3" id="3_6nwpc"]
 
