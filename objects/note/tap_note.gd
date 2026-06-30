@@ -28,9 +28,12 @@ func _process(_delta: float) -> void:
 	var parent_scale = get_parent().global_scale.x
 	var time_until_hit = target_time - current_time
 	var actual_speed := Conductor.BASE_SCROLL_SPEED * Settings.current_scroll_speed
-	var distance = (time_until_hit * actual_speed) + Conductor.HIT_RADIUS / parent_scale
+
+	var distance = max((time_until_hit * actual_speed) + (Conductor.HIT_RADIUS / parent_scale), 0.0)
 	position = direction_vector * distance
-	if time_until_hit < -Conductor.MISS_WINDOW:
+
+	var effective_miss_window: float = Conductor.MISS_WINDOW / Settings.current_scroll_speed
+	if time_until_hit < -effective_miss_window:
 		on_miss()
 
 

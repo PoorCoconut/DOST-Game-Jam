@@ -56,6 +56,18 @@ func _get_spawn_ahead_beats() -> float:
 	var travel_distance: float = 400.0 - Conductor.HIT_RADIUS
 	var seconds_to_reach: float = travel_distance / actual_speed
 	var beats_to_reach: float = seconds_to_reach / Conductor.seconds_per_beat
+
+	# Safety floor: at very high scroll speeds, beats_to_reach can shrink to a
+	# fraction smaller than a single frame's worth of beat-progress. When that
+	# happens the spawn check in _process() can skip right past the spawn
+	# window between two frames, so the note spawns late and visually "pops"
+	# or overshoots past the hit ring instead of traveling to it smoothly.
+	# We guarantee at least ~3 frames of travel time so spawning never gets
+	# skipped, regardless of scroll speed.
+	var min_seconds_buffer: float = (1.0 / 60.0) * 3.0
+	var min_beats_buffer: float = min_seconds_buffer / Conductor.seconds_per_beat
+	beats_to_reach = max(beats_to_reach, min_beats_buffer)
+
 	return beats_to_reach
 
 

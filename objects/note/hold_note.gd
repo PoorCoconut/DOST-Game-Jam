@@ -65,7 +65,7 @@ func _process(_delta: float) -> void:
 		head.position = direction_vector * Conductor.HIT_RADIUS
 	else:
 		var time_until_head: float = target_time - now
-		var head_distance: float = (time_until_head * spd) + Conductor.HIT_RADIUS / parent_scale
+		var head_distance: float = max((time_until_head * spd) + (Conductor.HIT_RADIUS / parent_scale), Conductor.HIT_RADIUS / parent_scale)
 		head.position = direction_vector * head_distance
 
 	# Tail scrolls inward until it reaches the hit radius
@@ -78,7 +78,8 @@ func _process(_delta: float) -> void:
 	body.add_point(tail.position)
 
 	# Auto-miss if head passes without being pressed
-	if not judged and now > target_time + Conductor.MISS_WINDOW:
+	var effective_miss_window: float = Conductor.MISS_WINDOW / Settings.current_scroll_speed
+	if not judged and now > target_time + effective_miss_window:
 		if SceneManager.is_replay and now < end_time:
 			return
 		_on_miss()

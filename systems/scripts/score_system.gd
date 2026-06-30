@@ -52,6 +52,7 @@ var hp_miss_ratio: float = 0.1 # HP lost on miss (10% of max HP)
 # HP state — managed here, displayed by FrequencyBarComponent
 var current_hp: float = 100.0
 var max_hp: float = 100.0
+var is_failed: bool = false  # true once HP hits 0 — forces F rank regardless of watts
 
 
 func load_chart(chart_resource) -> void:
@@ -63,6 +64,7 @@ func load_chart(chart_resource) -> void:
 	volts = 0
 	watts = 0.0
 	current_hp = max_hp  # reset HP on new chart
+	is_failed = false
 
 	for note in chart_resource.notes:
 		if note.is_hold_note():
@@ -121,6 +123,8 @@ func register_miss() -> void:
 
 
 func get_rank() -> String:
+	if is_failed:
+		return "F"
 	var score = int(watts)
 	if score >= 1000000: return "AP"
 	elif score >= 960000: return "S"
@@ -138,7 +142,8 @@ func _apply_hp(result: String) -> void:
 		"bad":     current_hp = min(current_hp + hp_bad, max_hp)
 		"miss":    current_hp = max(current_hp - (max_hp * hp_miss_ratio), 0.0)
 	hp_changed.emit(current_hp, max_hp)
-	if current_hp <= 0:
+	if current_hp <= 0 and not is_failed:
+		is_failed = true
 		player_failed.emit()
 
 
@@ -170,3 +175,4 @@ func reset() -> void:
 	bads = 0
 	misses = 0
 	current_hp = max_hp
+	is_failed = false

@@ -21,9 +21,9 @@ func start_recording(chart: ChartData) -> void:
 	else:
 		print("[REPLAY] already connected to Conductor.song_finished")
 
-	if not ScoreSystem.player_failed.is_connected(_on_song_finished):
-		ScoreSystem.player_failed.connect(_on_song_finished)
-		print("[REPLAY] connected to ScoreSystem.player_failed")
+	# NOTE: player_failed no longer auto-saves. On fail, the pause/fail screen
+	# decides if/when to save by calling save_replay_now() — e.g. when the
+	# player clicks "Results" after dying.
 
 
 func record_tap(beat_start: float, lane: int, mode: String, judgment: String, time_diff: float) -> void:
@@ -62,6 +62,12 @@ func record_hold(beat_start: float, lane: int, mode: String, judgment: String, t
 
 func _on_song_finished() -> void:
 	print("[REPLAY] _on_song_finished called")
+	save_replay_now()
+
+
+func save_replay_now() -> void:
+	# Called either automatically (song completed) or explicitly
+	# (player clicked Results after dying).
 	if _current_replay == null or _chart == null:
 		print("[REPLAY] replay or chart is null, aborting save")
 		return

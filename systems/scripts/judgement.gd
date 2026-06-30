@@ -71,34 +71,9 @@ func _toggle_mode() -> void:
 
 
 func _quick_retry() -> void:
-	# Reset Conductor
-	Conductor.audio_player.stop()
-	Conductor._song_position = 0.0
-	Conductor._song_position_in_beats = 0.0
-	Conductor._last_reported_beat = 0
-
-	# Reset NoteSpawner
-	spawner._clear_all_notes()
-	spawner.note_index = 0
-
-	# Reset held note state
-	held_notes     = [null, null, null, null]
-	held_note_data = [null, null, null, null]
-	held_note_modes = ["", "", "", ""]
-	current_mode = "+"
-	sustain_ring.rotation_degrees = 0.0
-
-	# Reset ScoreSystem
-	if ScoreSystem.has_method("reset"):
-		ScoreSystem.reset()
-
-	# Reset replay recorder
-	if replay_recorder != null and replay_recorder.has_method("start_recording"):
-		replay_recorder.start_recording(spawner.chart_resource)
-
-	# Restart song
-	Conductor.play_song()
-	print("[JUDGE] Quick Retry triggered.")
+	# Centralized in PauseManager: full scene reload guarantees Conductor,
+	# NoteSpawner, ScoreSystem, ReplayRecorder, and judge state all reset cleanly.
+	PauseManager.retry_level()
 
 
 func _try_hit(lane: int) -> void:
