@@ -3,7 +3,7 @@ extends Node
 # SONG INFORMATION
 var active_chart: ChartData
 var bpm: float = 120.0
-var offset: float = 0.0
+var lead_offset: float = 0.0 # offset of the actual song start
 var seconds_per_beat: float = 0.0
 
 # SONG TIMING
@@ -26,12 +26,11 @@ signal song_finished
 func _ready() -> void:
 	Input.set_use_accumulated_input(false)
 	audio_player.finished.connect(_on_song_finished)
-	# print("[CONDUCTOR] finished signal connected: ", audio_player.finished.is_connected(_on_song_finished))
 
 
 func load_song(chart: ChartData) -> void:
 	active_chart = chart
-	offset = chart.offset
+	lead_offset = chart.offset
 	audio_player.stream = chart.stream
 	update_song_bpm(chart.bpm)
 	
@@ -71,7 +70,7 @@ func _process(_delta):
 		_song_position += Settings.audio_offset
 
 		# calculate beat
-		_song_position_in_beats = _song_position / seconds_per_beat
+		_song_position_in_beats = (_song_position - lead_offset) / seconds_per_beat
 
 		_report_beat()
 
@@ -81,7 +80,7 @@ func _report_beat():
 	if _last_reported_beat < current_beat_int:
 		_last_reported_beat = current_beat_int
 		emit_signal("beat", _last_reported_beat)
-		# metronome.play()
+		metronome.play()
 
 
 func _on_song_finished() -> void:
@@ -100,8 +99,8 @@ func get_time() -> float:
 func time_to_beat(time: float) -> float:
 	if seconds_per_beat <= 0:
 		return 0.0
-	return (time - offset) / seconds_per_beat
+	return (time - lead_offset) / seconds_per_beat
 
 
 func beat_to_time(beat: float) -> float:
-	return beat * seconds_per_beat + offset
+	return beat * seconds_per_beat + lead_offset
