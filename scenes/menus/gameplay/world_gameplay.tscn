@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://bf2dfy7853wb8"]
 
-[ext_resource type="PackedScene" uid="uid://djq7ncohokjby" path="res://systems/components/user_interface/FrequencyBarComponent/frequency_bar_component.tscn" id="1_ftldk"]
 [ext_resource type="Script" uid="uid://fy2itsqbgj0q" path="res://systems/scripts/judgement.gd" id="3_kc66f"]
 [ext_resource type="Texture2D" uid="uid://1gsm04pemx5x" path="res://assets/energy_mask.png" id="5_fn7vn"]
 [ext_resource type="Script" uid="uid://dhob63b2lbkiu" path="res://systems/scripts/note_spawner.gd" id="6_lr7i6"]
@@ -13,26 +12,18 @@
 [node name="LevelHUDComponent" parent="." unique_id=511265971 instance=ExtResource("9_q0nmq")]
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1344942612]
-
-[node name="FrequencyBar" parent="." unique_id=1123226504 instance=ExtResource("1_ftldk")]
-visible = false
-position = Vector2(-549, -296)
-scale = Vector2(0.5, 0.5)
-
-[node name="Core" type="Sprite2D" parent="." unique_id=302376454]
-scale = Vector2(0.18, 0.179)
+position = Vector2(576, 324)
 
 [node name="Judge" type="Node" parent="." unique_id=617231441]
 script = ExtResource("3_kc66f")
 
-[node name="PlayfieldContainer" type="Node2D" parent="." unique_id=1553197630]
-
-[node name="NoteMask" type="Sprite2D" parent="PlayfieldContainer" unique_id=885414798]
+[node name="NoteMask" type="Sprite2D" parent="." unique_id=885414798]
 clip_children = 1
+position = Vector2(576, 324.00003)
 scale = Vector2(1.3, 1.3)
 texture = ExtResource("5_fn7vn")
 
-[node name="NoteSpawner" type="Node2D" parent="PlayfieldContainer/NoteMask" unique_id=890188748]
+[node name="NoteSpawner" type="Node2D" parent="NoteMask" unique_id=890188748]
 unique_name_in_owner = true
 script = ExtResource("6_lr7i6")
 note_scene = ExtResource("7_07rdt")

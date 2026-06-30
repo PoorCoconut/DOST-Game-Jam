@@ -1,0 +1,211 @@
+[gd_scene format=3 uid="uid://c5cs7bmkm68cx"]
+
+[ext_resource type="Script" uid="uid://18tuh56bvjuo" path="res://systems/components/user_interface/ScoreMeterComponent/score_meter_component.gd" id="1_q7n5a"]
+[ext_resource type="FontFile" uid="uid://bkyjc4k6cghwi" path="res://assets/fonts/glacial-indifference.regular.otf" id="2_r5sma"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_q7n5a"]
+
+[node name="ScoreMeterComponent" type="Node2D" unique_id=1072199233]
+script = ExtResource("1_q7n5a")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=826530732]
+position = Vector2(4.7683716e-07, 24)
+scale = Vector2(48, 48)
+texture = SubResource("PlaceholderTexture2D_q7n5a")
+
+[node name="ScoreLabel" type="Label" parent="." unique_id=1451322246]
+offset_left = 128.0
+offset_right = 236.0
+offset_bottom = 20.0
+theme_override_fonts/font = ExtResource("2_r5sma")
+text = "0,000,000"
+horizontal_alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1931947295]
+offset_left = 44.0
+offset_top = 36.0
+offset_right = 236.0
+offset_bottom = 56.0
+alignment = 1
+
+[node name="PerfectLabel" type="Label" parent="HBoxContainer" unique_id=426157784]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_r5sma")
+text = "0"
+horizontal_alignment = 1
+
+[node name="GoodLabel" type="Label" parent="HBoxContainer" unique_id=2114999624]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_r5sma")
+text = "0"
+horizontal_alignment = 1
+
+[node name="BadLabel" type="Label" parent="HBoxContainer" unique_id=2005358762]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_r5sma")
+text = "0"
+horizontal_alignment = 1
+
+[node name="MissLabel" type="Label" parent="HBoxContainer" unique_id=279285230]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_r5sma")
+text = "0"
+horizontal_alignment = 1
+
+[node name="Bar(PleaseDontLook)" type="Node2D" parent="." unique_id=668391150]
+position = Vector2(0, -4)
+
+[node name="Diamond2" type="ColorRect" parent="Bar(PleaseDontLook)" unique_id=516023382]
+offset_left = 40.0
+offset_top = 20.000002
+offset_right = 45.589172
+offset_bottom = 25.589167
+rotation = 0.7853982
+
+[node name="BarLine" type="Line2D" parent="Bar(PleaseDontLook)" unique_id=1199655383]
+points = PackedVector2Array(40, 24, 240, 24)
+width = 3.0
+
+[node name="Diamond1" type="ColorRect" parent="Bar(PleaseDontLook)" unique_id=1309962389]
+offset_left = 240.00002
+offset_top = 20.0
+offset_right = 245.58919
+offset_bottom = 25.589165
+rotation = 0.7853982
+
+[node name="Line2D5" type="Line2D" parent="Bar(PleaseDontLook)" unique_id=375776615]
+position = Vector2(44, 24)
+points = PackedVector2Array(0, 0, 0, 16)
+width = 2.0
+
+[node name="Line2D6" type="Line2D" parent="Bar(PleaseDontLook)" unique_id=914242502]
+position = Vector2(52, 24)
+points = PackedVector2Array(0, 0, 0, 8)
+width = 1.0
+
+[node name="Line2D7" type="Line2D" parent="Bar(PleaseDontLook)" unique_id=1883671044]
+position = Vector2(60, 24)
+points = PackedVector2Array(0, 0, 0, 8)
+width = 1.0
+
+[node name="Line2D8" type="Line2D" parent="Bar(PleaseDontLook)" unique_id=1900248754]
+position = Vector2(68, 24)
+points = PackedVector2Array(0, 0, 0, 8)
+width = 1.0
+
+[node name="Line2D9" type="Line2D" parent="Bar(PleaseDontLook)" unique_id=1514263808]
+position = Vector2(76, 24)
+points = PackedVector2Array(0, 0, 0, 8)
+width = 1.0
+
+[node name="Line2D25" type="Line2D" parent="Bar(PleaseDontLook)" unique_id=1640943994]
+position = Vector2(84, 24)
+points = PackedVector2Array(0, 0, 0, 8)
+width = 1.0
+
+[node name="Line2D10" type="Line2D" parent="Bar(PleaseDontLook)" unique_id=452316898]
+position = Vector2(100, 24)
+points = PackedVector2Array(0, 0, 0, 8)
+width = 1.0
+
+[node name="Line2D11" type="Line2D" parent="Bar(PleaseDontLook)" unique_id=667422146]
+position = Vector2(108, 24)
+points = PackedVector2Array(0, 0, 0, 8)
+width = 1.0
+
+[node name="Line2D12" type="Line2D" parent="Bar(PleaseDontLook)" unique_id=959936491]
+position = Vector2(116, 24)
+points = PackedVector2Array(0, 0, 0, 8)
+width = 1.0
+
+[node name="Line2D13" type="Line2D" parent="Bar(PleaseDontLook)" unique_id=281893084]
+position = Vector2(124, 24)
+points = PackedVector2Array(0, 0, 0, 8)
+width = 1.0
+
+[node name="Line2D14" type="Line2D" parent="Bar(PleaseDontLook)" unique_id=304572215]
+position = Vector2(132, 24)
+points = PackedVector2Array(0, 0, 0, 8)
+width = 1.0
+
+[node name="Line2D15" type="Line2D" parent="Bar(PleaseDontLook)" unique_id=1424186674]
+position = Vector2(148, 24)
+points = PackedVector2Array(0, 0, 0, 8)
+width = 1.0
+
+[node name="Line2D16" type="Line2D" parent="Bar(PleaseDontLook)" unique_id=2052815822]
+position = Vector2(156, 24)
+points = PackedVector2Array(0, 0, 0, 8)
+width = 1.0
+
+[node name="Line2D17" type="Line2D" parent="Bar(PleaseDontLook)" unique_id=1199558908]
+position = Vector2(164, 24)
+points = PackedVector2Array(0, 0, 0, 8)
+width = 1.0
+
+[node name="Line2D18" type="Line2D" parent="Bar(PleaseDontLook)" unique_id=32279709]
+position = Vector2(172, 24)
+points = PackedVector2Array(0, 0, 0, 8)
+width = 1.0
+
+[node name="Line2D19" type="Line2D" parent="Bar(PleaseDontLook)" unique_id=902019749]
+position = Vector2(204, 24)
+points = PackedVector2Array(0, 0, 0, 8)
+width = 1.0
+
+[node name="Line2D20" type="Line2D" parent="Bar(PleaseDontLook)" unique_id=189499098]
+position = Vector2(212, 24)
+points = PackedVector2Array(0, 0, 0, 8)
+width = 1.0
+
+[node name="Line2D21" type="Line2D" parent="Bar(PleaseDontLook)" unique_id=1140254354]
+position = Vector2(220, 24)
+points = PackedVector2Array(0, 0, 0, 8)
+width = 1.0
+
+[node name="Line2D22" type="Line2D" parent="Bar(PleaseDontLook)" unique_id=1642977980]
+position = Vector2(228, 24)
+points = PackedVector2Array(0, 0, 0, 8)
+width = 1.0
+
+[node name="Line2D23" type="Line2D" parent="Bar(PleaseDontLook)" unique_id=1255687136]
+position = Vector2(180, 24)
+points = PackedVector2Array(0, 0, 0, 8)
+width = 1.0
+
+[node name="Line2D24" type="Line2D" parent="Bar(PleaseDontLook)" unique_id=963609185]
+position = Vector2(196, 24)
+points = PackedVector2Array(0, 0, 0, 8)
+width = 1.0
+
+[node name="Line2D" type="Line2D" parent="Bar(PleaseDontLook)" unique_id=2058819339]
+position = Vector2(92, 24)
+points = PackedVector2Array(0, 0, 0, 12)
+width = 2.0
+
+[node name="Line2D2" type="Line2D" parent="Bar(PleaseDontLook)" unique_id=296059197]
+position = Vector2(140, 24)
+points = PackedVector2Array(0, 0, 0, 16)
+width = 2.0
+
+[node name="Line2D3" type="Line2D" parent="Bar(PleaseDontLook)" unique_id=281094854]
+position = Vector2(188, 24)
+points = PackedVector2Array(0, 0, 0, 12)
+width = 2.0
+
+[node name="Line2D4" type="Line2D" parent="Bar(PleaseDontLook)" unique_id=352067249]
+position = Vector2(236, 24)
+points = PackedVector2Array(0, 0, 0, 16)
+width = 2.0
+
+[node name="ArrowLine" type="Line2D" parent="." unique_id=1539987245]
+position = Vector2(236, 20)
+points = PackedVector2Array(0, 0, 0, 12, -4, 12, 0, 16, 4, 12, 0, 12)
+width = 2.0
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2

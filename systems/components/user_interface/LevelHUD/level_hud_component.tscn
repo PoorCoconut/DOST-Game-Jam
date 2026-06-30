@@ -3,15 +3,79 @@
 [ext_resource type="Script" uid="uid://c1uo6d8lr232y" path="res://systems/components/user_interface/LevelHUD/level_hud_component.gd" id="1_xjqfi"]
 [ext_resource type="PackedScene" uid="uid://djq7ncohokjby" path="res://systems/components/user_interface/FrequencyBarComponent/frequency_bar_component.tscn" id="4_42bt7"]
 [ext_resource type="PackedScene" uid="uid://b8a5r72xa74hx" path="res://systems/components/user_interface/AudioVisualizerCircularComponent/audio_visualizer_circular_component.tscn" id="4_mwk34"]
+[ext_resource type="PackedScene" uid="uid://c5cs7bmkm68cx" path="res://systems/components/user_interface/ScoreMeterComponent/score_meter_component.tscn" id="5_cxd2y"]
 [ext_resource type="PackedScene" uid="uid://b7u0kqlhcwvtg" path="res://systems/components/user_interface/JudgementRingComponent/judgement_ring_component.tscn" id="5_ilhbb"]
+
+[sub_resource type="Gradient" id="Gradient_cxd2y"]
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_cxd2y"]
+gradient = SubResource("Gradient_cxd2y")
+
+[sub_resource type="Gradient" id="Gradient_mwk34"]
+colors = PackedColorArray(1, 1, 1, 0, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ax0dj"]
+gradient = SubResource("Gradient_mwk34")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mwk34"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0.76862746, 0.76862746, 0.76862746, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cxd2y"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(1, 1, 1, 1)
 
 [node name="LevelHUDComponent" type="CanvasLayer" unique_id=511265971]
 script = ExtResource("1_xjqfi")
 
+[node name="FadeLeft" type="Sprite2D" parent="." unique_id=1475613443]
+position = Vector2(160, 31.75)
+scale = Vector2(1.25, 64.5)
+texture = SubResource("GradientTexture1D_cxd2y")
+
+[node name="FadeRight" type="Sprite2D" parent="." unique_id=1649934717]
+position = Vector2(992, 32)
+scale = Vector2(1.25, 64.5)
+texture = SubResource("GradientTexture1D_ax0dj")
+
 [node name="FrequencyBarComponent" parent="." unique_id=1123226504 instance=ExtResource("4_42bt7")]
-position = Vector2(64, 64)
-scale = Vector2(0.5, 0.5)
+position = Vector2(32, 32)
+scale = Vector2(0.25, 0.25)
 
 [node name="JudgementRingComponent" parent="." unique_id=575620661 instance=ExtResource("5_ilhbb")]
 
 [node name="AudioVisualizerCircularComponent" parent="." unique_id=1170582492 instance=ExtResource("4_mwk34")]
+
+[node name="SongProgressBar" type="ProgressBar" parent="." unique_id=1739492356]
+unique_name_in_owner = true
+offset_top = 640.0
+offset_right = 1152.0
+offset_bottom = 648.0
+theme_override_styles/background = SubResource("StyleBoxFlat_mwk34")
+theme_override_styles/fill = SubResource("StyleBoxFlat_cxd2y")
+show_percentage = false
+
+[node name="SongNameLabel" type="Label" parent="." unique_id=1787361274]
+offset_left = 8.0
+offset_top = 616.0
+offset_right = 320.0
+offset_bottom = 639.0
+text = "SONG NAME"
+
+[node name="DifficultyLabel" type="Label" parent="." unique_id=1822783040]
+offset_left = 832.0
+offset_top = 616.0
+offset_right = 1144.0
+offset_bottom = 639.0
+text = "DIFFICULTY LABEL"
+horizontal_alignment = 2
+
+[node name="ScoreMeterComponent" parent="." unique_id=1072199233 instance=ExtResource("5_cxd2y")]
+position = Vector2(888, 8)

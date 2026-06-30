@@ -1,27 +1,72 @@
 [gd_scene format=3 uid="uid://djq7ncohokjby"]
 
 [ext_resource type="Script" uid="uid://cs0afpy0ghlig" path="res://systems/components/user_interface/FrequencyBarComponent/frequency_bar_component.gd" id="1_sl5ek"]
+[ext_resource type="Texture2D" uid="uid://bascrkywa76n8" path="res://assets/dcb2b55a30fa32bcae5869c36edf1bcf-removebg-preview.png" id="2_6orvl"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_sl5ek"]
+[sub_resource type="Gradient" id="Gradient_6orvl"]
+offsets = PackedFloat32Array(0, 0.845679, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
 
 [node name="FrequencyBarComponent" type="Node2D" unique_id=1123226504]
 script = ExtResource("1_sl5ek")
+amplitude = 70.0
+frequency = 10.0
+length = 1080.0
+heart_idle_jitter = 0.9
+heart_max_jitter = 5.0
 
-[node name="HeartSprite" type="Sprite2D" parent="." unique_id=1735676780]
+[node name="Circle" type="Sprite2D" parent="." unique_id=1735676780]
 unique_name_in_owner = true
-scale = Vector2(48.5, 48.5)
-texture = SubResource("PlaceholderTexture2D_sl5ek")
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_6orvl")
 
 [node name="Frequency" type="Line2D" parent="." unique_id=1070094042]
 unique_name_in_owner = true
-position = Vector2(48, 0)
+position = Vector2(71, 0)
+width = 8.0
+gradient = SubResource("Gradient_6orvl")
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="Heart" type="Line2D" parent="." unique_id=292397087]
+unique_name_in_owner = true
+points = PackedVector2Array(0, 32, -32, 0, -16, -24, 0, -8, 16, -24, 32, 0, 0, 32)
+width = 4.0
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="BarLines" type="Node2D" parent="." unique_id=527312411]
+
+[node name="Bar" type="Line2D" parent="BarLines" unique_id=46480356]
+position = Vector2(23, 0)
+points = PackedVector2Array(25, 0, 1129, 0)
+width = 5.0
+gradient = SubResource("Gradient_6orvl")
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="TopLine" type="Line2D" parent="BarLines" unique_id=984722011]
+position = Vector2(23, 0)
+points = PackedVector2Array(-23, -48, -23, -96)
 width = 5.0
 joint_mode = 2
 begin_cap_mode = 2
 end_cap_mode = 2
 
-[node name="Bar" type="Line2D" parent="." unique_id=46480356]
-points = PackedVector2Array(48, -16, 48, 16, 48, 0, 400, 0, 400, -8, 416, 0, 400, 8, 400, 0)
+[node name="LeftLine" type="Line2D" parent="BarLines" unique_id=407821009]
+position = Vector2(23, 0)
+points = PackedVector2Array(-71, 0, -119, 0)
+width = 5.0
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="BottomLine" type="Line2D" parent="BarLines" unique_id=1279525328]
+position = Vector2(23, 0)
+points = PackedVector2Array(-23, 48, -23, 96)
 width = 5.0
 joint_mode = 2
 begin_cap_mode = 2
