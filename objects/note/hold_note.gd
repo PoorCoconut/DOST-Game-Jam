@@ -7,14 +7,14 @@ var end_time: float = 0.0                     # when the tail ends
 var beat_duration: float = 0.0                # total beats this note spans
 var judged: bool = false                      # true once head is pressed or missed
 var is_held: bool = false                     # true while player is holding
-var head_judgment: String = "miss"            # judgment from head press
+var head_judgement: String = "miss"           # judgement from head press
 var press_time: float = 0.0                   # when the player pressed the head
 var last_tick_beat: float = 0.0               # tracks the last sustain tick
 var is_lite: bool = false                     # head needs to be pressed, not "just pressed"
 
-var slices_total: int = 0                    # total beat slices for this hold note
-var slices_hit: int = 0                      # how many slices have been scored so far
-var next_slice_beat: float = 0.0             # the beat time of the next slice to score
+var slices_total: int = 0                     # total beat slices for this hold note
+var slices_hit: int = 0                       # how many slices have been scored so far
+var next_slice_beat: float = 0.0              # the beat time of the next slice to score
 
 signal auto_resolved(note)
 
@@ -27,7 +27,7 @@ func _actual_speed() -> float:
 	return Conductor.BASE_SCROLL_SPEED * Settings.current_scroll_speed
 
 
-func setup(p_lane: int, p_target_time: float, p_end_time: float, p_beat_duration: float, p_direction: Vector2) -> void:
+func setup(p_lane: int, p_target_time: float, p_end_time: float, p_beat_duration: float, p_direction: Vector2, p_is_lite: bool) -> void:
 	lane = p_lane
 	target_time = p_target_time
 	end_time = p_end_time
@@ -109,8 +109,11 @@ func _process(_delta: float) -> void:
 
 func _on_miss() -> void:
 	judged = true
-	for i in range(slices_total):
-		ScoreSystem.register_hold_slice("miss")
+	if is_lite:
+		ScoreSystem.register_lite_miss()
+	else:
+		ScoreSystem.register_miss()
+	
 	VisualEffects.play_note_miss(self)
 	if not is_inside_tree(): return
 	await get_tree().create_timer(0.15).timeout
@@ -121,10 +124,9 @@ func on_head_pressed(time_diff: float) -> void:
 	judged = true
 	is_held = true
 	press_time = Conductor.get_time()
-	head_judgment = ScoreSystem._get_judgment(time_diff)
+	head_judgement = ScoreSystem._get_judgement(time_diff)
 
-	ScoreSystem.register_hold_slice(head_judgment)
-	_play_sound()
+	ScoreSystem.register_hold_slice(head_judgement)
 	slices_hit = 1
 
 	var head_beat: float = target_time / Conductor.seconds_per_beat
@@ -139,14 +141,13 @@ func on_released() -> void:
 	var now: float = Conductor.get_time()
 
 	if now >= end_time:
+		_play_sound()
 		VisualEffects.play_note_hit(self)
 		if not is_inside_tree(): return
 		await get_tree().create_timer(0.15).timeout
 		queue_free()
 	else:
-		while slices_hit < slices_total:
-			ScoreSystem.register_hold_slice("miss")
-			slices_hit += 1
+		ScoreSystem.register_miss()
 		VisualEffects.play_note_miss(self)
 		if not is_inside_tree(): return
 		await get_tree().create_timer(0.15).timeout

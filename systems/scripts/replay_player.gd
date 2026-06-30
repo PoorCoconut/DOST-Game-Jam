@@ -76,7 +76,7 @@ func _process(_delta: float) -> void:
 
 
 func _fire_hold(entry: Dictionary, scheduled_press_time: float) -> void:
-	# print("[DEBUG-REPLAYER] _fire_entry called -> is_hold: true | judgment: %s | lane: %d | mode: %s" % [entry.get("judgment", "??"), entry.get("lane", -1), entry.get("mode", "??")])
+	# print("[DEBUG-REPLAYER] _fire_entry called -> is_hold: true | judgement: %s | lane: %d | mode: %s" % [entry.get("judgement", "??"), entry.get("lane", -1), entry.get("mode", "??")])
 
 	var lane: int = entry["lane"]
 	var mode: String = entry["mode"]
@@ -85,7 +85,7 @@ func _fire_hold(entry: Dictionary, scheduled_press_time: float) -> void:
 		current_mode = mode
 		sustain_ring.rotation_degrees = 45.0 if mode == "x" else 0.0
 
-	if entry["judgment"] == "miss":
+	if entry["judgement"] == "miss":
 		return
 
 	var ideal_target_time: float = entry["beat_start"] * Conductor.seconds_per_beat
@@ -100,7 +100,9 @@ func _fire_hold(entry: Dictionary, scheduled_press_time: float) -> void:
 
 	var diff: float = abs(hold_note.target_time - scheduled_press_time)
 	hold_note.on_head_pressed(diff)
-
+	
+	# OH MY GOOOODDD OKAY FINE
+	SoundManager.play_hitsound(lane)
 	judge.held_notes[lane] = hold_note
 	judge.held_note_data[lane] = entry["beat_start"]
 	judge.held_note_modes[lane] = mode
@@ -120,7 +122,7 @@ func _fire_hold(entry: Dictionary, scheduled_press_time: float) -> void:
 
 
 func _fire_tap(entry: Dictionary, scheduled_press_time: float) -> void:
-	# print("[DEBUG-REPLAYER] _fire_entry called -> is_hold: false | judgment: %s | lane: %d | mode: %s" % [entry.get("judgment", "??"), entry.get("lane", -1), entry.get("mode", "??")])
+	# print("[DEBUG-REPLAYER] _fire_entry called -> is_hold: false | judgement: %s | lane: %d | mode: %s" % [entry.get("judgement", "??"), entry.get("lane", -1), entry.get("mode", "??")])
 
 	var lane: int = entry["lane"]
 	var mode: String = entry["mode"]
@@ -129,7 +131,7 @@ func _fire_tap(entry: Dictionary, scheduled_press_time: float) -> void:
 		current_mode = mode
 		sustain_ring.rotation_degrees = 45.0 if mode == "x" else 0.0
 
-	if entry["judgment"] == "miss":
+	if entry["judgement"] == "miss":
 		return
 
 	var notes: Array = spawner.active_notes[mode][lane]
@@ -146,7 +148,7 @@ func _fire_tap(entry: Dictionary, scheduled_press_time: float) -> void:
 
 	if closest_note != null:
 		closest_note.judged = true
-		ScoreSystem.register_judgment(abs(entry["time_offset"]))
+		ScoreSystem.register_judgement(abs(entry["time_offset"]))
 		if SoundManager.has_method("play_hitsound"):
 			SoundManager.play_hitsound(lane)
 		if closest_note.has_method("destroy"):
@@ -157,7 +159,7 @@ func _fire_tap(entry: Dictionary, scheduled_press_time: float) -> void:
 
 func _find_hold_note(mode: String, lane: int, ideal_target_time: float) -> Node2D:
 	var best_note: Node2D = null
-	var best_diff: float = 0.25
+	var best_diff: float = 0.05
 
 	var hold_notes: Array = spawner.active_hold_notes[mode][lane]
 	for note in hold_notes:

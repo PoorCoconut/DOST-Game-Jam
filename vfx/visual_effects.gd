@@ -1,19 +1,13 @@
 extends Node
 
-# THIS IS VERY BARE-BONES, AND IS OPEN FOR CHANGE
-# THE REASON FOR ADDING VFX THIS EARLY:
-# - to be able to see early on what the final look should be, like:
-#     - sync notes should be a different color
-#     - x notes should be different to + notes so its easy to understand if the player should rotate or no
-#     - proper indicator for hits and misses
-# - that's... all for now really
+# this should probably be renamed to NoteEffects
 
 
-# a bit hard-coded i guess
 @export var plus_color: Color = Color.WHITE
 @export var x_color:    Color = Color(0.49, 0.745, 1.0, 1.0)
 @export var sync_color: Color = Color(2.0, 1.5, 0.0)
 @export var lite_color: Color = Color(0.75, 0.45, 1.0) 
+
 
 func setup_note_visuals(note: Node2D, mode: String) -> void:
 	note.global_scale = Vector2.ONE

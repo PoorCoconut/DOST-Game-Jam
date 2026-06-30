@@ -45,7 +45,6 @@ text = "Press Space to Play"
 
 [node name="Button2" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1231617266]
 layout_mode = 2
-shortcut = SubResource("Shortcut_qiond")
 text = "Settings"
 
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Button" to="." method="_on_play_button_pressed"]

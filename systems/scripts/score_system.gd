@@ -1,6 +1,6 @@
 extends Node
 
-signal judgment_made(result)
+signal judgement_made(result)
 signal score_updated(volts, watts)
 signal hp_changed(current_hp, max_hp)  # emitted on every HP change so FrequencyBar can react
 signal player_failed                   # emitted when HP reaches 0
@@ -38,7 +38,7 @@ var total_notes: int = 0
 var base_amp_per_note: float = 0.0
 var base_volt_per_note: float = 0.0
 
-# judgment counters for ranking panel
+# judgement counters for ranking panel
 var perfects: int = 0
 var goods: int = 0
 var bads: int = 0
@@ -50,14 +50,14 @@ var hp_good: float = 1.0         # HP gained on good hit
 var hp_bad: float = 0.5          # HP gained on bad hit
 var hp_miss_ratio: float = 0.1   # HP lost on miss (10% of max HP)
 
-# TODO
 var hp_lite_hit: float = hp_good # HP gained on lite note hit
 var hp_lite_miss: float = 0.05   # HP lost on lite note misses (5% of max HP)
 
 # HP state — managed here, displayed by FrequencyBarComponent
 var current_hp: float = 100.0
 var max_hp: float = 100.0
-var is_failed: bool = false  # true once HP hits 0 — forces F rank regardless of watts
+var is_failed: bool = false     # true once HP hits 0 — forces F rank regardless of watts
+var is_invincible: bool = false # always false by default, this is just in preparation for a "No Fail" mod
 
 
 func load_chart(chart_resource: ChartData) -> void:
@@ -71,9 +71,9 @@ func load_chart(chart_resource: ChartData) -> void:
 		base_volt_per_note = float(MAX_VOLT_SCORE) / float(total_notes)
 
 
-func register_judgment(time_diff: float) -> String:
-	var result: String = _get_judgment(time_diff)
-	_record_judgment(result)
+func register_judgement(time_diff: float) -> String:
+	var result: String = _get_judgement(time_diff)
+	_record_judgement(result)
 	_apply_hp(result)
 
 	if result == "miss":
@@ -84,7 +84,7 @@ func register_judgment(time_diff: float) -> String:
 		watts += base_amp_per_note * ACCURACY_RATIO[result]
 		watts += base_volt_per_note
 
-	judgment_made.emit(result)
+	judgement_made.emit(result)
 	score_updated.emit(volts, roundi(watts))
 
 	# DEBUG
@@ -94,7 +94,7 @@ func register_judgment(time_diff: float) -> String:
 
 func register_hold_slice(result: String) -> void:
 	# called once per beat slice while a hold note is active
-	_record_judgment(result)
+	_record_judgement(result)
 	_apply_hp(result)
 
 	if result == "miss":
@@ -105,16 +105,42 @@ func register_hold_slice(result: String) -> void:
 		watts += base_amp_per_note * ACCURACY_RATIO[result]
 		watts += base_volt_per_note
 
-	judgment_made.emit(result)
+	judgement_made.emit(result)
 	score_updated.emit(volts, roundi(watts))
 
 	# DEBUG
-	print("[SCORE] HOLD SLICE %s | Volts: %d | Watts: %d | HP: %.1f" % [result.to_upper(), volts, roundi(watts), current_hp])
+	# print("[SCORE] HOLD SLICE %s | Volts: %d | Watts: %d | HP: %.1f" % [result.to_upper(), volts, roundi(watts), current_hp])
+
+
+func register_lite_hit() -> void:
+	_record_judgement("perfect")
+	_apply_hp_direct(hp_lite_hit)
+	
+	volts += 1
+	max_volts = max(max_volts, volts)
+	
+	# scored as perfect
+	watts += base_amp_per_note * ACCURACY_RATIO["perfect"]
+	watts += base_volt_per_note
+	
+	judgement_made.emit("perfect")
+	score_updated.emit(volts, roundi(watts))
+
+
+func register_lite_miss() -> void:
+	_record_judgement("miss")
+	_apply_hp_direct(-(max_hp * hp_lite_miss))
+	
+	volts = 0
+	
+	judgement_made.emit("miss")
+	score_updated.emit(volts, roundi(watts))
+	print("[SCORE] LITE MISS | Combo Reset | HP: %.1f" % current_hp)
 
 
 # didn't click
 func register_miss() -> void:
-	register_judgment(INF)
+	register_judgement(INF)
 
 
 func get_rank() -> String:
@@ -137,12 +163,30 @@ func _apply_hp(result: String) -> void:
 		"bad":     current_hp = min(current_hp + hp_bad, max_hp)
 		"miss":    current_hp = max(current_hp - (max_hp * hp_miss_ratio), 0.0)
 	hp_changed.emit(current_hp, max_hp)
+	
+	if is_invincible:
+		current_hp = max_hp
+		return
+	
 	if current_hp <= 0 and not is_failed:
 		is_failed = true
 		player_failed.emit()
 
 
-func _record_judgment(result: String) -> void:
+func _apply_hp_direct(amount: float) -> void:
+	current_hp = clamp(current_hp + amount, 0.0, max_hp)
+	hp_changed.emit(current_hp, max_hp)
+	
+	if is_invincible:
+		current_hp = max_hp
+		return
+	
+	if current_hp <= 0 and not is_failed:
+		is_failed = true
+		player_failed.emit()
+
+
+func _record_judgement(result: String) -> void:
 	match result:
 		"perfect": perfects += 1
 		"good": goods += 1
@@ -151,7 +195,7 @@ func _record_judgment(result: String) -> void:
 
 
 # timings
-func _get_judgment(time_diff: float) -> String:
+func _get_judgement(time_diff: float) -> String:
 	if time_diff <= PERFECT_WINDOW:
 		return "perfect"
 	elif time_diff <= GOOD_WINDOW:

@@ -53,6 +53,7 @@ metadata/_custom_type_script = "uid://dsabl2qk2n1bp"
 script = ExtResource("1_6nwpc")
 beat_start = 9.0
 beat_end = 11.0
+is_lite = true
 lane = 2
 metadata/_custom_type_script = "uid://dsabl2qk2n1bp"
 

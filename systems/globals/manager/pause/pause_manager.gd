@@ -47,8 +47,7 @@ func resume_game() -> void:
 
 
 func go_to_results_after_fail() -> void:
-	# Only now saves the replay when player
-	# clicks results on fail
+	# Only now saves the replay when player clicks results on fail
 	get_tree().paused = false
 	is_paused = false
 
