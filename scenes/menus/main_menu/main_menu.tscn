@@ -139,6 +139,7 @@ visible = false
 layout_mode = 1
 
 [node name="SettingsOverlay" parent="." unique_id=690435023 instance=ExtResource("4_peecx")]
+visible = false
 layout_mode = 1
 offset_left = -576.0
 offset_top = -328.0

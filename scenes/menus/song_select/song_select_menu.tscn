@@ -1,0 +1,84 @@
+[gd_scene format=3 uid="uid://dikdl2je1f0k6"]
+
+[ext_resource type="PackedScene" uid="uid://bp8aei52hyfm8" path="res://scenes/menus/song_select/song_card/song_card.tscn" id="1_ecet1"]
+[ext_resource type="Script" uid="uid://tf0rg0jnfvl" path="res://scenes/menus/song_select/song_select_menu.gd" id="1_f68u0"]
+[ext_resource type="PackedScene" uid="uid://07sua8ll53xq" path="res://scenes/menus/ui_header/ui_header.tscn" id="2_l5ec8"]
+[ext_resource type="PackedScene" uid="uid://criendm0u25hq" path="res://scenes/menus/song_select/song_list/song_list.tscn" id="3_8y6ec"]
+[ext_resource type="PackedScene" uid="uid://m3fs1bi2pk0w" path="res://scenes/menus/overlay/profile_dropdown/profile_dropdown_overlay.tscn" id="5_ulf0x"]
+[ext_resource type="PackedScene" uid="uid://dhp8w153d0qd6" path="res://scenes/menus/overlay/profile_input/profile_input_modal.tscn" id="6_cnu2e"]
+
+[node name="SongSelectMenu" type="Control" unique_id=701800275]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_f68u0")
+
+[node name="BackgroundDimmer" type="ColorRect" parent="." unique_id=495573193]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 0.1764706)
+
+[node name="MainVerticalStack" type="VBoxContainer" parent="." unique_id=878601018]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="UIHeader" parent="MainVerticalStack" unique_id=1325149863 instance=ExtResource("2_l5ec8")]
+z_index = 1
+clip_contents = true
+custom_minimum_size = Vector2(0, 112)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MainVerticalStack" unique_id=1831742943]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_top = -40
+
+[node name="CenterLayoutContainer" type="HBoxContainer" parent="MainVerticalStack/MarginContainer" unique_id=321207231]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 335
+alignment = 2
+
+[node name="SongCard" parent="MainVerticalStack/MarginContainer/CenterLayoutContainer" unique_id=296548007 instance=ExtResource("1_ecet1")]
+layout_mode = 2
+
+[node name="SongList" parent="MainVerticalStack/MarginContainer/CenterLayoutContainer" unique_id=1708506911 instance=ExtResource("3_8y6ec")]
+layout_mode = 2
+
+[node name="ViewportLoadingIndicator" type="Control" parent="." unique_id=1566780552]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ProfileDropdownOverlay" parent="." unique_id=1990743977 instance=ExtResource("5_ulf0x")]
+visible = false
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="ProfileInputModal" parent="." unique_id=796207773 instance=ExtResource("6_cnu2e")]
+visible = false
+layout_mode = 1

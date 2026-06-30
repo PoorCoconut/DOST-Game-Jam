@@ -1,0 +1,99 @@
+[gd_scene format=3 uid="uid://07sua8ll53xq"]
+
+[ext_resource type="Script" uid="uid://bnhx5mqi27qrn" path="res://scenes/menus/ui_header/ui_header.gd" id="1_064fg"]
+[ext_resource type="PackedScene" uid="uid://gvgujai51nkd" path="res://scenes/menus/ui_header/profile_card/profile_card.tscn" id="2_k600t"]
+
+[node name="UIHeader" type="Control" unique_id=1325149863]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -8.0
+offset_bottom = 104.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+script = ExtResource("1_064fg")
+
+[node name="HeaderBackground" type="ColorRect" parent="." unique_id=1969018763]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.2627451)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=288677413]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+
+[node name="LeftProfileSection" type="HBoxContainer" parent="HBoxContainer" unique_id=2041291720]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/LeftProfileSection" unique_id=1282123201]
+layout_mode = 2
+theme_override_constants/margin_right = 24
+
+[node name="BackButton" type="Button" parent="HBoxContainer/LeftProfileSection/MarginContainer" unique_id=1672952723]
+custom_minimum_size = Vector2(64, 72)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/outline_size = 0
+text = "<--"
+
+[node name="ProfileCard" parent="HBoxContainer/LeftProfileSection" unique_id=761239812 instance=ExtResource("2_k600t")]
+layout_mode = 2
+
+[node name="SkillsTabButton" type="Button" parent="HBoxContainer/LeftProfileSection" unique_id=1703843265]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+toggle_mode = true
+text = "Skills"
+
+[node name="ModsTabButton" type="Button" parent="HBoxContainer/LeftProfileSection" unique_id=796876051]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+toggle_mode = true
+text = "Mods"
+
+[node name="ActiveModsRow" type="HBoxContainer" parent="HBoxContainer/LeftProfileSection" unique_id=833146205]
+layout_mode = 2
+
+[node name="ModFL" type="TextureRect" parent="HBoxContainer/LeftProfileSection/ActiveModsRow" unique_id=1009787339]
+layout_mode = 2
+
+[node name="ModFS" type="TextureRect" parent="HBoxContainer/LeftProfileSection/ActiveModsRow" unique_id=1223068058]
+layout_mode = 2
+
+[node name="ModDT" type="TextureRect" parent="HBoxContainer/LeftProfileSection/ActiveModsRow" unique_id=1256463690]
+layout_mode = 2
+
+[node name="ModHR" type="TextureRect" parent="HBoxContainer/LeftProfileSection/ActiveModsRow" unique_id=1568296445]
+layout_mode = 2
+
+[node name="RightControlsSection" type="HBoxContainer" parent="HBoxContainer" unique_id=1202793456]
+layout_mode = 2
+alignment = 2
+
+[node name="VolumeButton" type="Button" parent="HBoxContainer/RightControlsSection" unique_id=645169672]
+custom_minimum_size = Vector2(64, 72)
+layout_mode = 2
+size_flags_vertical = 0
+text = "<))"
+
+[node name="SettingsButton" type="Button" parent="HBoxContainer/RightControlsSection" unique_id=270645354]
+custom_minimum_size = Vector2(64, 72)
+layout_mode = 2
+size_flags_vertical = 0
+text = "*"
+
+[connection signal="profile_clicked" from="HBoxContainer/LeftProfileSection/ProfileCard" to="." method="_on_profile_card_clicked"]
+[connection signal="toggled" from="HBoxContainer/LeftProfileSection/SkillsTabButton" to="." method="_on_skills_tab_toggled"]
+[connection signal="toggled" from="HBoxContainer/LeftProfileSection/ModsTabButton" to="." method="_on_mods_tab_toggled"]
