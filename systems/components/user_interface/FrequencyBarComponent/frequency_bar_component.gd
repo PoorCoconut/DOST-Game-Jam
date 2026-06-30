@@ -17,30 +17,36 @@ var phase: float = 0.1
 var hp_ratio: float = 1.0  #Made by CUR_HP / MAX_HP. 1 is full health, 0 is no health
 #^^^ Note that hp_ratio controls many aspects of the wave. The Speed as well as the frequency!
 var target_ratio: float = 1.0  #hp_ratio lerps toward this. Set this when HP changes.
+
 @onready var frequency_line: Line2D = %Frequency
+
 
 func _ready():
 	print("[STATS] HP: ", CUR_HP, " / ", MAX_HP)
+	ScoreSystem.hp_changed.connect(_on_hp_changed)
 	_redraw()
 
-#Example [very simple] hp setter
+
+func _on_hp_changed(current: float, max_hp: float) -> void:
+	set_hp(current, max_hp)
+	print("[STATS] HP: ", CUR_HP, " / ", MAX_HP)
+
+
+# Example [very simple] hp setter
 func set_hp(current: float, max_hp: float = MAX_HP) -> void:
 	if current <= 0:
 		CUR_HP = 0
-	else: CUR_HP = current
+	else:
+		CUR_HP = current
 	MAX_HP = max_hp
 	target_ratio = clamp(CUR_HP / MAX_HP, 0.0, 1.0)
 
-func _input(_event: InputEvent) -> void:
-	if Input.is_action_just_pressed("ui_accept"):
-		CUR_HP -= 5
-		set_hp(CUR_HP - 5)
-		print("[STATS] HP: ",CUR_HP, " / ", MAX_HP)
 
 func _process(delta: float) -> void:
 	hp_ratio = lerp(hp_ratio, target_ratio, delta * lerp_speed) #Changes the hp ratio with an interpolation
 	phase += delta * (speed * hp_ratio) #Animation speed scales with hp!
 	_redraw()
+
 
 func _redraw() -> void:
 	frequency_line.clear_points()
