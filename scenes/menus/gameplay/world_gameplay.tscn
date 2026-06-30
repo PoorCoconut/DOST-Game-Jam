@@ -8,9 +8,10 @@
 [ext_resource type="Texture2D" uid="uid://1gsm04pemx5x" path="res://assets/energy_mask.png" id="5_fn7vn"]
 [ext_resource type="Script" uid="uid://dhob63b2lbkiu" path="res://systems/scripts/note_spawner.gd" id="6_lr7i6"]
 [ext_resource type="PackedScene" uid="uid://k00spa2y4tnk" path="res://objects/note/tap_note.tscn" id="7_07rdt"]
+[ext_resource type="Script" uid="uid://37kj31j1y7qo" path="res://systems/scripts/ring_scale_controller.gd" id="7_fn7vn"]
 [ext_resource type="PackedScene" uid="uid://d3skweb2myvk" path="res://objects/note/hold_note.tscn" id="8_a5bbv"]
 [ext_resource type="Script" uid="uid://bte3cw0r48u2u" path="res://systems/scripts/replay_player.gd" id="9_replay"]
-[ext_resource type="Script" uid="uid://dcwpsqw6nr4f8" path="res://systems/scripts/world_gameplay.gd" id="10_wgp"]
+[ext_resource type="Script" uid="uid://dcwpsqw6nr4f8" path="res://scenes/menus/gameplay/world_gameplay.gd" id="10_wgp"]
 
 [node name="WorldGameplay" type="Node2D" unique_id=1726405357]
 script = ExtResource("10_wgp")
@@ -42,6 +43,7 @@ unique_name_in_owner = true
 script = ExtResource("9_replay")
 
 [node name="PlayfieldContainer" type="Node2D" parent="." unique_id=1553197630]
+script = ExtResource("7_fn7vn")
 
 [node name="EnergyRing" type="Sprite2D" parent="PlayfieldContainer" unique_id=451023611]
 scale = Vector2(1.3, 1.3)

@@ -67,15 +67,23 @@ offset_bottom = 241.0
 placeholder_text = "Set BPM"
 alignment = 1
 
+[node name="RingPercentField" type="LineEdit" parent="UI" unique_id=244274957]
+layout_mode = 0
+offset_top = 245.0
+offset_right = 127.0
+offset_bottom = 276.0
+placeholder_text = "Ring Scale"
+alignment = 1
+
 [node name="ScrollContainer" type="ScrollContainer" parent="UI" unique_id=495508522]
 layout_mode = 0
 offset_left = 137.0
 offset_top = 40.0
-offset_right = 610.0
+offset_right = 636.0
 offset_bottom = 611.0
 
 [node name="GridView" type="Control" parent="UI/ScrollContainer" unique_id=2007271287]
-custom_minimum_size = Vector2(400, 16200)
+custom_minimum_size = Vector2(480, 16200)
 layout_mode = 2
 script = ExtResource("2_xbjp5")
 
@@ -100,10 +108,10 @@ layout_mode = 2
 
 [node name="SongInfo" type="VBoxContainer" parent="UI" unique_id=672828153]
 layout_mode = 0
-offset_left = 631.0
-offset_top = 8.0
-offset_right = 671.0
-offset_bottom = 85.0
+offset_left = 644.0
+offset_top = 16.0
+offset_right = 684.0
+offset_bottom = 93.0
 
 [node name="TitleLabel" type="Label" parent="UI/SongInfo" unique_id=398431317]
 layout_mode = 2
@@ -116,7 +124,7 @@ layout_mode = 2
 
 [node name="Scrubber" type="Control" parent="UI" unique_id=1704809627]
 anchors_preset = 0
-offset_left = 628.0
+offset_left = 644.0
 offset_top = 104.0
 offset_right = 1124.0
 offset_bottom = 144.0
@@ -126,10 +134,10 @@ script = ExtResource("3_b5stn")
 clip_contents = true
 custom_minimum_size = Vector2(600, 450)
 anchors_preset = 0
-offset_left = 628.0
+offset_left = 644.0
 offset_top = 160.0
-offset_right = 1289.3333
-offset_bottom = 757.3334
+offset_right = 1284.0
+offset_bottom = 768.0
 scale = Vector2(0.75, 0.75)
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="UI/PreviewPanel" unique_id=1634317744]
@@ -147,7 +155,7 @@ stretch = true
 
 [node name="PreviewViewport" type="SubViewport" parent="UI/PreviewPanel/SubViewportContainer" unique_id=1760385502]
 handle_input_locally = false
-size = Vector2i(923, 561)
+size = Vector2i(902, 572)
 render_target_update_mode = 4
 
 [node name="PreviewRestart" type="Button" parent="UI/PreviewPanel" unique_id=507405584]
@@ -168,5 +176,6 @@ text = "Preview Restart"
 [connection signal="item_selected" from="UI/FileButtons/SnapOption" to="." method="_on_snap_option_item_selected"]
 [connection signal="text_changed" from="UI/BPMField" to="." method="_on_bpm_field_text_changed"]
 [connection signal="text_submitted" from="UI/BPMField" to="." method="_on_bpm_field_text_submitted"]
+[connection signal="text_submitted" from="UI/RingPercentField" to="." method="_on_ring_percent_field_text_submitted"]
 [connection signal="seek_requested" from="UI/Scrubber" to="." method="_on_scrubber_seek_requested"]
 [connection signal="pressed" from="UI/PreviewPanel/PreviewRestart" to="." method="_on_preview_restart_pressed"]

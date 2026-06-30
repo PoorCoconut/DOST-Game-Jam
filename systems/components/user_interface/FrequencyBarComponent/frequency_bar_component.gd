@@ -22,14 +22,12 @@ var target_ratio: float = 1.0  #hp_ratio lerps toward this. Set this when HP cha
 
 
 func _ready():
-	print("[STATS] HP: ", CUR_HP, " / ", MAX_HP)
 	ScoreSystem.hp_changed.connect(_on_hp_changed)
 	_redraw()
 
 
 func _on_hp_changed(current: float, max_hp: float) -> void:
 	set_hp(current, max_hp)
-	print("[STATS] HP: ", CUR_HP, " / ", MAX_HP)
 
 
 # Example [very simple] hp setter

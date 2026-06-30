@@ -9,7 +9,7 @@ const ENTRY_ROW_HEIGHT: int = 56
 
 var _current_chart: ChartData = null
 
-#just call show_chart when hoving or selecting a song
+# just call show_chart when hovering or selecting a song
 func show_chart(chart: ChartData) -> void:
 	if chart == _current_chart:
 		return

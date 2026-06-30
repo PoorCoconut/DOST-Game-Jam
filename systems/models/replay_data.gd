@@ -1,5 +1,6 @@
 extends Resource
 class_name ReplayData
+
 @export var chart: ChartData
 @export var entries: Array = []
 @export var final_watts: int
@@ -9,5 +10,5 @@ class_name ReplayData
 @export var goods: int
 @export var bads: int
 @export var misses: int
-@export var max_volts: int = 0  # peak combo reached during the run
+@export var max_volts: int = 0      # peak combo reached during the run
 @export var timestamp: float = 0.0  # Unix time when the replay was saved
