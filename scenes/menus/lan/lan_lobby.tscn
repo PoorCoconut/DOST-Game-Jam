@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://bx50lqfrb7kd7"]
+
+[ext_resource type="Script" uid="uid://8nxtx53iistm" path="res://scenes/menus/lan/lan_lobby.gd" id="1_script"]
+
+[node name="LANLobby" type="Control" unique_id=1961365679]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Background" type="ColorRect" parent="." unique_id=185685249]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="MainPanel" type="VBoxContainer" parent="." unique_id=490488377]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -120.0
+offset_right = 150.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NameInput" type="LineEdit" parent="MainPanel" unique_id=1168331480]
+layout_mode = 2
+placeholder_text = "Enter your name"
+
+[node name="GoOnlineButton" type="Button" parent="MainPanel" unique_id=825597635]
+layout_mode = 2
+text = "Go Online"
+
+[node name="StatusLabel" type="Label" parent="MainPanel" unique_id=145609296]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="PeerList" type="ItemList" parent="MainPanel" unique_id=29452106]
+visible = false
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="MainPanel" unique_id=402536927]
+layout_mode = 2
+text = "Back"
+
+[node name="InvitePanel" type="PanelContainer" parent="." unique_id=645662243]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -130.0
+offset_top = -50.0
+offset_right = 130.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="InviteVBox" type="VBoxContainer" parent="InvitePanel" unique_id=447048435]
+layout_mode = 2
+
+[node name="InviteLabel" type="Label" parent="InvitePanel/InviteVBox" unique_id=175766791]
+layout_mode = 2
+text = "Invite text"
+horizontal_alignment = 1
+
+[node name="InviteButtons" type="HBoxContainer" parent="InvitePanel/InviteVBox" unique_id=244141294]
+layout_mode = 2
+alignment = 1
+
+[node name="AcceptButton" type="Button" parent="InvitePanel/InviteVBox/InviteButtons" unique_id=271836137]
+layout_mode = 2
+text = "Accept"
+
+[node name="DeclineButton" type="Button" parent="InvitePanel/InviteVBox/InviteButtons" unique_id=52744293]
+layout_mode = 2
+text = "Decline"
+
+[connection signal="pressed" from="MainPanel/GoOnlineButton" to="." method="_on_go_online_pressed"]
+[connection signal="item_activated" from="MainPanel/PeerList" to="." method="_on_peer_selected"]
+[connection signal="pressed" from="MainPanel/BackButton" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="InvitePanel/InviteVBox/InviteButtons/AcceptButton" to="." method="_on_accept_pressed"]
+[connection signal="pressed" from="InvitePanel/InviteVBox/InviteButtons/DeclineButton" to="." method="_on_decline_pressed"]

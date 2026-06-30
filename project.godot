@@ -28,6 +28,7 @@ ScoreSystem="*uid://blp5kqsfd5c2b"
 VisualEffects="*uid://f5j76tnobxhw"
 Settings="*uid://dmykiroelaq8v"
 PauseManager="*uid://bxhboouu320qc"
+NetworkManager="*uid://bsx4nn3kuvrjp"
 
 [display]
 

@@ -87,3 +87,6 @@ func get_beat() -> float:
 
 func get_time() -> float:
 	return _song_position
+
+func is_playing() -> bool:
+	return audio_player.playing
