@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://7t7b7nfoo8y0" path="res://systems/components/user_interface/AudioVisualizerCircularComponent/audio_visualizer_circular_component.gd" id="1_d5pg4"]
 [ext_resource type="AudioStream" uid="uid://dn2y6qgeq1xe8" path="res://sound/music/mus_breakbeat.mp3" id="2_hrqby"]
-[ext_resource type="Texture2D" uid="uid://feis2myfmhg3" path="res://assets/circular_line.png" id="3_wipuk"]
+[ext_resource type="Texture2D" uid="uid://cw3k8xch43fcy" path="res://assets/thin_white_ring.png" id="3_wipuk"]
 
 [node name="AudioVisualizerCircularComponent" type="Control" unique_id=1170582492]
 layout_mode = 3
@@ -12,6 +12,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_d5pg4")
+radius = 315.0
 normalization_power = 0.3
 
 [node name="TestMusic" type="AudioStreamPlayer2D" parent="." unique_id=1889963470]

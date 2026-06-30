@@ -3,15 +3,59 @@
 [ext_resource type="Script" uid="uid://277h8i6ghlyc" path="res://systems/components/user_interface/JudgementRingComponent/judgement_ring_component.gd" id="1_8o5i6"]
 [ext_resource type="Texture2D" uid="uid://daurxwylw4wwr" path="res://systems/components/user_interface/JudgementRingComponent/judgement_ring.png" id="2_6hyhd"]
 [ext_resource type="Texture2D" uid="uid://bascrkywa76n8" path="res://assets/dcb2b55a30fa32bcae5869c36edf1bcf-removebg-preview.png" id="3_xwuql"]
+[ext_resource type="Texture2D" uid="uid://xr2ojb112ubx" path="res://systems/components/user_interface/JudgementRingComponent/judgement_ring_filled.png" id="4_ostiw"]
 
 [node name="JudgementRingComponent" type="Node2D" unique_id=575620661]
 script = ExtResource("1_8o5i6")
+quadrant1_color = Color(1, 0, 0, 1)
+quadrant2_color = Color(0, 1, 0, 1)
+quadrant3_color = Color(0, 0, 1, 1)
+quadrant4_color = Color(1, 1, 0, 1)
+rotate_speed = 0.1
 
 [node name="CenterMark" type="Marker2D" parent="." unique_id=136988184]
 position = Vector2(576, 324)
 
-[node name="PlaceholderRing" type="Sprite2D" parent="." unique_id=1449087777]
+[node name="Ring" type="Node2D" parent="." unique_id=1006421433]
 position = Vector2(576, 324)
+rotation = 0.7853982
+
+[node name="Quadrant1" type="Sprite2D" parent="Ring" unique_id=1209266358]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(52.00006, -52)
+scale = Vector2(0.096, 0.096)
+texture = ExtResource("4_ostiw")
+hframes = 2
+vframes = 2
+frame = 1
+
+[node name="Quadrant2" type="Sprite2D" parent="Ring" unique_id=1973606936]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(52, 52)
+scale = Vector2(0.096, 0.096)
+texture = ExtResource("4_ostiw")
+hframes = 2
+vframes = 2
+frame = 3
+
+[node name="Quadrant3" type="Sprite2D" parent="Ring" unique_id=483713345]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(-52, 52)
+scale = Vector2(0.096, 0.096)
+texture = ExtResource("4_ostiw")
+hframes = 2
+vframes = 2
+frame = 2
+
+[node name="Quadrant4" type="Sprite2D" parent="Ring" unique_id=2094443402]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(-52, -52)
+scale = Vector2(0.096, 0.096)
+texture = ExtResource("4_ostiw")
+hframes = 2
+vframes = 2
+
+[node name="JudgementRing" type="Sprite2D" parent="Ring" unique_id=1449087777]
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("2_6hyhd")
 offset = Vector2(-1, 0)
@@ -22,7 +66,6 @@ scale = Vector2(0.4, 0.4)
 texture = ExtResource("3_xwuql")
 
 [node name="SustainMeter" type="TextureProgressBar" parent="." unique_id=693337917]
-unique_name_in_owner = true
 texture_filter = 2
 offset_left = 501.00003
 offset_top = 249.00002

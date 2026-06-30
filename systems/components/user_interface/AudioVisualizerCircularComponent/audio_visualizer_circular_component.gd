@@ -4,11 +4,8 @@ class_name AudioVisualizerCircularComponent
 @onready var audio_spectrum: AudioEffectInstance = AudioServer.get_bus_effect_instance(1, 0)
 @onready var center_marker: Marker2D = %CenterMarker
 
-## DEBUG
-@onready var test_music: AudioStreamPlayer2D = $TestMusic
-
 @export_category("Audio Visualizer Circle Settings")
-@export var center_offset: Vector2 = Vector2(7,5) #Magic number i know but it keeps it in place!
+@export var center_offset: Vector2 = Vector2(0,0)
 @export var radius: float = 280.0
 @export var major_bar_width: float = 6.0
 @export var minor_bar_width: float = 2.0
@@ -73,14 +70,14 @@ func _process(delta):
 	rotation_speed = lerp(rotation_speed, target_rotation_speed, rotation_change_speed)
 	rotation += rotation_speed * delta
 	# DEBUG music toggle
-	if Input.is_action_just_pressed("ui_accept") and test_music:
-		if test_music.playing:
-			set_rotation_speed(-0.05)
-			music_playing = false
-			test_music.stop()
-		else:
-			music_playing = true
-			test_music.play()
+	#if Input.is_action_just_pressed("ui_accept") and test_music:
+		#if test_music.playing:
+			#set_rotation_speed(-0.05)
+			#music_playing = false
+			#test_music.stop()
+		#else:
+			#music_playing = true
+			#test_music.play()
 
 	if music_playing:
 		_update_bars()

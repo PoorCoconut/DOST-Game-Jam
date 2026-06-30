@@ -16,8 +16,8 @@ var slices_total: int = 0          # total beat slices for this hold note
 var slices_hit: int = 0            # how many slices have been scored so far
 var next_slice_beat: float = 0.0   # the beat time of the next slice to score
 
-@onready var head: Node2D = $Head
-@onready var tail: Node2D = $Tail
+@onready var head: Node2D = $HeadSprite
+@onready var tail: Node2D = $TailSprite
 @onready var body: Line2D = $Body
 
 func setup(p_lane: int, p_target_time: float, p_end_time: float, p_beat_duration: float, p_direction: Vector2) -> void:
@@ -28,8 +28,8 @@ func setup(p_lane: int, p_target_time: float, p_end_time: float, p_beat_duration
 	direction_vector = p_direction.normalized()
 	slices_total = int(round(p_beat_duration))
 
-	head.rotation = direction_vector.angle() + (PI / 2.0)
-	tail.rotation = direction_vector.angle() + (PI / 2.0)
+	head.rotation = direction_vector.angle() - 44.75 + (PI / 2.0)
+	tail.rotation = direction_vector.angle() - 44.75 + (PI / 2.0)
 
 	var current_time = Conductor.get_time()
 	var time_until_head = target_time - current_time
