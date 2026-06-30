@@ -1,0 +1,361 @@
+[gd_scene format=3 uid="uid://d0b0in01lciks"]
+
+[ext_resource type="Script" uid="uid://q4t7s0emrpw7" path="res://scenes/menus/settings/settings_panel.gd" id="1_panel"]
+
+[node name="SettingsPanel" type="Control" unique_id=1213191879]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_panel")
+
+[node name="Background" type="ColorRect" parent="." unique_id=863362994]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.05, 0.05, 0.05, 1)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=368392639]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 20.0
+offset_right = -40.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="ScrollContainer" unique_id=1464224072]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="ScrollContainer/VBox" unique_id=217087745]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Settings"
+horizontal_alignment = 1
+
+[node name="HSepA" type="HSeparator" parent="ScrollContainer/VBox" unique_id=396311453]
+layout_mode = 2
+
+[node name="HeaderAudio" type="Label" parent="ScrollContainer/VBox" unique_id=1925717217]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "— Audio —"
+horizontal_alignment = 1
+
+[node name="RowScrollSpeed" type="HBoxContainer" parent="ScrollContainer/VBox" unique_id=1326349459]
+layout_mode = 2
+
+[node name="LabelScrollSpeed" type="Label" parent="ScrollContainer/VBox/RowScrollSpeed" unique_id=1925221935]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Scroll Speed"
+
+[node name="SliderScrollSpeed" type="HSlider" parent="ScrollContainer/VBox/RowScrollSpeed" unique_id=2087046177]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.5
+max_value = 5.0
+step = 0.1
+value = 1.0
+
+[node name="LabelScrollSpeedVal" type="Label" parent="ScrollContainer/VBox/RowScrollSpeed" unique_id=1446047380]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "1.0x"
+horizontal_alignment = 1
+
+[node name="RowAudioOffset" type="HBoxContainer" parent="ScrollContainer/VBox" unique_id=2018136424]
+layout_mode = 2
+
+[node name="LabelAudioOffset" type="Label" parent="ScrollContainer/VBox/RowAudioOffset" unique_id=1170462660]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Audio Offset"
+
+[node name="SliderAudioOffset" type="HSlider" parent="ScrollContainer/VBox/RowAudioOffset" unique_id=390209015]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = -0.5
+max_value = 0.5
+step = 0.001
+
+[node name="LabelAudioOffsetVal" type="Label" parent="ScrollContainer/VBox/RowAudioOffset" unique_id=332994672]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "0ms"
+horizontal_alignment = 1
+
+[node name="HSepB" type="HSeparator" parent="ScrollContainer/VBox" unique_id=1304459561]
+layout_mode = 2
+
+[node name="HeaderVolume" type="Label" parent="ScrollContainer/VBox" unique_id=1475942103]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "— Volume —"
+horizontal_alignment = 1
+
+[node name="RowMaster" type="HBoxContainer" parent="ScrollContainer/VBox" unique_id=1544263317]
+layout_mode = 2
+
+[node name="LabelMaster" type="Label" parent="ScrollContainer/VBox/RowMaster" unique_id=1023276539]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Master"
+
+[node name="SliderMaster" type="HSlider" parent="ScrollContainer/VBox/RowMaster" unique_id=1041585795]
+layout_mode = 2
+size_flags_horizontal = 3
+value = 100.0
+
+[node name="LabelMasterVal" type="Label" parent="ScrollContainer/VBox/RowMaster" unique_id=459642349]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "100"
+horizontal_alignment = 1
+
+[node name="RowMusic" type="HBoxContainer" parent="ScrollContainer/VBox" unique_id=1652854717]
+layout_mode = 2
+
+[node name="LabelMusic" type="Label" parent="ScrollContainer/VBox/RowMusic" unique_id=1742835823]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Music"
+
+[node name="SliderMusic" type="HSlider" parent="ScrollContainer/VBox/RowMusic" unique_id=653944115]
+layout_mode = 2
+size_flags_horizontal = 3
+value = 100.0
+
+[node name="LabelMusicVal" type="Label" parent="ScrollContainer/VBox/RowMusic" unique_id=2065273100]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "100"
+horizontal_alignment = 1
+
+[node name="RowSFX" type="HBoxContainer" parent="ScrollContainer/VBox" unique_id=1204646698]
+layout_mode = 2
+
+[node name="LabelSFX" type="Label" parent="ScrollContainer/VBox/RowSFX" unique_id=2074980662]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "SFX"
+
+[node name="SliderSFX" type="HSlider" parent="ScrollContainer/VBox/RowSFX" unique_id=1109887252]
+layout_mode = 2
+size_flags_horizontal = 3
+value = 100.0
+
+[node name="LabelSFXVal" type="Label" parent="ScrollContainer/VBox/RowSFX" unique_id=1309825290]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "100"
+horizontal_alignment = 1
+
+[node name="HSepC" type="HSeparator" parent="ScrollContainer/VBox" unique_id=614484257]
+layout_mode = 2
+
+[node name="HeaderKeybinds" type="Label" parent="ScrollContainer/VBox" unique_id=1933598397]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "— Keybinds —"
+horizontal_alignment = 1
+
+[node name="HeaderPlusMode" type="Label" parent="ScrollContainer/VBox" unique_id=20805129]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "+ Mode"
+
+[node name="RowPlusTop" type="HBoxContainer" parent="ScrollContainer/VBox" unique_id=1354572069]
+layout_mode = 2
+
+[node name="LabelPlusTop" type="Label" parent="ScrollContainer/VBox/RowPlusTop" unique_id=279157200]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Top (Lane 1)"
+
+[node name="BtnPlusTop" type="Button" parent="ScrollContainer/VBox/RowPlusTop" unique_id=84001017]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+text = "F"
+
+[node name="RowPlusRight" type="HBoxContainer" parent="ScrollContainer/VBox" unique_id=1348248611]
+layout_mode = 2
+
+[node name="LabelPlusRight" type="Label" parent="ScrollContainer/VBox/RowPlusRight" unique_id=1918501535]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Right (Lane 2)"
+
+[node name="BtnPlusRight" type="Button" parent="ScrollContainer/VBox/RowPlusRight" unique_id=236803650]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+text = "K"
+
+[node name="RowPlusBottom" type="HBoxContainer" parent="ScrollContainer/VBox" unique_id=1896375431]
+layout_mode = 2
+
+[node name="LabelPlusBottom" type="Label" parent="ScrollContainer/VBox/RowPlusBottom" unique_id=367925665]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Bottom (Lane 3)"
+
+[node name="BtnPlusBottom" type="Button" parent="ScrollContainer/VBox/RowPlusBottom" unique_id=53253282]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+text = "J"
+
+[node name="RowPlusLeft" type="HBoxContainer" parent="ScrollContainer/VBox" unique_id=419655761]
+layout_mode = 2
+
+[node name="LabelPlusLeft" type="Label" parent="ScrollContainer/VBox/RowPlusLeft" unique_id=1853568066]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Left (Lane 4)"
+
+[node name="BtnPlusLeft" type="Button" parent="ScrollContainer/VBox/RowPlusLeft" unique_id=1033523034]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+text = "D"
+
+[node name="HeaderXMode" type="Label" parent="ScrollContainer/VBox" unique_id=892704148]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "x Mode"
+
+[node name="RowXTop" type="HBoxContainer" parent="ScrollContainer/VBox" unique_id=793108177]
+layout_mode = 2
+
+[node name="LabelXTop" type="Label" parent="ScrollContainer/VBox/RowXTop" unique_id=1139102650]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Top-Right (Lane 1)"
+
+[node name="BtnXTop" type="Button" parent="ScrollContainer/VBox/RowXTop" unique_id=834800305]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+text = "F"
+
+[node name="RowXRight" type="HBoxContainer" parent="ScrollContainer/VBox" unique_id=435307428]
+layout_mode = 2
+
+[node name="LabelXRight" type="Label" parent="ScrollContainer/VBox/RowXRight" unique_id=810788332]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Bottom-Right (Lane 2)"
+
+[node name="BtnXRight" type="Button" parent="ScrollContainer/VBox/RowXRight" unique_id=296776393]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+text = "K"
+
+[node name="RowXBottom" type="HBoxContainer" parent="ScrollContainer/VBox" unique_id=1650166119]
+layout_mode = 2
+
+[node name="LabelXBottom" type="Label" parent="ScrollContainer/VBox/RowXBottom" unique_id=905875424]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Bottom-Left (Lane 3)"
+
+[node name="BtnXBottom" type="Button" parent="ScrollContainer/VBox/RowXBottom" unique_id=726303320]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+text = "J"
+
+[node name="RowXLeft" type="HBoxContainer" parent="ScrollContainer/VBox" unique_id=1931167231]
+layout_mode = 2
+
+[node name="LabelXLeft" type="Label" parent="ScrollContainer/VBox/RowXLeft" unique_id=1078296185]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Top-Left (Lane 4)"
+
+[node name="BtnXLeft" type="Button" parent="ScrollContainer/VBox/RowXLeft" unique_id=1809330425]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+text = "D"
+
+[node name="HeaderOther" type="Label" parent="ScrollContainer/VBox" unique_id=900109568]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Other"
+
+[node name="RowTransform" type="HBoxContainer" parent="ScrollContainer/VBox" unique_id=1976211415]
+layout_mode = 2
+
+[node name="LabelTransform" type="Label" parent="ScrollContainer/VBox/RowTransform" unique_id=163215018]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Transform"
+
+[node name="BtnTransform" type="Button" parent="ScrollContainer/VBox/RowTransform" unique_id=62561454]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+text = "Space"
+
+[node name="RowQuickRetry" type="HBoxContainer" parent="ScrollContainer/VBox" unique_id=1843942762]
+layout_mode = 2
+
+[node name="LabelQuickRetry" type="Label" parent="ScrollContainer/VBox/RowQuickRetry" unique_id=1282873899]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Quick Retry"
+
+[node name="BtnQuickRetry" type="Button" parent="ScrollContainer/VBox/RowQuickRetry" unique_id=201294344]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+text = "Q"
+
+[node name="HSepD" type="HSeparator" parent="ScrollContainer/VBox" unique_id=389735194]
+layout_mode = 2
+
+[node name="RowButtons" type="HBoxContainer" parent="ScrollContainer/VBox" unique_id=287998367]
+layout_mode = 2
+alignment = 1
+
+[node name="BtnSave" type="Button" parent="ScrollContainer/VBox/RowButtons" unique_id=1522599584]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+text = "Save & Back"
+
+[node name="BtnDiscard" type="Button" parent="ScrollContainer/VBox/RowButtons" unique_id=1925514930]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+text = "Discard"
+
+[node name="RemapOverlay" type="ColorRect" parent="." unique_id=2035294260]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.7)
+
+[node name="RemapLabel" type="Label" parent="RemapOverlay" unique_id=1294775762]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -30.0
+offset_right = 200.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 24
+text = "Press any key..."
+horizontal_alignment = 1
+vertical_alignment = 1
