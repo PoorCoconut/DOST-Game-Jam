@@ -1,11 +1,8 @@
 extends Node
 
-# Lane action names are now generated dynamically from Settings.
-# + mode: lane1..lane4
-# x mode: lane_x1..lane_x4
-# These match what Settings.apply_keybinds() registers in InputMap.
+# lane action names are now generated dynamically from Settings
 
-@onready var spawner: Node2D       = %NoteSpawner
+@onready var spawner: Node2D        = %NoteSpawner
 @onready var sustain_ring: Sprite2D = %SustainRing
 @onready var replay_recorder: Node  = %ReplayRecorder
 
@@ -19,7 +16,11 @@ var held_note_modes: Array = ["", "", "", ""]
 
 
 func _ready() -> void:
-	print("[JUDGE] replay_recorder is null: ", replay_recorder == null)
+	if autoplay:
+		ScoreSystem.is_invincible = true
+	else:
+		ScoreSystem.is_invincible = false
+	print("[JUDGE] Replay Recorder NULL: ", replay_recorder == null)
 
 
 func _get_lane_action(lane: int) -> String:
@@ -48,20 +49,23 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed(Settings.TRANSFORM_ACTION):
 		_toggle_mode()
 
-	# Lane inputs — always check both + and x action names so a press
-	# registers regardless of which mode the player is currently in.
-	for lane in range(4):
-		var plus_action := "lane%d" % (lane + 1)
-		var x_action    := "lane_x%d" % (lane + 1)
 
-		var just_pressed  := Input.is_action_just_pressed(plus_action)  or Input.is_action_just_pressed(x_action)
-		var just_released := Input.is_action_just_released(plus_action) or Input.is_action_just_released(x_action)
+	for lane in range(4):
+		var action := _get_lane_action(lane)
+		
+		var just_pressed  := Input.is_action_just_pressed(action)
+		var just_released := Input.is_action_just_released(action)
+		var pressed       := Input.is_action_pressed(action)
 
 		if just_pressed:
-			SoundManager.play_hitsound(lane)
+			_play_sound(lane)
 			_try_hit(lane)
 		elif just_released:
 			_try_release(lane)
+
+		# LITE NOTES
+		if pressed:
+			_try_lite_hit(lane)
 
 
 func _toggle_mode() -> void:
@@ -71,8 +75,6 @@ func _toggle_mode() -> void:
 
 
 func _quick_retry() -> void:
-	# Centralized in PauseManager: full scene reload guarantees Conductor,
-	# NoteSpawner, ScoreSystem, ReplayRecorder, and judge state all reset cleanly.
 	PauseManager.retry_level()
 
 
@@ -80,6 +82,7 @@ func _try_hit(lane: int) -> void:
 	var now: float = Conductor.get_time()
 	var hold_notes: Array = spawner.active_hold_notes[current_mode][lane]
 
+	# check hold notes first
 	for note in hold_notes:
 		if not is_instance_valid(note) or note.judged:
 			continue
@@ -112,7 +115,7 @@ func _try_hit(lane: int) -> void:
 		return
 
 	closest_note.judged = true
-	var result = ScoreSystem.register_judgment(closest_diff)
+	var result = ScoreSystem.register_judgement(closest_diff)
 	var time_offset: float = now - closest_note.target_time
 	var beat_start = closest_note.target_time / Conductor.seconds_per_beat
 
@@ -127,6 +130,41 @@ func _try_hit(lane: int) -> void:
 		closest_note.queue_free()
 
 
+func _try_lite_hit(lane: int) -> void:
+	var now: float = Conductor.get_time()
+	
+	# Check for Lite HOLD HEADS
+	var hold_notes: Array = spawner.active_hold_notes[current_mode][lane]
+	for note in hold_notes:
+		if is_instance_valid(note) and not note.judged and note.is_lite:
+			if now >= note.target_time:
+				note.on_head_pressed(0.0) # force perfect
+				
+				held_notes[lane]      = note
+				held_note_data[lane]  = note.target_time / Conductor.seconds_per_beat
+				held_note_modes[lane] = current_mode
+				
+				if not note.auto_resolved.is_connected(_on_hold_auto_resolved):
+					note.auto_resolved.connect(_on_hold_auto_resolved)
+				
+				_play_sound(lane)
+				return
+
+	# Check for Lite TAP NOTES
+	var tap_notes: Array = spawner.active_notes[current_mode][lane]
+	for note in tap_notes:
+		if is_instance_valid(note) and not note.judged and note.is_lite:
+			if now >= note.target_time:
+				note.judged = true
+				
+				ScoreSystem.register_lite_hit()
+				if replay_recorder:
+					replay_recorder.record_tap(note.target_time / Conductor.seconds_per_beat, lane, current_mode, "perfect", 0.0)
+				_play_sound(lane)
+				note.destroy()
+				return
+
+
 func _on_hold_auto_resolved(note: Node2D) -> void:
 	var lane: int      = note.lane
 	var beat_start     = held_note_data[lane]
@@ -139,7 +177,7 @@ func _on_hold_auto_resolved(note: Node2D) -> void:
 	var note_mode: String = held_note_modes[lane]
 
 	if replay_recorder != null:
-		replay_recorder.record_hold(beat_start, lane, note_mode, note.head_judgment, press_offset, release_offset, beat_end)
+		replay_recorder.record_hold(beat_start, lane, note_mode, note.head_judgement, press_offset, release_offset, beat_end)
 
 	held_notes[lane]      = null
 	held_note_data[lane]  = null
@@ -155,7 +193,7 @@ func _try_release(lane: int) -> void:
 		return
 
 	var now: float            = Conductor.get_time()
-	var judgment              = note.head_judgment
+	var judgement              = note.head_judgement
 	var beat_start            = held_note_data[lane]
 	var note_mode: String     = held_note_modes[lane]
 	var press_offset: float   = note.press_time - note.target_time
@@ -165,7 +203,7 @@ func _try_release(lane: int) -> void:
 	note.on_released()
 
 	if replay_recorder != null:
-		replay_recorder.record_hold(beat_start, lane, note_mode, judgment, press_offset, release_offset, note_beat_end)
+		replay_recorder.record_hold(beat_start, lane, note_mode, judgement, press_offset, release_offset, note_beat_end)
 	else:
 		print("[JUDGE] WARNING: replay_recorder is null, hold not recorded")
 

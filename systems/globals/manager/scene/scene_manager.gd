@@ -13,11 +13,15 @@ var opponent_name: String = ""
 var waiting_for_start: bool = false
 var start_time_msec: int = 0
 
+
+
+# Menu Directories
 const GAMEPLAY_DIR: String  = "res://scenes/menus/gameplay/world_gameplay.tscn"
 const MENU_DIR: String      = "res://scenes/menus/main/main_menu.tscn"
 const RANKING_DIR: String   = "res://scenes/menus/ranking/ranking_panel.tscn"
+const SETTINGS_DIR: String  = "res://scenes/menus/settings/settings_panel.tscn"
+const PAUSE_DIR: String     = "res://scenes/menus/pause/pause_panel.tscn"
 const MULTIPLAYER_LOBBY_DIR: String = "res://scenes/menus/multiplayer/multiplayer_lobby.tscn"
-
 
 func load_gameplay(chart: ChartData, energy: String) -> void:
 	selected_chart = chart
@@ -38,6 +42,10 @@ func load_multiplayer_lobby():
 
 func go_to_ranking() -> void:
 	get_tree().change_scene_to_file(RANKING_DIR)
+
+
+func go_to_settings() -> void:
+	get_tree().change_scene_to_file(SETTINGS_DIR)
 
 
 func quit_to_menu() -> void:

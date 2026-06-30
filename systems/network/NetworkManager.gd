@@ -70,8 +70,8 @@ func _process(delta: float) -> void:
 
 #presence loops
 #presence is a player being shown in the ui
-
-func start_presence(name: String) -> void:
+# broadcasts presence to other player in netwowkr
+func start_presence(name: String) -> void: 
 	player_name = name
 	host_name = ""
 	_active_peers.clear()
@@ -94,7 +94,7 @@ func start_presence(name: String) -> void:
 	_broadcasting = true
 	print("[Net] Presence started. My IP: ", my_ip)
 
-
+# stops player presence
 func stop_presence() -> void:
 	_broadcasting = false
 	if _broadcast_socket: _broadcast_socket.close()
@@ -115,7 +115,7 @@ func _broadcast_tick(delta: float) -> void:
 		_broadcast_socket.set_dest_address("255.255.255.255", PRESENCE_PORT)
 		_broadcast_socket.put_packet(JSON.stringify(packet).to_utf8_buffer())
 
-
+# reads selected presence
 func _read_presence() -> void:
 	if not _presence_socket:
 		return
@@ -138,7 +138,7 @@ func _read_presence() -> void:
 		else:
 			_active_peers[sender_ip]["last_seen"] = 0.0
 
-
+# remove LAN players that have stopped broadcasting their presence.
 func _expire_peers(delta: float) -> void:
 	var to_remove: Array = []
 	for ip in _active_peers:

@@ -32,9 +32,7 @@ func play_tick(lane_index: int) -> void:
 	if lane_index >= 0 and lane_index < ticks.size():
 		ticks[lane_index].play()
 
-
-# ─── VOLUME HELPERS ───────────────────────────────────────────────────────────
-# Called by Settings (or the settings UI) — pass a value from 0 to 100.
+# VOLUME HELPERS
 
 func set_master_volume(value: float) -> void:
 	Settings.apply_volume_master(value)

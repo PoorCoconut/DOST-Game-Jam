@@ -1,42 +1,36 @@
 extends Node
 
-# ─── SAVE PATH ───────────────────────────────────────────────────────────────
 const SAVE_PATH := "user://settings.cfg"
 
-# ─── SCROLL SPEED ────────────────────────────────────────────────────────────
-# Multiplier. 1.0x = default BASE_SCROLL_SPEED in NoteSpawner.
+# multiplier for the BASE_SCROLL_SPEED in Conductor
 var current_scroll_speed: float = 1.0
 
-# ─── AUDIO OFFSET ────────────────────────────────────────────────────────────
-# In seconds. Added to _song_position in Conductor.
+# added to _song_position in Conductor
 var audio_offset: float = 0.0
 
-# ─── VOLUME (0–100) ──────────────────────────────────────────────────────────
+# volume sliders
 var volume_master: float = 100.0
 var volume_music:  float = 100.0
 var volume_sfx:    float = 100.0
 
-# ─── KEYBINDS ────────────────────────────────────────────────────────────────
-# These match the InputMap action names you define in Project Settings.
-# Values are the KEY_ constants (e.g. KEY_F, KEY_J, etc.)
+# keybinds
 var keybind_plus_lanes:  Array[int] = [KEY_F, KEY_K, KEY_J, KEY_D]   # Top, Right, Bottom, Left
 var keybind_x_lanes:     Array[int] = [KEY_F, KEY_K, KEY_J, KEY_D]   # same keys, different mode
 var keybind_transform:   int        = KEY_SPACE
 var keybind_quick_retry: int        = KEY_Q
 
-# Internal: action names used by judgement.gd
-const PLUS_ACTION_PREFIX:  String = "lane"          # lane1..lane4
-const X_ACTION_PREFIX:     String = "lane_x"        # lane_x1..lane_x4
+# action names used by judgement.gd
+const PLUS_ACTION_PREFIX:  String = "lane"
+const X_ACTION_PREFIX:     String = "lane_x"
 const TRANSFORM_ACTION:    String = "transform"
 const QUICK_RETRY_ACTION:  String = "quick_retry"
 
-# ─── READY ───────────────────────────────────────────────────────────────────
+
 func _ready() -> void:
 	load_settings()
 	_apply_all()
 
 
-# ─── APPLY ALL ───────────────────────────────────────────────────────────────
 func _apply_all() -> void:
 	apply_volume_master(volume_master)
 	apply_volume_music(volume_music)
@@ -44,7 +38,6 @@ func _apply_all() -> void:
 	apply_keybinds()
 
 
-# ─── VOLUME ──────────────────────────────────────────────────────────────────
 func apply_volume_master(value: float) -> void:
 	volume_master = clampf(value, 0.0, 100.0)
 	AudioServer.set_bus_volume_db(
@@ -52,12 +45,14 @@ func apply_volume_master(value: float) -> void:
 		linear_to_db(volume_master / 100.0)
 	)
 
+
 func apply_volume_music(value: float) -> void:
 	volume_music = clampf(value, 0.0, 100.0)
 	AudioServer.set_bus_volume_db(
 		AudioServer.get_bus_index("Music"),
 		linear_to_db(volume_music / 100.0)
 	)
+
 
 func apply_volume_sfx(value: float) -> void:
 	volume_sfx = clampf(value, 0.0, 100.0)
@@ -67,14 +62,11 @@ func apply_volume_sfx(value: float) -> void:
 	)
 
 
-# ─── KEYBINDS ────────────────────────────────────────────────────────────────
 func apply_keybinds() -> void:
-	# + lanes: lane1..lane4
 	for i in range(4):
 		var action := "lane%d" % (i + 1)
 		_remap_action(action, keybind_plus_lanes[i])
 
-	# x lanes: lane_x1..lane_x4
 	for i in range(4):
 		var action := "lane_x%d" % (i + 1)
 		_remap_action(action, keybind_x_lanes[i])
@@ -109,7 +101,6 @@ func set_keybind_quick_retry(key_code: int) -> void:
 	_remap_action(QUICK_RETRY_ACTION, key_code)
 
 
-# ─── SAVE / LOAD ─────────────────────────────────────────────────────────────
 func save_settings() -> void:
 	var cfg := ConfigFile.new()
 
@@ -137,7 +128,7 @@ func load_settings() -> void:
 	volume_master        = cfg.get_value("volume",   "master",          100.0)
 	volume_music         = cfg.get_value("volume",   "music",           100.0)
 	volume_sfx           = cfg.get_value("volume",   "sfx",             100.0)
-	keybind_plus_lanes   = cfg.get_value("keybinds", "plus_lanes",      [KEY_F, KEY_K, KEY_J, KEY_D])
-	keybind_x_lanes      = cfg.get_value("keybinds", "x_lanes",         [KEY_F, KEY_K, KEY_J, KEY_D])
+	keybind_plus_lanes   = Array(cfg.get_value("keybinds", "plus_lanes", [KEY_F, KEY_K, KEY_J, KEY_D]), TYPE_INT, "", null)
+	keybind_x_lanes      = Array(cfg.get_value("keybinds", "x_lanes", [KEY_F, KEY_K, KEY_J, KEY_D]), TYPE_INT, "", null)
 	keybind_transform    = cfg.get_value("keybinds", "transform",       KEY_SPACE)
 	keybind_quick_retry  = cfg.get_value("keybinds", "quick_retry",     KEY_Q)
