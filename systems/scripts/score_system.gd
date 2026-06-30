@@ -30,6 +30,7 @@ const MAX_BONUS_SCORE: int = 0        # placeholder — Solar/Hydro bonus, not i
 const MAX_SCORE: int = MAX_AMP_SCORE + MAX_VOLT_SCORE + MAX_BONUS_SCORE
 
 var volts: int = 0
+var max_volts: int = 0  # highest combo reached this run
 var watts: float = 0.0
 
 # per-chart stats
@@ -62,6 +63,7 @@ func load_chart(chart_resource) -> void:
 	bads = 0
 	misses = 0
 	volts = 0
+	max_volts = 0
 	watts = 0.0
 	current_hp = max_hp  # reset HP on new chart
 	is_failed = false
@@ -87,6 +89,7 @@ func register_judgment(time_diff: float) -> String:
 		volts = 0
 	else:
 		volts += 1
+		max_volts = max(max_volts, volts)
 		watts += base_amp_per_note * ACCURACY_RATIO[result]
 		watts += base_volt_per_note
 
@@ -107,6 +110,7 @@ func register_hold_slice(result: String) -> void:
 		volts = 0
 	else:
 		volts += 1
+		max_volts = max(max_volts, volts)
 		watts += base_amp_per_note * ACCURACY_RATIO[result]
 		watts += base_volt_per_note
 
@@ -169,6 +173,7 @@ func _get_judgment(time_diff: float) -> String:
 
 func reset() -> void:
 	volts = 0
+	max_volts = 0
 	watts = 0.0
 	perfects = 0
 	goods = 0

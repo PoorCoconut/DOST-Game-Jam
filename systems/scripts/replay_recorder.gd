@@ -67,30 +67,32 @@ func _on_song_finished() -> void:
 
 func save_replay_now() -> void:
 	# Called either automatically (song completed) or explicitly
-	# (player clicked Results after dying).
+	# (player clicked Results after dying on the fail-pause screen).
 	if _current_replay == null or _chart == null:
 		print("[REPLAY] replay or chart is null, aborting save")
 		return
 
 	_current_replay.final_watts = roundi(ScoreSystem.watts)
 	_current_replay.final_volts = ScoreSystem.volts
+	_current_replay.max_volts = ScoreSystem.max_volts
 	_current_replay.final_rank = ScoreSystem.get_rank()
 	_current_replay.perfects = ScoreSystem.perfects
 	_current_replay.goods = ScoreSystem.goods
 	_current_replay.bads = ScoreSystem.bads
 	_current_replay.misses = ScoreSystem.misses
+	_current_replay.timestamp = Time.get_unix_time_from_system()
 	_save_replay()
 
 
 func _save_replay() -> void:
-	var dir = "user://replays/"
+	var song_slug = _chart.song_name.to_lower().replace(" ", "_")
+	var dir = "user://replays/%s/" % song_slug
 	if not DirAccess.dir_exists_absolute(dir):
 		DirAccess.make_dir_recursive_absolute(dir)
 
 	# Timestamped filename so each run is preserved
 	var timestamp = Time.get_datetime_string_from_system().replace(":", "-").replace(" ", "_")
-	var song_slug = _chart.song_name.to_lower().replace(" ", "_")
-	var file_name = song_slug + "_" + timestamp + ".tres"
+	var file_name = timestamp + ".tres"
 	var path = dir + file_name
 
 	var err = ResourceSaver.save(_current_replay, path)
