@@ -1,9 +1,10 @@
 extends Node2D
 
-var lane: int = 0
-var direction_vector: Vector2 = Vector2.ZERO
-var target_time: float = 0.0
-var judged: bool = false
+var lane: int = 0                             # which lane the note starts
+var direction_vector: Vector2 = Vector2.ZERO  # direction line of the note
+var target_time: float = 0.0                  # when the note should be hit
+var judged: bool = false                      # true once head is pressed or missed
+
 
 func setup(p_lane: int, p_target_time: float, p_direction: Vector2) -> void:
 	lane = p_lane
@@ -44,6 +45,7 @@ func on_miss():
 	if not is_inside_tree(): return
 	await get_tree().create_timer(0.15).timeout
 	queue_free()
+
 
 func destroy():
 	judged = true

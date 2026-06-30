@@ -46,7 +46,7 @@ func _get_spawn_ahead_beats() -> float:
 	# Golden Rule: faster scroll speed = notes must spawn sooner.
 	# We calculate how many beats ahead a note needs to spawn so it
 	# travels from spawn point to HIT_RADIUS exactly on time.
-	#
+	
 	# travel_distance = 400px (screen edge) - HIT_RADIUS (67px) = 333px
 	# actual speed     = BASE_SCROLL_SPEED * current_scroll_speed
 	# seconds_to_reach = travel_distance / actual_speed
@@ -141,7 +141,9 @@ func spawn_note(data: NoteData) -> Node2D:
 
 # --- FOR PREVIEW ---
 func recalculate_note_index(current_beat: float) -> void:
+	# despawn all currently active notes, they'll respawn fresh if still relevant
 	_clear_all_notes()
+	
 	note_index = 0
 	while note_index < chart_resource.notes.size():
 		var data: NoteData = chart_resource.notes[note_index]

@@ -1,9 +1,9 @@
 extends Node
 
-# Lane action names are now generated dynamically from Settings.
+# lane action names are now generated dynamically from Settings
 # + mode: lane1..lane4
 # x mode: lane_x1..lane_x4
-# These match what Settings.apply_keybinds() registers in InputMap.
+# matches Settings.apply_keybinds()
 
 @onready var spawner: Node2D       = %NoteSpawner
 @onready var sustain_ring: Sprite2D = %SustainRing
@@ -19,7 +19,7 @@ var held_note_modes: Array = ["", "", "", ""]
 
 
 func _ready() -> void:
-	print("[JUDGE] replay_recorder is null: ", replay_recorder == null)
+	print("[JUDGE] Replay Recorder NULL: ", replay_recorder == null)
 
 
 func _get_lane_action(lane: int) -> String:
@@ -48,8 +48,7 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed(Settings.TRANSFORM_ACTION):
 		_toggle_mode()
 
-	# Lane inputs — always check both + and x action names so a press
-	# registers regardless of which mode the player is currently in.
+
 	for lane in range(4):
 		var plus_action := "lane%d" % (lane + 1)
 		var x_action    := "lane_x%d" % (lane + 1)
@@ -71,8 +70,6 @@ func _toggle_mode() -> void:
 
 
 func _quick_retry() -> void:
-	# Centralized in PauseManager: full scene reload guarantees Conductor,
-	# NoteSpawner, ScoreSystem, ReplayRecorder, and judge state all reset cleanly.
 	PauseManager.retry_level()
 
 
@@ -80,6 +77,7 @@ func _try_hit(lane: int) -> void:
 	var now: float = Conductor.get_time()
 	var hold_notes: Array = spawner.active_hold_notes[current_mode][lane]
 
+	# check hold notes first
 	for note in hold_notes:
 		if not is_instance_valid(note) or note.judged:
 			continue

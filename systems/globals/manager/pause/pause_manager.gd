@@ -1,18 +1,16 @@
 extends Node
 
-# ─── STATE ───────────────────────────────────────────────────────────────────
 signal paused(is_fail: bool)
 signal resumed
 signal retried
 
-const PAUSE_PANEL_SCENE: String = "res://scenes/menus/pause/pause_panel.tscn"
+const PAUSE_PANEL_SCENE: String = SceneManager.PAUSE_DIR
 
 var pause_panel_instance: CanvasLayer = null
 var is_paused: bool = false
 var is_fail_state: bool = false
 
 
-# ─── PAUSE ───────────────────────────────────────────────────────────────────
 func pause_game(is_fail: bool = false) -> void:
 	if is_paused:
 		return
@@ -48,10 +46,9 @@ func resume_game() -> void:
 	resumed.emit()
 
 
-# ─── RESULTS (from fail screen) ──────────────────────────────────────────────
 func go_to_results_after_fail() -> void:
-	# Player clicked "Results" on the fail screen.
-	# NOW we save the replay, then unpause and go to ranking.
+	# Only now saves the replay when player
+	# clicks results on fail
 	get_tree().paused = false
 	is_paused = false
 
@@ -65,7 +62,6 @@ func go_to_results_after_fail() -> void:
 	SceneManager.go_to_ranking()
 
 
-# ─── RETRY ───────────────────────────────────────────────────────────────────
 func retry_level() -> void:
 	get_tree().paused = false
 	is_paused = false
@@ -75,12 +71,11 @@ func retry_level() -> void:
 		pause_panel_instance.visible = false
 
 	retried.emit()
-	# Reloading the gameplay scene is the cleanest full reset —
-	# everything (notes, judge state, replay recorder, conductor) is freshly instanced.
+	# reloading the gameplay scene is the cleanest full reset
+	# everything (notes, judge state, replay recorder, conductor) is freshly instanced
 	get_tree().reload_current_scene()
 
 
-# ─── QUIT ────────────────────────────────────────────────────────────────────
 func quit_to_menu() -> void:
 	get_tree().paused = false
 	is_paused = false
@@ -93,7 +88,7 @@ func quit_to_menu() -> void:
 	SceneManager.quit_to_menu()
 
 
-# ─── CLEANUP (call when leaving gameplay scene normally, e.g. song finished) ──
+# called when leaving gameplay scene normally, e.g. song finished
 func cleanup() -> void:
 	is_paused = false
 	is_fail_state = false

@@ -5,7 +5,7 @@ var _chart: ChartData = null
 
 
 func start_recording(chart: ChartData) -> void:
-	# Never record during replay playback
+	# never record during replay playback
 	if SceneManager.is_replay:
 		return
 
@@ -21,7 +21,8 @@ func start_recording(chart: ChartData) -> void:
 	else:
 		print("[REPLAY] already connected to Conductor.song_finished")
 
-	# NOTE: player_failed no longer auto-saves. On fail, the pause/fail screen
+	# NOTE: 
+	# player_failed no longer auto-saves. On fail, the pause/fail screen
 	# decides if/when to save by calling save_replay_now() — e.g. when the
 	# player clicks "Results" after dying.
 
@@ -43,7 +44,7 @@ func record_tap(beat_start: float, lane: int, mode: String, judgment: String, ti
 
 
 func record_hold(beat_start: float, lane: int, mode: String, judgment: String, time_of_press_offset: float, time_of_release_offset: float, beat_end: float) -> void:
-	print("[REC_DEBUG] Recording Hold -> StartBeat: %f | EndBeat: %f | PressOffset: %f | ReleaseOffset: %f" % [beat_start, beat_end, time_of_press_offset, time_of_release_offset])
+	print("[RECORD] Recording Hold -> StartBeat: %f | EndBeat: %f | PressOffset: %f | ReleaseOffset: %f" % [beat_start, beat_end, time_of_press_offset, time_of_release_offset])
 	if _current_replay == null:
 		return
 

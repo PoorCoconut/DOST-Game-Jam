@@ -1,19 +1,19 @@
 extends Node2D
 
-var lane: int = 0
-var direction_vector: Vector2 = Vector2.ZERO
-var target_time: float = 0.0
-var end_time: float = 0.0
-var beat_duration: float = 0.0
-var judged: bool = false
-var is_held: bool = false
-var head_judgment: String = "miss"
-var press_time: float = 0.0
-var last_tick_beat: float = 0.0
+var lane: int = 0                             # which lane the note starts
+var direction_vector: Vector2 = Vector2.ZERO  # direction line of the note
+var target_time: float = 0.0                  # when the head should be hit
+var end_time: float = 0.0                     # when the tail ends
+var beat_duration: float = 0.0                # total beats this note spans
+var judged: bool = false                      # true once head is pressed or missed
+var is_held: bool = false                     # true while player is holding
+var head_judgment: String = "miss"            # judgment from head press
+var press_time: float = 0.0                   # when the player pressed the head
+var last_tick_beat: float = 0.0               # tracks the last sustain tick
 
-var slices_total: int = 0
-var slices_hit: int = 0
-var next_slice_beat: float = 0.0
+var slices_total: int = 0                    # total beat slices for this hold note
+var slices_hit: int = 0                      # how many slices have been scored so far
+var next_slice_beat: float = 0.0             # the beat time of the next slice to score
 
 signal auto_resolved(note)
 
@@ -136,7 +136,6 @@ func on_released() -> void:
 	var now: float = Conductor.get_time()
 
 	if now >= end_time:
-		_play_sound()
 		VisualEffects.play_note_hit(self)
 		if not is_inside_tree(): return
 		await get_tree().create_timer(0.15).timeout
