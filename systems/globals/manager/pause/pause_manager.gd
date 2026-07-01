@@ -9,7 +9,6 @@ const PAUSE_PANEL_SCENE: String = SceneManager.PAUSE_DIR
 var pause_panel_instance: CanvasLayer = null
 var is_paused: bool = false
 var is_fail_state: bool = false
-var can_pause: bool = true # should be false during level editor
 
 
 func pause_game(is_fail: bool = false) -> void:

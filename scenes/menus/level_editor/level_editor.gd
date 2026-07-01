@@ -74,10 +74,11 @@ func _ready() -> void:
 	new_chart()
 	
 	# DISABLE SCORE SYSTEM REDUCING HP
-	ScoreSystem.is_invincible = true
-	
 	# DISABLE PAUSING
-	PauseManager.can_pause = false
+	# DISABLE RECORDING
+	# ENABLE PREVIEW
+	# ENABLE AUTOPLAY
+	MatchRules.level_editor(true)
 	
 	grid_view.seek_requested.connect(_on_scrubber_seek_requested)
 	grid_view.ring_event_selected.connect(_on_ring_event_selected)
@@ -86,8 +87,7 @@ func _ready() -> void:
 
 
 func _exit_tree() -> void:
-	ScoreSystem.is_invincible = false
-	PauseManager.can_pause = true
+	MatchRules.level_editor(false)
 	for evt in _removed_accept_events:
 		InputMap.action_add_event("ui_accept", evt)
 
@@ -425,12 +425,8 @@ func _refresh_preview() -> void:
 	SceneManager.selected_chart = chart
 	preview_instance = GAMEPLAY_SCENE.instantiate()
 	
-	var spawner := preview_instance.get_node("PlayfieldContainer/NoteMask/NoteSpawner")
-	if spawner:
-		spawner.is_preview = true
-	
-	var judge := preview_instance.get_node("Judge")
-	if judge:
-		judge.autoplay = true
+	# I'll just keep these
+	MatchRules.is_preview = true
+	MatchRules.is_autoplay = true
 	
 	preview_viewport.add_child(preview_instance)

@@ -6,8 +6,8 @@ extends Node2D
 @export var hold_note_scene: PackedScene
 
 # --- FOR PREVIEW AND RECORD ---
-@export var is_preview: bool = false
-@export var is_recording: bool = true # change this to false if we're not recording (for debugging)
+@export var is_preview: bool   = MatchRules.is_preview
+@export var is_recording: bool = MatchRules.can_record
 
 var chart_resource: Resource
 
@@ -41,9 +41,8 @@ func _ready():
 	ScoreSystem.load_chart(chart_resource)
 	Conductor.load_song(chart_resource)
 
-	if not is_preview:
-		if not SceneManager.is_multiplayer: # prevents multiplayer games from playing immediately
-			Conductor.play_song()
+	if not is_preview and not SceneManager.is_multiplayer: # prevents multiplayer games from playing immediately
+		Conductor.play_song()
 
 
 func _get_spawn_ahead_beats() -> float:

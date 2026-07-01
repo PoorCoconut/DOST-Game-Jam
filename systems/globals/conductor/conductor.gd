@@ -80,7 +80,7 @@ func _report_beat():
 	if _last_reported_beat < current_beat_int:
 		_last_reported_beat = current_beat_int
 		emit_signal("beat", _last_reported_beat)
-		metronome.play()
+		# metronome.play()
 
 
 func _on_song_finished() -> void:

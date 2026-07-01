@@ -45,7 +45,7 @@ func _unhandled_input(_event: InputEvent) -> void:
 	if SceneManager.is_replay:
 		return
 
-	if Input.is_action_just_pressed("pause") and PauseManager.can_pause:
+	if Input.is_action_just_pressed("pause") and MatchRules.can_pause:
 		if PauseManager.is_paused:
 			# only allow resuming via this shortcut on a normal (non-fail) pause
 			if not PauseManager.is_fail_state:

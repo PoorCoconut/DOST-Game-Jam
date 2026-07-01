@@ -7,7 +7,7 @@ extends Node
 @onready var replay_recorder: Node  = %ReplayRecorder
 
 # --- AUTOPLAYER ---
-@export var autoplay: bool = false
+var autoplay: bool = MatchRules.is_autoplay
 
 var current_mode: String = "+"
 var held_notes: Array     = [null, null, null, null]
