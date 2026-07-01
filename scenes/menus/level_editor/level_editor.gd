@@ -4,7 +4,10 @@ extends Node2D
 @onready var title_label: Label = $UI/SongInfo/TitleLabel
 @onready var bpm_label: Label = $UI/SongInfo/BPMLabel
 @onready var bpm_field: LineEdit = $UI/BPMField
-@onready var mode_label: Label = $UI/SongInfo/ModeLabel
+
+# Placement Labels
+@onready var mode_label: Label = $UI/Placement/ModeLabel
+@onready var lite_label: Label = $UI/Placement/LiteLabel
 
 # Editor Essentials
 @onready var grid_view: Control = $UI/ScrollContainer/GridView
@@ -70,6 +73,12 @@ func _ready() -> void:
 	snap_option.select(3)  # default to 1/4
 	new_chart()
 	
+	# DISABLE SCORE SYSTEM REDUCING HP
+	ScoreSystem.is_invincible = true
+	
+	# DISABLE PAUSING
+	PauseManager.can_pause = false
+	
 	grid_view.seek_requested.connect(_on_scrubber_seek_requested)
 	grid_view.ring_event_selected.connect(_on_ring_event_selected)
 	ring_percent_field.editable = false
@@ -77,6 +86,8 @@ func _ready() -> void:
 
 
 func _exit_tree() -> void:
+	ScoreSystem.is_invincible = false
+	PauseManager.can_pause = true
 	for evt in _removed_accept_events:
 		InputMap.action_add_event("ui_accept", evt)
 
@@ -141,6 +152,8 @@ func new_chart() -> void:
 	grid_view.queue_redraw()
 	refresh_song_info()
 	mode_label.text = "Mode: low (+)"
+	mode_label.modulate = Color.CYAN
+	lite_label.text = "Normal Notes"
 	_update_lane_headers("low (+)")
 	_refresh_preview()
 
@@ -201,6 +214,8 @@ func _on_chart_file_dialog_file_selected(path: String) -> void:
 	paused_position = 0.0
 	is_paused = false
 	mode_label.text = "Mode: low (+)"
+	mode_label.modulate = Color.CYAN
+	lite_label.text = "Normal Notes"
 	grid_view.set_mode("low (+)")
 	_refresh_preview()
 
@@ -254,6 +269,12 @@ func _toggle_mode() -> void:
 	_update_lane_headers(new_mode)
 
 
+func _toggle_lite() -> void:
+	grid_view.is_lite_placement_mode = !grid_view.is_lite_placement_mode
+	lite_label.text = "Lite Notes" if grid_view.is_lite_placement_mode else "Normal Notes"
+	lite_label.modulate = VisualEffects.lite_color if grid_view.is_lite_placement_mode else Color.WHITE
+	print("[EDITOR] Lite Placement Mode: ", grid_view.is_lite_placement_mode)
+
 # Audio Control (Pause and Play)
 func _toggle_playback() -> void:
 	if Conductor.active_chart == null:
@@ -296,6 +317,9 @@ func _input(event: InputEvent) -> void:
 			KEY_ALT: 
 				_toggle_mode()
 			
+			KEY_L:
+				_toggle_lite()
+			
 			OFFSET_SET_KEY: 
 				_calibrate_offset()
 			
@@ -328,7 +352,7 @@ func _place_note_live(lane: int) -> void:
 		return
 	var raw_beat: float = Conductor.time_to_beat(Conductor.get_time())
 	var beat: float = grid_view.snap_beat(raw_beat)
-	chart.add_note(beat, lane, grid_view.current_mode)
+	chart.add_note(beat, lane, grid_view.current_mode, grid_view.is_lite_placement_mode)
 	grid_view.queue_redraw()
 
 

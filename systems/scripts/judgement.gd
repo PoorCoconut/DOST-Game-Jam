@@ -16,10 +16,6 @@ var held_note_modes: Array = ["", "", "", ""]
 
 
 func _ready() -> void:
-	if autoplay:
-		ScoreSystem.is_invincible = true
-	else:
-		ScoreSystem.is_invincible = false
 	print("[JUDGE] Replay Recorder NULL: ", replay_recorder == null)
 
 
