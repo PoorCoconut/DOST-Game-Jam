@@ -6,7 +6,6 @@ extends Node2D
 @onready var judgement_ring: Sprite2D = $Ring/JudgementRing
 @onready var ring: Node2D = $Ring
 @onready var energy_source: Sprite2D = $EnergySource
-@onready var sustain_meter: TextureProgressBar = $SustainMeter
 
 #Sustain Meters
 #Simple
