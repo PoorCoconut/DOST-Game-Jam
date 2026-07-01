@@ -7,7 +7,7 @@ extends Node
 @onready var replay_recorder: Node  = %ReplayRecorder
 
 # --- AUTOPLAYER ---
-var autoplay: bool = MatchRules.is_autoplay
+var autoplay: bool = true
 
 var current_mode: String = "+"
 var held_notes: Array     = [null, null, null, null]
@@ -65,9 +65,7 @@ func _process(_delta: float) -> void:
 
 
 func _toggle_mode() -> void:
-	#current_mode = "x" if current_mode == "+" else "+"
-	#sustain_ring.rotation_degrees = 45.0 if current_mode == "x" else 0.0
-	print("[JUDGE] Mode Switched: ", current_mode)
+	current_mode = "x" if current_mode == "+" else "+"
 
 
 func _quick_retry() -> void:

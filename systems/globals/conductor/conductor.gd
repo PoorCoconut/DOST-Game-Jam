@@ -32,6 +32,7 @@ func load_song(chart: ChartData) -> void:
 	active_chart = chart
 	lead_offset = chart.offset
 	audio_player.stream = chart.stream
+	audio_player.bus = "Music"
 	update_song_bpm(chart.bpm)
 	
 	# reset tracking
@@ -102,8 +103,8 @@ func time_to_beat(time: float) -> float:
 	return (time - lead_offset) / seconds_per_beat
 
 
-func beat_to_time(beat: float) -> float:
-	return beat * seconds_per_beat + lead_offset
+func beat_to_time(beat_to_convert: float) -> float:
+	return beat_to_convert * seconds_per_beat + lead_offset
 
 func is_playing() -> bool:
 	return audio_player.playing

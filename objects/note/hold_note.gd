@@ -36,8 +36,8 @@ func setup(p_lane: int, p_target_time: float, p_end_time: float, p_beat_duration
 	is_lite = p_is_lite
 	slices_total = int(round(p_beat_duration))
 
-	head.rotation = direction_vector.angle() - 44.75 + (PI / 2.0)
-	tail.rotation = direction_vector.angle() - 44.75 + (PI / 2.0)
+	head.rotation = direction_vector.angle() + (PI / 2.0)
+	tail.rotation = direction_vector.angle() + (PI / 2.0)
 
 	var current_time = Conductor.get_time()
 	var spd := _actual_speed()
@@ -128,7 +128,7 @@ func on_head_pressed(time_diff: float) -> void:
 
 	ScoreSystem.register_hold_slice(head_judgement)
 	slices_hit = 1
-
+	
 	var head_beat: float = target_time / Conductor.seconds_per_beat
 	next_slice_beat = head_beat + 1.0
 

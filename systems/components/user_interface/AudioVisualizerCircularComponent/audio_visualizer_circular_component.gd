@@ -2,7 +2,6 @@ extends Control
 class_name AudioVisualizerCircularComponent
 
 @onready var audio_spectrum: AudioEffectInstance = AudioServer.get_bus_effect_instance(1, 0)
-@onready var center_marker: Marker2D = %CenterMarker
 
 @export_category("Audio Visualizer Circle Settings")
 @export var center_offset: Vector2 = Vector2(0,0)
@@ -37,17 +36,16 @@ const MIN_DB = 60
 const MIN_FREQ = 20.0
 
 var bars: Array = []
-var music_playing: bool = false
 
 func _ready():
 	# Wait one frame so get_rect() returns the correct size
 	set_rotation_speed(rotation_speed)
 	await get_tree().process_frame
-	pivot_offset = center_marker.global_position
+	pivot_offset = global_position
 	_spawn_bars()
 
 func _spawn_bars():
-	var center = get_global_transform().affine_inverse() * center_marker.global_position
+	var center = get_global_transform().affine_inverse() * global_position
 	center += center_offset
 	for i in range(BAR_COUNT):
 		var bar = ColorRect.new()
@@ -79,7 +77,7 @@ func _process(delta):
 			#music_playing = true
 			#test_music.play()
 
-	if music_playing:
+	if Conductor.is_playing():
 		_update_bars()
 	else:
 		_lower_bars()

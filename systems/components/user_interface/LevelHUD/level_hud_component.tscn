@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://c1uo6d8lr232y" path="res://systems/components/user_interface/LevelHUD/level_hud_component.gd" id="1_xjqfi"]
 [ext_resource type="PackedScene" uid="uid://djq7ncohokjby" path="res://systems/components/user_interface/FrequencyBarComponent/frequency_bar_component.tscn" id="4_42bt7"]
-[ext_resource type="PackedScene" uid="uid://b8a5r72xa74hx" path="res://systems/components/user_interface/AudioVisualizerCircularComponent/audio_visualizer_circular_component.tscn" id="4_mwk34"]
 [ext_resource type="PackedScene" uid="uid://c5cs7bmkm68cx" path="res://systems/components/user_interface/ScoreMeterComponent/score_meter_component.tscn" id="5_cxd2y"]
 
 [sub_resource type="Gradient" id="Gradient_cxd2y"]
@@ -47,8 +46,6 @@ texture = SubResource("GradientTexture1D_ax0dj")
 [node name="FrequencyBarComponent" parent="." unique_id=1123226504 instance=ExtResource("4_42bt7")]
 position = Vector2(32, 32)
 scale = Vector2(0.25, 0.25)
-
-[node name="AudioVisualizerCircularComponent" parent="." unique_id=1170582492 instance=ExtResource("4_mwk34")]
 
 [node name="SongProgressBar" type="ProgressBar" parent="." unique_id=1739492356]
 unique_name_in_owner = true

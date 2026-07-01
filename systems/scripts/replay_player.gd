@@ -1,7 +1,7 @@
 extends Node
 
 var spawner: Node2D
-var sustain_ring: Sprite2D
+var sustain_ring: Node2D
 var judge: Node
 
 var _replay: ReplayData = null

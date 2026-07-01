@@ -27,7 +27,7 @@ extends Node2D
 @export var quadrant3_color : Color = Color(1, 1, 1, 1)
 @export var quadrant4_color : Color = Color(1, 1, 1, 1)
 ##The higher the number, the faster the speed
-@export var fade_speed : float = 10.0  
+@export var fade_speed : float = 20.0  
 
 @export_category("Transform")
 ##How many seconds for the 45 degree turn

@@ -5,6 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://1gsm04pemx5x" path="res://assets/energy_mask.png" id="5_fn7vn"]
 [ext_resource type="Script" uid="uid://dhob63b2lbkiu" path="res://systems/scripts/note_spawner.gd" id="6_lr7i6"]
 [ext_resource type="PackedScene" uid="uid://k00spa2y4tnk" path="res://objects/note/tap_note.tscn" id="7_07rdt"]
+[ext_resource type="PackedScene" uid="uid://b8a5r72xa74hx" path="res://systems/components/user_interface/AudioVisualizerCircularComponent/audio_visualizer_circular_component.tscn" id="7_8k7nv"]
+[ext_resource type="Script" uid="uid://37kj31j1y7qo" path="res://systems/scripts/ring_scale_controller.gd" id="7_fn7vn"]
 [ext_resource type="PackedScene" uid="uid://d3skweb2myvk" path="res://objects/note/hold_note.tscn" id="8_a5bbv"]
 [ext_resource type="Script" uid="uid://1ddbc618by85" path="res://systems/scripts/replay_recorder.gd" id="8_q0nmq"]
 [ext_resource type="Script" uid="uid://bte3cw0r48u2u" path="res://systems/scripts/replay_player.gd" id="9_kc66f"]
@@ -15,9 +17,9 @@
 script = ExtResource("1_i6826")
 
 [node name="LevelHUDComponent" parent="." unique_id=511265971 instance=ExtResource("9_q0nmq")]
+follow_viewport_scale = 0.001
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1344942612]
-position = Vector2(576, 324)
 
 [node name="Judge" type="Node" parent="." unique_id=617231441]
 script = ExtResource("3_kc66f")
@@ -35,16 +37,21 @@ script = ExtResource("8_q0nmq")
 unique_name_in_owner = true
 script = ExtResource("9_kc66f")
 
-[node name="PlayfieldContainer" type="Node2D" parent="." unique_id=221520134]
-
-[node name="SustainRing" parent="PlayfieldContainer" unique_id=575620661 instance=ExtResource("10_kc66f")]
+[node name="SustainRing" parent="." unique_id=575620661 instance=ExtResource("10_kc66f")]
 unique_name_in_owner = true
-position = Vector2(576, 324)
+quadrant1_color = Color(1, 1, 1, 1)
+quadrant2_color = Color(1, 1, 1, 1)
+quadrant3_color = Color(1, 1, 1, 1)
+quadrant4_color = Color(1, 1, 1, 1)
+
+[node name="PlayfieldContainer" type="Node2D" parent="." unique_id=221520134]
+script = ExtResource("7_fn7vn")
+
+[node name="AudioVisualizerCircularComponent" parent="PlayfieldContainer" unique_id=1170582492 instance=ExtResource("7_8k7nv")]
 
 [node name="NoteMask" type="Sprite2D" parent="PlayfieldContainer" unique_id=885414798]
 clip_children = 1
-position = Vector2(576, 324.00003)
-scale = Vector2(1.3, 1.3)
+scale = Vector2(1.22, 1.22)
 texture = ExtResource("5_fn7vn")
 
 [node name="NoteSpawner" type="Node2D" parent="PlayfieldContainer/NoteMask" unique_id=890188748]

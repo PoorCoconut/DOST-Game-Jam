@@ -55,11 +55,6 @@ func set_hp(current: float, max_hp: float = MAX_HP) -> void:
 	MAX_HP = max_hp
 	target_ratio = clamp(CUR_HP / MAX_HP, 0.0, 1.0)
 
-func _input(_event: InputEvent) -> void:
-	if Input.is_action_just_pressed("ui_accept"): ##DEBUG PURPOSES
-		CUR_HP -= 5
-		set_hp(CUR_HP - 5)
-		print("[STATS] HP: ",CUR_HP, " / ", MAX_HP)
 
 func _process(delta: float) -> void:
 	hp_ratio = lerp(hp_ratio, target_ratio, delta * lerp_speed) #Changes the hp ratio with an interpolation

@@ -32,7 +32,7 @@ func _ready():
 	if SceneManager.selected_chart:
 		chart_resource = SceneManager.selected_chart
 	else:
-		chart_resource = load("res://scenes/charts/mus_breakbeat.tres")
+		chart_resource = load("res://scenes/levels/test/mus_breakbeat.tres")
 
 	if is_recording:
 		replay_recorder.start_recording(chart_resource)
