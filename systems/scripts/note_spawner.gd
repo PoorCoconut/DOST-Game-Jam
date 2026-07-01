@@ -39,7 +39,8 @@ func _ready():
 	Conductor.load_song(chart_resource)
 
 	if not is_preview:
-		Conductor.play_song()
+		if not SceneManager.is_multiplayer: # prevents multiplayer games from playing immediately
+			Conductor.play_song()
 
 
 func _get_spawn_ahead_beats() -> float:
@@ -73,6 +74,9 @@ func _get_spawn_ahead_beats() -> float:
 
 func _process(_delta: float) -> void:
 	if chart_resource == null:
+		return
+
+	if not Conductor.is_playing(): # stops note from spawning before playback starts
 		return
 
 	var current_beat: float = Conductor.get_beat()

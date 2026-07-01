@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://bf2dfy7853wb8"]
 
+
 [ext_resource type="PackedScene" uid="uid://djq7ncohokjby" path="res://systems/components/user_interface/FrequencyBarComponent/frequency_bar_component.tscn" id="1_ftldk"]
 [ext_resource type="Texture2D" uid="uid://cww1fm7c8aoe6" path="res://assets/sustain_ring_white.png" id="2_q0nmq"]
 [ext_resource type="Script" uid="uid://fy2itsqbgj0q" path="res://systems/scripts/judgement.gd" id="3_kc66f"]

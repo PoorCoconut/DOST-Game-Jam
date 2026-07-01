@@ -104,3 +104,6 @@ func time_to_beat(time: float) -> float:
 
 func beat_to_time(beat: float) -> float:
 	return beat * seconds_per_beat + lead_offset
+
+func is_playing() -> bool:
+	return audio_player.playing
