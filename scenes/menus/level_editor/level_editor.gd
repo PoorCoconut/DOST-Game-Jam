@@ -247,10 +247,12 @@ func _on_mode_toggle_pressed() -> void:
 
 
 func _toggle_mode() -> void:
-	var new_mode := "high (x)" if grid_view.current_mode == "low (+)" else "low (+)"
-	grid_view.set_mode(new_mode)
-	mode_label.text = "Mode: %s" % new_mode
-	mode_label.modulate = Color.ORANGE if new_mode == "high (x)" else Color.CYAN
+	if grid_view:
+		grid_view.placing_special = false # Turn off special when switching lane axes
+	var new_mode := "high (x)" if grid_view.current_mode == "low (+)" else "low (+)" 
+	grid_view.set_mode(new_mode) 
+	mode_label.text = "Mode: %s" % new_mode 
+	mode_label.modulate = Color.ORANGE if new_mode == "high (x)" else Color.CYAN 
 	_update_lane_headers(new_mode)
 
 
@@ -389,7 +391,6 @@ func _on_ring_percent_field_text_submitted(new_text: String) -> void:
 	ring_percent_field.text = "%.0f" % (grid_view.selected_ring_event.target_scale * 100.0)
 
 
-# Gameplay Preview
 func _refresh_preview() -> void:
 	if preview_instance:
 		preview_instance.queue_free()
@@ -410,3 +411,23 @@ func _refresh_preview() -> void:
 		judge.autoplay = true
 	
 	preview_viewport.add_child(preview_instance)
+
+# Ring Scaler
+func _on_ring_event_selected(ev: ScaleEvent) -> void:
+	if ev == null:
+		ring_percent_field.text = ""
+		ring_percent_field.editable = false
+	else:
+		ring_percent_field.text = "%.0f" % (ev.target_scale * 100.0)
+		ring_percent_field.editable = true
+
+func _on_ring_percent_field_text_submitted(new_text: String) -> void:
+	if grid_view.selected_ring_event == null:
+		ring_percent_field.text = ""
+		ring_percent_field.editable = false
+		return
+	var value := new_text.to_float()
+	if value <= 0 or not new_text.is_valid_float():
+		return
+	grid_view.set_ring_event_percent(value)
+	ring_percent_field.text = "%.0f" % (grid_view.selected_ring_event.target_scale * 100.0)

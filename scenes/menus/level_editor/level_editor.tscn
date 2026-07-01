@@ -40,6 +40,11 @@ text = "Clear Chart"
 layout_mode = 2
 text = "Load Chart"
 
+[node name="Choose Background" type="Button" parent="UI/FileButtons" unique_id=190802662]
+layout_mode = 2
+text = "Choose
+Background"
+
 [node name="SongFileDialog" type="FileDialog" parent="UI/FileButtons" unique_id=1258136699]
 title = "Open a File"
 file_mode = 0
@@ -52,6 +57,12 @@ file_mode = 0
 access = 2
 filters = PackedStringArray("*.tres")
 
+[node name="BackgroundFileDialog" type="FileDialog" parent="UI/FileButtons" unique_id=1760473538]
+title = "Open a File"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.png", "*.jpg", "*.jpeg")
+
 [node name="Play_Pause" type="Button" parent="UI/FileButtons" unique_id=484283981]
 layout_mode = 2
 text = "Play/Pause"
@@ -61,9 +72,9 @@ layout_mode = 2
 
 [node name="BPMField" type="LineEdit" parent="UI" unique_id=338541541]
 layout_mode = 0
-offset_top = 210.0
+offset_top = 268.0
 offset_right = 127.0
-offset_bottom = 241.0
+offset_bottom = 299.0
 placeholder_text = "Set BPM"
 alignment = 1
 
@@ -122,6 +133,9 @@ layout_mode = 2
 [node name="BPMLabel" type="Label" parent="UI/SongInfo" unique_id=469537465]
 layout_mode = 2
 
+[node name="BGPreview" type="TextureRect" parent="UI/SongInfo" unique_id=1378287378]
+layout_mode = 2
+
 [node name="Scrubber" type="Control" parent="UI" unique_id=1704809627]
 anchors_preset = 0
 offset_left = 644.0
@@ -145,15 +159,17 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -131.99994
-offset_top = -4.0
-offset_right = 130.31537
-offset_bottom = -40.0
+offset_left = 3.8146973e-05
+offset_top = -10.666667
+offset_right = 545.18494
+offset_bottom = 408.4937
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.54, 0.54)
 stretch = true
 
 [node name="PreviewViewport" type="SubViewport" parent="UI/PreviewPanel/SubViewportContainer" unique_id=1760385502]
+transparent_bg = true
 handle_input_locally = false
 size = Vector2i(902, 572)
 render_target_update_mode = 4
@@ -166,12 +182,21 @@ offset_right = 396.66666
 offset_bottom = 596.3333
 text = "Preview Restart"
 
+[node name="for debugging (to visualize playfield" type="ColorRect" parent="." unique_id=1413362]
+offset_left = 654.0
+offset_top = 228.0
+offset_right = 1121.0
+offset_bottom = 491.0
+color = Color(0.6509804, 0.76862746, 1, 0.05882353)
+
 [connection signal="pressed" from="UI/FileButtons/LoadSong" to="." method="_on_load_song_pressed"]
 [connection signal="pressed" from="UI/FileButtons/SaveChart" to="." method="_on_save_chart_pressed"]
 [connection signal="pressed" from="UI/FileButtons/NewChart" to="." method="_on_new_chart_pressed"]
 [connection signal="pressed" from="UI/FileButtons/LoadChart" to="." method="_on_load_chart_pressed"]
+[connection signal="pressed" from="UI/FileButtons/Choose Background" to="." method="_on_choose_bg_pressed"]
 [connection signal="file_selected" from="UI/FileButtons/SongFileDialog" to="." method="_on_song_file_dialog_file_selected"]
 [connection signal="file_selected" from="UI/FileButtons/ChartFileDialog" to="." method="_on_chart_file_dialog_file_selected"]
+[connection signal="file_selected" from="UI/FileButtons/BackgroundFileDialog" to="." method="_on_bg_file_dialog_file_selected"]
 [connection signal="pressed" from="UI/FileButtons/Play_Pause" to="." method="_on_play_pause_pressed"]
 [connection signal="item_selected" from="UI/FileButtons/SnapOption" to="." method="_on_snap_option_item_selected"]
 [connection signal="text_changed" from="UI/BPMField" to="." method="_on_bpm_field_text_changed"]

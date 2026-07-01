@@ -533,7 +533,12 @@ func _draw_notes() -> void:
 		return
 	for n in chart.notes:
 		var x := n.lane * lane_width
-		var color := Color.CYAN if n.mode == "low (+)" else Color.ORANGE
+		var color: Color
+		if n.is_special:
+			color = Color(0.7, 0.4, 1.0) # Special note color
+		else:
+			color = Color.CYAN if n.mode == "low (+)" else Color.ORANGE
+			
 		if n.beat_end > n.beat_start:
 			var y_top := n.beat_start * pixels_per_beat
 			var y_bottom := n.beat_end * pixels_per_beat

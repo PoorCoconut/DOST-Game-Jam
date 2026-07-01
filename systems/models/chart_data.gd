@@ -10,13 +10,13 @@ class_name ChartData
 @export var scale_events: Array[ScaleEvent] = [] # list of ScaleData manips
 
 
-
-func add_note(beat_start: float, lane: int, mode: String, beat_end: float = 0.0) -> NoteData:
+func add_note(beat_start: float, lane: int, mode: String, beat_end: float = 0.0, is_special: bool = false) -> NoteData:
 	var note := NoteData.new()
 	note.beat_start = beat_start
 	note.beat_end = beat_end
 	note.lane = lane
 	note.mode = mode
+	note.is_special = is_special
 	notes.append(note)
 	sort_notes()
 	return note
