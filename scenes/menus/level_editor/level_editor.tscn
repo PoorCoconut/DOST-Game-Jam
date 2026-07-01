@@ -80,9 +80,9 @@ alignment = 1
 
 [node name="RingPercentField" type="LineEdit" parent="UI" unique_id=244274957]
 layout_mode = 0
-offset_top = 304.0
+offset_top = 245.0
 offset_right = 127.0
-offset_bottom = 335.0
+offset_bottom = 276.0
 placeholder_text = "Ring Scale"
 alignment = 1
 
@@ -94,7 +94,7 @@ offset_right = 636.0
 offset_bottom = 611.0
 
 [node name="GridView" type="Control" parent="UI/ScrollContainer" unique_id=2007271287]
-custom_minimum_size = Vector2(400, 16200)
+custom_minimum_size = Vector2(480, 16200)
 layout_mode = 2
 script = ExtResource("2_xbjp5")
 
@@ -171,7 +171,7 @@ stretch = true
 [node name="PreviewViewport" type="SubViewport" parent="UI/PreviewPanel/SubViewportContainer" unique_id=1760385502]
 transparent_bg = true
 handle_input_locally = false
-size = Vector2i(1185, 1027)
+size = Vector2i(902, 572)
 render_target_update_mode = 4
 
 [node name="PreviewRestart" type="Button" parent="UI/PreviewPanel" unique_id=507405584]

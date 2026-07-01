@@ -1,4 +1,3 @@
-# ring_scale_controller.gd
 extends Node2D
 
 var chart: ChartData

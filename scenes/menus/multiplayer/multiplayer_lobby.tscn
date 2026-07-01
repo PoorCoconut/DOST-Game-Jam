@@ -1,0 +1,71 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/menus/multiplayer/multiplayer_lobby.gd" id="1_script"]
+
+[node name="MultiplayerLobby" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Layout" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -140.0
+offset_right = 160.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PlayerPanel" type="VBoxContainer" parent="Layout"]
+layout_mode = 2
+
+[node name="HostLabel" type="Label" parent="Layout/PlayerPanel"]
+layout_mode = 2
+text = "Host: ..."
+
+[node name="GuestLabel" type="Label" parent="Layout/PlayerPanel"]
+layout_mode = 2
+text = "Guest: ..."
+
+[node name="SettingsPanel" type="VBoxContainer" parent="Layout"]
+layout_mode = 2
+
+[node name="EnergyLabel" type="Label" parent="Layout/SettingsPanel"]
+layout_mode = 2
+text = "Your Energy Type:"
+
+[node name="EnergyOption" type="OptionButton" parent="Layout/SettingsPanel"]
+layout_mode = 2
+
+[node name="StartButton" type="Button" parent="Layout"]
+visible = false
+layout_mode = 2
+text = "Start Match"
+
+[node name="WaitingLabel" type="Label" parent="Layout"]
+visible = false
+layout_mode = 2
+text = "Waiting for host to start..."
+horizontal_alignment = 1
+
+[node name="StatusLabel" type="Label" parent="Layout"]
+layout_mode = 2
+text = ""
+horizontal_alignment = 1
+
+[node name="QuitButton" type="Button" parent="Layout"]
+layout_mode = 2
+text = "Leave Lobby"
+
+[connection signal="item_selected" from="Layout/SettingsPanel/EnergyOption" to="." method="_on_energy_selected"]
+[connection signal="pressed" from="Layout/StartButton" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="Layout/QuitButton" to="." method="_on_quit_pressed"]
