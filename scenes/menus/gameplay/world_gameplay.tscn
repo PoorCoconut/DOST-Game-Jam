@@ -4,10 +4,12 @@
 [ext_resource type="Texture2D" uid="uid://1gsm04pemx5x" path="res://assets/energy_mask.png" id="5_fn7vn"]
 [ext_resource type="Script" uid="uid://dhob63b2lbkiu" path="res://systems/scripts/note_spawner.gd" id="6_lr7i6"]
 [ext_resource type="PackedScene" uid="uid://k00spa2y4tnk" path="res://objects/note/tap_note.tscn" id="7_07rdt"]
+[ext_resource type="Script" uid="uid://37kj31j1y7qo" path="res://systems/scripts/ring_scale_controller.gd" id="7_fn7vn"]
 [ext_resource type="PackedScene" uid="uid://d3skweb2myvk" path="res://objects/note/hold_note.tscn" id="8_a5bbv"]
 [ext_resource type="PackedScene" uid="uid://dleilsmim1rix" path="res://systems/components/user_interface/LevelHUD/level_hud_component.tscn" id="9_q0nmq"]
 
 [node name="WorldGameplay" type="Node2D" unique_id=1726405357]
+script = ExtResource("10_wgp")
 
 [node name="LevelHUDComponent" parent="." unique_id=511265971 instance=ExtResource("9_q0nmq")]
 

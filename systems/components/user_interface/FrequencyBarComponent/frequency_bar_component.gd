@@ -35,16 +35,23 @@ var target_ratio: float = 1.0  #hp_ratio lerps toward this. Set this when HP cha
 @onready var frequency_line: Line2D = %Frequency
 @onready var heart_line: Line2D = %Heart
 
+
 func _ready():
-	print("[STATS] HP: ", CUR_HP, " / ", MAX_HP)
+	ScoreSystem.hp_changed.connect(_on_hp_changed)
 	_redraw()
 	_redraw_heart()
 
-#Example [very simple] hp setter
+
+func _on_hp_changed(current: float, max_hp: float) -> void:
+	set_hp(current, max_hp)
+
+
+# Example [very simple] hp setter
 func set_hp(current: float, max_hp: float = MAX_HP) -> void:
 	if current <= 0:
 		CUR_HP = 0
-	else: CUR_HP = current
+	else:
+		CUR_HP = current
 	MAX_HP = max_hp
 	target_ratio = clamp(CUR_HP / MAX_HP, 0.0, 1.0)
 

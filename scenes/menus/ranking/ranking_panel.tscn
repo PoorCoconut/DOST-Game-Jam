@@ -1,0 +1,79 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/menus/ranking/ranking_panel.gd" id="1_rp"]
+
+[node name="RankingPanel" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_rp")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 20.0
+offset_bottom = -20.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 16
+
+[node name="RankLabel" type="Label" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Rank: "
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 56
+
+[node name="ScoreLabel" type="Label" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Score: "
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 40
+
+[node name="MaxComboLabel" type="Label" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Max Combo: "
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 28
+
+[node name="PerfectsLabel" type="Label" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Perfect: "
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 28
+
+[node name="GoodsLabel" type="Label" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Good: "
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 28
+
+[node name="BadsLabel" type="Label" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Bad: "
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 28
+
+[node name="MissesLabel" type="Label" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Miss: "
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 28
+
+[node name="WatchReplayButton" type="Button" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 48)
+text = "Watch Replay"
+theme_override_font_sizes/font_size = 24
+
+[node name="LeaderboardButton" type="Button" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 48)
+text = "Leaderboard"
+theme_override_font_sizes/font_size = 24
+
+[node name="QuitButton" type="Button" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 48)
+text = "Quit to Menu"
+theme_override_font_sizes/font_size = 24
