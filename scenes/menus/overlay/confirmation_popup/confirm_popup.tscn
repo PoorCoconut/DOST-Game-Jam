@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://bv83t3qi6jxqs"]
+
+[ext_resource type="Script" uid="uid://y3ue0rfk5jdi" path="res://scenes/menus/overlay/confirmation_popup/confirm_popup.gd" id="1_soqvq"]
+
+[node name="ConfirmPopup" type="Control" unique_id=629342930]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_soqvq")
+
+[node name="DimBackground" type="ColorRect" parent="." unique_id=1824132176]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -576.0
+offset_top = -324.0
+offset_right = 576.0
+offset_bottom = 324.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.37254903)
+
+[node name="Panel" type="PanelContainer" parent="." unique_id=1940594197]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -201.75
+offset_top = -77.0
+offset_right = 201.75
+offset_bottom = 77.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=220319240]
+layout_mode = 2
+alignment = 1
+
+[node name="MessageLabel" type="Label" parent="Panel/VBoxContainer" unique_id=1540077937]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=2131466471]
+layout_mode = 2
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="ConfirmButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer" unique_id=1806010223]
+layout_mode = 2
+text = "I'm Gay and I Touch Little Kids!"
+
+[node name="CancelButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer" unique_id=1404123200]
+layout_mode = 2
+text = "Cancel"
+
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/ConfirmButton" to="." method="_on_confirm_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/CancelButton" to="." method="_on_cancel_pressed"]

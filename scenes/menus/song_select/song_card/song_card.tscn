@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://bp8aei52hyfm8"]
+
+[ext_resource type="Script" uid="uid://c7n6ypjoh37ic" path="res://scenes/menus/song_select/song_card/song_card.gd" id="1_41tsk"]
+
+[node name="SongCard" type="Control" unique_id=296548007]
+custom_minimum_size = Vector2(350, 350)
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -175.0
+offset_top = -175.0
+offset_right = 175.0
+offset_bottom = 175.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_41tsk")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1943468450]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -190.5
+offset_right = 150.0
+offset_bottom = 190.5
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="LargeJacketTexture" type="TextureRect" parent="VBoxContainer" unique_id=373427827]
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="DisplayTitle" type="Label" parent="VBoxContainer" unique_id=1248021073]
+layout_mode = 2
+text = "Title"
+horizontal_alignment = 1
+
+[node name="DisplayArtist" type="Label" parent="VBoxContainer" unique_id=2003248222]
+layout_mode = 2
+text = "Artist"
+horizontal_alignment = 1
+
+[node name="InfoGrid" type="GridContainer" parent="VBoxContainer" unique_id=751176061]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+columns = 4
+
+[node name="LengthValue" type="Label" parent="VBoxContainer/InfoGrid" unique_id=1957886970]
+layout_mode = 2
+text = "lorem"
+horizontal_alignment = 1
+
+[node name="BPMValue" type="Label" parent="VBoxContainer/InfoGrid" unique_id=495662980]
+layout_mode = 2
+text = "lorem"
+horizontal_alignment = 1
+
+[node name="CountValue" type="Label" parent="VBoxContainer/InfoGrid" unique_id=1750287108]
+layout_mode = 2
+text = "lorem"
+horizontal_alignment = 1
+
+[node name="DiffValue" type="Label" parent="VBoxContainer/InfoGrid" unique_id=1573982431]
+layout_mode = 2
+text = "lorem"
+horizontal_alignment = 1
