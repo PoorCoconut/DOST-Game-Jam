@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://criendm0u25hq"]
+
+[ext_resource type="Script" uid="uid://nrbqpdq88c1w" path="res://scenes/menus/song_select/song_list/song_list.gd" id="1_30p6g"]
+
+[node name="SongList" type="ScrollContainer" unique_id=1708506911]
+clip_contents = false
+offset_right = 40.0
+offset_bottom = 40.0
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+script = ExtResource("1_30p6g")
+
+[node name="SongsContainerVBox" type="VBoxContainer" parent="." unique_id=824705045]
+layout_mode = 2
+theme_override_constants/separation = 12

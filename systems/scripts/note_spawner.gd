@@ -5,8 +5,9 @@ extends Node2D
 @onready var replay_recorder: Node = %ReplayRecorder
 @export var hold_note_scene: PackedScene
 
-# --- FOR PREVIEW ---
-@export var is_preview: bool = false
+# --- FOR PREVIEW AND RECORD ---
+@export var is_preview: bool   = MatchRules.is_preview
+@export var is_recording: bool = MatchRules.can_record
 
 var chart_resource: Resource
 
@@ -33,14 +34,15 @@ func _ready():
 	else:
 		chart_resource = load("res://scenes/charts/mus_breakbeat.tres")
 
+	if is_recording:
+		replay_recorder.start_recording(chart_resource)
+	
 	chart_resource.sort_notes()
 	ScoreSystem.load_chart(chart_resource)
-	replay_recorder.start_recording(chart_resource)
 	Conductor.load_song(chart_resource)
 
-	if not is_preview:
-		if not SceneManager.is_multiplayer: # prevents multiplayer games from playing immediately
-			Conductor.play_song()
+	if not is_preview and not SceneManager.is_multiplayer: # prevents multiplayer games from playing immediately
+		Conductor.play_song()
 
 
 func _get_spawn_ahead_beats() -> float:

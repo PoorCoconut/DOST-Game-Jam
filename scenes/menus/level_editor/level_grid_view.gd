@@ -24,6 +24,7 @@ var drag_start_beat: float = 0.0
 var drag_current_beat: float = 0.0
 var current_mode: String = "low (+)"
 var playhead_beat: float = 0.0
+var is_lite_placement_mode: bool = false
 
 # Ring Scale
 var selected_ring_event: ScaleEvent = null
@@ -223,9 +224,9 @@ func _finish_drag() -> void:
 	
 	var note: NoteData
 	if beat_end - beat_start < (1.0 / snap_divisor):
-		note = chart.add_note(beat_start, drag_lane, current_mode)
+		note = chart.add_note(beat_start, drag_lane, current_mode, is_lite_placement_mode)
 	else:
-		note = chart.add_note(beat_start, drag_lane, current_mode, beat_end)
+		note = chart.add_note(beat_start, drag_lane, current_mode, is_lite_placement_mode, beat_end)
 	last_placed_note = note
 	
 	var undo_fn := func():
@@ -321,7 +322,7 @@ func paste_at_anchor() -> void:
 			skipped += 1
 			continue
 		var hold_length: float = entry["hold_length"]
-		var new_note := chart.add_note(new_beat, new_lane, entry["mode"], new_beat + hold_length if hold_length > 0.0 else 0.0)
+		var new_note := chart.add_note(new_beat, new_lane, entry["mode"], is_lite_placement_mode, new_beat + hold_length if hold_length > 0.0 else 0.0)
 		new_notes.append(new_note)
 	
 	if skipped > 0:
@@ -534,6 +535,12 @@ func _draw_notes() -> void:
 	for n in chart.notes:
 		var x := n.lane * lane_width
 		var color := Color.CYAN if n.mode == "low (+)" else Color.ORANGE
+		
+		# FOR LITE NOTES
+		if n.is_lite:
+			color = color.darkened(0.6)
+			color.a = 0.6
+		
 		if n.beat_end > n.beat_start:
 			var y_top := n.beat_start * pixels_per_beat
 			var y_bottom := n.beat_end * pixels_per_beat

@@ -56,8 +56,7 @@ var hp_lite_miss: float = 0.05   # HP lost on lite note misses (5% of max HP)
 # HP state — managed here, displayed by FrequencyBarComponent
 var current_hp: float = 100.0
 var max_hp: float = 100.0
-var is_failed: bool = false     # true once HP hits 0 — forces F rank regardless of watts
-var is_invincible: bool = false # always false by default, this is just in preparation for a "No Fail" mod
+var is_failed: bool = false      # true once HP hits 0 — forces F rank regardless of watts
 
 
 func load_chart(chart_resource: ChartData) -> void:
@@ -164,7 +163,7 @@ func _apply_hp(result: String) -> void:
 		"miss":    current_hp = max(current_hp - (max_hp * hp_miss_ratio), 0.0)
 	hp_changed.emit(current_hp, max_hp)
 	
-	if is_invincible:
+	if MatchRules.is_invincible:
 		current_hp = max_hp
 		return
 	
@@ -172,12 +171,12 @@ func _apply_hp(result: String) -> void:
 		is_failed = true
 		player_failed.emit()
 
-
+# USED FOR LITE NOTES
 func _apply_hp_direct(amount: float) -> void:
 	current_hp = clamp(current_hp + amount, 0.0, max_hp)
 	hp_changed.emit(current_hp, max_hp)
 	
-	if is_invincible:
+	if MatchRules.is_invincible:
 		current_hp = max_hp
 		return
 	

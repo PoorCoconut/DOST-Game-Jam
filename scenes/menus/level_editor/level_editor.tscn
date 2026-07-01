@@ -21,8 +21,9 @@ offset_bottom = 616.0
 
 [node name="FileButtons" type="VBoxContainer" parent="UI" unique_id=760030987]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_top = 40.0
+offset_right = 95.0
+offset_bottom = 235.0
 
 [node name="LoadSong" type="Button" parent="UI/FileButtons" unique_id=236057975]
 layout_mode = 2
@@ -61,17 +62,17 @@ layout_mode = 2
 
 [node name="BPMField" type="LineEdit" parent="UI" unique_id=338541541]
 layout_mode = 0
-offset_top = 210.0
+offset_top = 250.0
 offset_right = 127.0
-offset_bottom = 241.0
+offset_bottom = 281.0
 placeholder_text = "Set BPM"
 alignment = 1
 
 [node name="RingPercentField" type="LineEdit" parent="UI" unique_id=244274957]
 layout_mode = 0
-offset_top = 245.0
+offset_top = 285.0
 offset_right = 127.0
-offset_bottom = 276.0
+offset_bottom = 316.0
 placeholder_text = "Ring Scale"
 alignment = 1
 
@@ -106,38 +107,60 @@ layout_mode = 2
 [node name="West" type="Label" parent="UI/GridHeader" unique_id=1153844298]
 layout_mode = 2
 
+[node name="ColorRect" type="ColorRect" parent="UI" unique_id=1988309953]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 322.0
+offset_right = 127.0
+offset_bottom = 390.0
+color = Color(0.3403393, 0.34033933, 0.3403393, 1)
+
+[node name="Placement" type="VBoxContainer" parent="UI" unique_id=1554483586]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 330.0
+offset_right = 53.0
+offset_bottom = 382.0
+
+[node name="ModeLabel" type="Label" parent="UI/Placement" unique_id=369954519]
+layout_mode = 2
+text = "Mode:"
+
+[node name="LiteLabel" type="Label" parent="UI/Placement" unique_id=20047992]
+layout_mode = 2
+text = "Lite:"
+
 [node name="SongInfo" type="VBoxContainer" parent="UI" unique_id=672828153]
 layout_mode = 0
 offset_left = 644.0
-offset_top = 16.0
-offset_right = 684.0
-offset_bottom = 93.0
+offset_top = 42.0
+offset_right = 688.0
+offset_bottom = 119.0
 
 [node name="TitleLabel" type="Label" parent="UI/SongInfo" unique_id=398431317]
 layout_mode = 2
-
-[node name="ModeLabel" type="Label" parent="UI/SongInfo" unique_id=1426553530]
-layout_mode = 2
+text = "Title:"
 
 [node name="BPMLabel" type="Label" parent="UI/SongInfo" unique_id=469537465]
 layout_mode = 2
+text = "BPM:"
 
 [node name="Scrubber" type="Control" parent="UI" unique_id=1704809627]
 anchors_preset = 0
 offset_left = 644.0
-offset_top = 104.0
+offset_top = 101.0
 offset_right = 1124.0
-offset_bottom = 144.0
+offset_bottom = 141.0
 script = ExtResource("3_b5stn")
 
 [node name="PreviewPanel" type="Control" parent="UI" unique_id=1248538424]
 clip_contents = true
 custom_minimum_size = Vector2(600, 450)
 anchors_preset = 0
-offset_left = 644.0
-offset_top = 160.0
+offset_left = 644.00006
+offset_top = 152.0
 offset_right = 1284.0
-offset_bottom = 768.0
+offset_bottom = 760.0
 scale = Vector2(0.75, 0.75)
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="UI/PreviewPanel" unique_id=1634317744]
@@ -146,9 +169,9 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -131.99994
-offset_top = -4.0
+offset_top = -6.6666718
 offset_right = 130.31537
-offset_bottom = -40.0
+offset_bottom = -42.666687
 grow_horizontal = 2
 grow_vertical = 2
 stretch = true
@@ -160,10 +183,10 @@ render_target_update_mode = 4
 
 [node name="PreviewRestart" type="Button" parent="UI/PreviewPanel" unique_id=507405584]
 layout_mode = 0
-offset_left = 266.66666
-offset_top = 565.3333
-offset_right = 396.66666
-offset_bottom = 596.3333
+offset_left = 233.3332
+offset_top = 572.0
+offset_right = 419.99994
+offset_bottom = 608.3334
 text = "Preview Restart"
 
 [connection signal="pressed" from="UI/FileButtons/LoadSong" to="." method="_on_load_song_pressed"]

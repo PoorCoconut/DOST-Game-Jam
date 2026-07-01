@@ -1,0 +1,281 @@
+[gd_scene format=3 uid="uid://wqfp06qq2upu"]
+
+[ext_resource type="Script" uid="uid://cvtgcqy3ev114" path="res://scenes/menus/overlay/mods_overlay/mods_overlay.gd" id="1_j5t2t"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nnl14"]
+bg_color = Color(0, 0, 0, 0.5882353)
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_nnl14"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_tltf4"]
+gradient = SubResource("Gradient_nnl14")
+fill_to = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_u2gqu"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_1fm8h"]
+gradient = SubResource("Gradient_u2gqu")
+fill_from = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_wphjj"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3cg57"]
+gradient = SubResource("Gradient_wphjj")
+fill_from = Vector2(1, 0)
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_ims6b"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qdqf4"]
+gradient = SubResource("Gradient_ims6b")
+fill_from = Vector2(1, 1)
+fill_to = Vector2(0, 0)
+
+[node name="ModsOverlay" type="Control" unique_id=425077867]
+z_index = 10
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_j5t2t")
+
+[node name="DimmerBackground" type="ColorRect" parent="." unique_id=1564408358]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.39215687)
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=550234325]
+layout_mode = 0
+offset_left = 96.0
+offset_top = 126.0
+offset_right = 1056.0
+offset_bottom = 522.0
+theme_override_constants/margin_top = 40
+
+[node name="ModalFrame" type="PanelContainer" parent="MarginContainer" unique_id=660997554]
+custom_minimum_size = Vector2(960, 350)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/ModalFrame" unique_id=1161968199]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/ModalFrame/MarginContainer" unique_id=2104836955]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TopDivider" type="TextureRect" parent="MarginContainer/ModalFrame/MarginContainer/VBoxContainer" unique_id=977572661]
+layout_mode = 2
+
+[node name="Line2D" type="Line2D" parent="MarginContainer/ModalFrame/MarginContainer/VBoxContainer/TopDivider" unique_id=817682777]
+points = PackedVector2Array(0, -6, 904, -6)
+width = 2.0
+
+[node name="CardsHBOX" type="HBoxContainer" parent="MarginContainer/ModalFrame/MarginContainer/VBoxContainer" unique_id=1933047718]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="ModCard_FL" type="PanelContainer" parent="MarginContainer/ModalFrame/MarginContainer/VBoxContainer/CardsHBOX" unique_id=2067829858]
+custom_minimum_size = Vector2(172, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nnl14")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/ModalFrame/MarginContainer/VBoxContainer/CardsHBOX/ModCard_FL" unique_id=508276879]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/ModalFrame/MarginContainer/VBoxContainer/CardsHBOX/ModCard_FL/MarginContainer" unique_id=1642974692]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/ModalFrame/MarginContainer/VBoxContainer/CardsHBOX/ModCard_FL/MarginContainer/VBoxContainer" unique_id=1691941518]
+custom_minimum_size = Vector2(84, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = SubResource("GradientTexture2D_tltf4")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="AbbrLabel" type="Label" parent="MarginContainer/ModalFrame/MarginContainer/VBoxContainer/CardsHBOX/ModCard_FL/MarginContainer/VBoxContainer" unique_id=969921679]
+layout_mode = 2
+text = "FL"
+horizontal_alignment = 1
+
+[node name="NameLabel" type="Label" parent="MarginContainer/ModalFrame/MarginContainer/VBoxContainer/CardsHBOX/ModCard_FL/MarginContainer/VBoxContainer" unique_id=935203020]
+modulate = Color(1, 1, 0, 1)
+layout_mode = 2
+text = "Fading Light"
+horizontal_alignment = 1
+
+[node name="DescLabel" type="Label" parent="MarginContainer/ModalFrame/MarginContainer/VBoxContainer/CardsHBOX/ModCard_FL/MarginContainer/VBoxContainer" unique_id=635682119]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Energies gradually dim into nothingness the closer they get to the core."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="ModCard_FS" type="PanelContainer" parent="MarginContainer/ModalFrame/MarginContainer/VBoxContainer/CardsHBOX" unique_id=532632794]
+custom_minimum_size = Vector2(172, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nnl14")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/ModalFrame/MarginContainer/VBoxContainer/CardsHBOX/ModCard_FS" unique_id=1720487200]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/ModalFrame/MarginContainer/VBoxContainer/CardsHBOX/ModCard_FS/MarginContainer" unique_id=911245681]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/ModalFrame/MarginContainer/VBoxContainer/CardsHBOX/ModCard_FS/MarginContainer/VBoxContainer" unique_id=1825219188]
+custom_minimum_size = Vector2(84, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = SubResource("GradientTexture2D_1fm8h")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="AbbrLabel" type="Label" parent="MarginContainer/ModalFrame/MarginContainer/VBoxContainer/CardsHBOX/ModCard_FS/MarginContainer/VBoxContainer" unique_id=369924246]
+layout_mode = 2
+text = "FS"
+horizontal_alignment = 1
+
+[node name="NameLabel" type="Label" parent="MarginContainer/ModalFrame/MarginContainer/VBoxContainer/CardsHBOX/ModCard_FS/MarginContainer/VBoxContainer" unique_id=1297377284]
+modulate = Color(1, 1, 0, 1)
+layout_mode = 2
+text = "Flow State"
+horizontal_alignment = 1
+
+[node name="DescLabel" type="Label" parent="MarginContainer/ModalFrame/MarginContainer/VBoxContainer/CardsHBOX/ModCard_FS/MarginContainer/VBoxContainer" unique_id=579423017]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Skills of any energy source are absolutely disabled. Only pure skill matters."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="ModCard_DT" type="PanelContainer" parent="MarginContainer/ModalFrame/MarginContainer/VBoxContainer/CardsHBOX" unique_id=664761757]
+custom_minimum_size = Vector2(172, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nnl14")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/ModalFrame/MarginContainer/VBoxContainer/CardsHBOX/ModCard_DT" unique_id=1847910058]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/ModalFrame/MarginContainer/VBoxContainer/CardsHBOX/ModCard_DT/MarginContainer" unique_id=1285943022]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/ModalFrame/MarginContainer/VBoxContainer/CardsHBOX/ModCard_DT/MarginContainer/VBoxContainer" unique_id=1898457471]
+custom_minimum_size = Vector2(84, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = SubResource("GradientTexture2D_3cg57")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="AbbrLabel" type="Label" parent="MarginContainer/ModalFrame/MarginContainer/VBoxContainer/CardsHBOX/ModCard_DT/MarginContainer/VBoxContainer" unique_id=1842038134]
+layout_mode = 2
+text = "DT"
+horizontal_alignment = 1
+
+[node name="NameLabel" type="Label" parent="MarginContainer/ModalFrame/MarginContainer/VBoxContainer/CardsHBOX/ModCard_DT/MarginContainer/VBoxContainer" unique_id=1728819789]
+modulate = Color(1, 1, 0, 1)
+layout_mode = 2
+text = "Double Time"
+horizontal_alignment = 1
+
+[node name="DescLabel" type="Label" parent="MarginContainer/ModalFrame/MarginContainer/VBoxContainer/CardsHBOX/ModCard_DT/MarginContainer/VBoxContainer" unique_id=1661611965]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "The song’s playback is increased by 1.5x. Ironic that it isn’t double, but it still makes the level fast."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="ModCard_HR" type="PanelContainer" parent="MarginContainer/ModalFrame/MarginContainer/VBoxContainer/CardsHBOX" unique_id=641766747]
+custom_minimum_size = Vector2(172, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nnl14")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/ModalFrame/MarginContainer/VBoxContainer/CardsHBOX/ModCard_HR" unique_id=1913728046]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/ModalFrame/MarginContainer/VBoxContainer/CardsHBOX/ModCard_HR/MarginContainer" unique_id=1396602415]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/ModalFrame/MarginContainer/VBoxContainer/CardsHBOX/ModCard_HR/MarginContainer/VBoxContainer" unique_id=1193694598]
+custom_minimum_size = Vector2(84, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = SubResource("GradientTexture2D_qdqf4")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="AbbrLabel" type="Label" parent="MarginContainer/ModalFrame/MarginContainer/VBoxContainer/CardsHBOX/ModCard_HR/MarginContainer/VBoxContainer" unique_id=2029050525]
+layout_mode = 2
+text = "HR"
+horizontal_alignment = 1
+
+[node name="NameLabel" type="Label" parent="MarginContainer/ModalFrame/MarginContainer/VBoxContainer/CardsHBOX/ModCard_HR/MarginContainer/VBoxContainer" unique_id=731768060]
+modulate = Color(1, 1, 0, 1)
+layout_mode = 2
+text = "Hard Rock"
+horizontal_alignment = 1
+
+[node name="DescLabel" type="Label" parent="MarginContainer/ModalFrame/MarginContainer/VBoxContainer/CardsHBOX/ModCard_HR/MarginContainer/VBoxContainer" unique_id=1426489730]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Things are much harder. Notes are harder to hit, and go into the opposite direction than original."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="BottomDivider" type="TextureRect" parent="MarginContainer/ModalFrame/MarginContainer/VBoxContainer" unique_id=1474191872]
+layout_mode = 2
+
+[node name="Line2D" type="Line2D" parent="MarginContainer/ModalFrame/MarginContainer/VBoxContainer/BottomDivider" unique_id=1430344295]
+position = Vector2(0, 7)
+points = PackedVector2Array(0, -6, 904, -6)
+width = 2.0
+
+[node name="HintLabel" type="Label" parent="MarginContainer/ModalFrame/MarginContainer/VBoxContainer" unique_id=1390636379]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 10
+text = "HINT: You can pick one, many, none, or all of the mods above."
+
+[node name="AcceptButton" type="Button" parent="MarginContainer/ModalFrame/MarginContainer/VBoxContainer" unique_id=800667544]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Accept"

@@ -23,12 +23,13 @@ buses/default_bus_layout="uid://cur1eswi0qgdq"
 Conductor="*uid://3fpgbse4vgdn"
 SoundManager="*uid://vwumpp0njlov"
 SceneManager="*uid://wd8jaoonho3o"
-SkillSystem="*uid://clanyirc2ig8i"
-ScoreSystem="*uid://blp5kqsfd5c2b"
-VisualEffects="*uid://f5j76tnobxhw"
-Settings="*uid://dmykiroelaq8v"
-PauseManager="*uid://bxhboouu320qc"
 NetworkManager="*uid://bsx4nn3kuvrjp"
+PauseManager="*uid://bxhboouu320qc"
+ScoreSystem="*uid://blp5kqsfd5c2b"
+MatchRules="*uid://clanyirc2ig8i"
+VisualEffects="*uid://f5j76tnobxhw"
+Player="*uid://d21catv0f8y1y"
+Settings="*uid://dmykiroelaq8v"
 
 [display]
 

@@ -1,8 +1,8 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://b4ojrddfvpa8s"]
 
-[ext_resource type="Script" path="res://scenes/menus/multiplayer/multiplayer_lobby.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://vl3tqv6roawh" path="res://scenes/menus/multiplayer/multiplayer_lobby.gd" id="1_script"]
 
-[node name="MultiplayerLobby" type="Control"]
+[node name="MultiplayerLobby" type="Control" unique_id=589178964]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,7 +11,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_script")
 
-[node name="Layout" type="VBoxContainer" parent="."]
+[node name="Layout" type="VBoxContainer" parent="." unique_id=1451928462]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -25,44 +25,43 @@ offset_bottom = 140.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PlayerPanel" type="VBoxContainer" parent="Layout"]
+[node name="PlayerPanel" type="VBoxContainer" parent="Layout" unique_id=1959429854]
 layout_mode = 2
 
-[node name="HostLabel" type="Label" parent="Layout/PlayerPanel"]
+[node name="HostLabel" type="Label" parent="Layout/PlayerPanel" unique_id=917975688]
 layout_mode = 2
 text = "Host: ..."
 
-[node name="GuestLabel" type="Label" parent="Layout/PlayerPanel"]
+[node name="GuestLabel" type="Label" parent="Layout/PlayerPanel" unique_id=129855472]
 layout_mode = 2
 text = "Guest: ..."
 
-[node name="SettingsPanel" type="VBoxContainer" parent="Layout"]
+[node name="SettingsPanel" type="VBoxContainer" parent="Layout" unique_id=1627096261]
 layout_mode = 2
 
-[node name="EnergyLabel" type="Label" parent="Layout/SettingsPanel"]
+[node name="EnergyLabel" type="Label" parent="Layout/SettingsPanel" unique_id=16245460]
 layout_mode = 2
 text = "Your Energy Type:"
 
-[node name="EnergyOption" type="OptionButton" parent="Layout/SettingsPanel"]
+[node name="EnergyOption" type="OptionButton" parent="Layout/SettingsPanel" unique_id=873338438]
 layout_mode = 2
 
-[node name="StartButton" type="Button" parent="Layout"]
+[node name="StartButton" type="Button" parent="Layout" unique_id=1956487348]
 visible = false
 layout_mode = 2
 text = "Start Match"
 
-[node name="WaitingLabel" type="Label" parent="Layout"]
+[node name="WaitingLabel" type="Label" parent="Layout" unique_id=776985154]
 visible = false
 layout_mode = 2
 text = "Waiting for host to start..."
 horizontal_alignment = 1
 
-[node name="StatusLabel" type="Label" parent="Layout"]
+[node name="StatusLabel" type="Label" parent="Layout" unique_id=1800665266]
 layout_mode = 2
-text = ""
 horizontal_alignment = 1
 
-[node name="QuitButton" type="Button" parent="Layout"]
+[node name="QuitButton" type="Button" parent="Layout" unique_id=579136775]
 layout_mode = 2
 text = "Leave Lobby"
 
