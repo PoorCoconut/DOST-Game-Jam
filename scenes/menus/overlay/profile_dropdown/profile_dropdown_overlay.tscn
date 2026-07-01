@@ -1,0 +1,172 @@
+[gd_scene format=3 uid="uid://m3fs1bi2pk0w"]
+
+[ext_resource type="Script" uid="uid://de80ywo31xb2n" path="res://scenes/menus/overlay/profile_dropdown/profile_dropdown_overlay.gd" id="1_kxp8m"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kxp8m"]
+bg_color = Color(0.13333334, 0.13333334, 0.14117648, 1)
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="ProfileDropdownOverlay" type="PanelContainer" unique_id=1990743977]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_kxp8m")
+script = ExtResource("1_kxp8m")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1452245603]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=132757865]
+layout_mode = 2
+
+[node name="StatRowsVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=501186183]
+layout_mode = 2
+
+[node name="MostUsedSkillRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer/StatRowsVBox" unique_id=1310493511]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/VBoxContainer/StatRowsVBox/MostUsedSkillRow" unique_id=1650829848]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/StatRowsVBox/MostUsedSkillRow" unique_id=1002257609]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Most used Skill"
+
+[node name="Count" type="Label" parent="MarginContainer/VBoxContainer/StatRowsVBox/MostUsedSkillRow" unique_id=610821494]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="Tier" type="Label" parent="MarginContainer/VBoxContainer/StatRowsVBox/MostUsedSkillRow" unique_id=1816524344]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="MostUsedModRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer/StatRowsVBox" unique_id=765905577]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/VBoxContainer/StatRowsVBox/MostUsedModRow" unique_id=1266862554]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/StatRowsVBox/MostUsedModRow" unique_id=926346070]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Most used Mod"
+
+[node name="Count" type="Label" parent="MarginContainer/VBoxContainer/StatRowsVBox/MostUsedModRow" unique_id=1318341479]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="Tier" type="Label" parent="MarginContainer/VBoxContainer/StatRowsVBox/MostUsedModRow" unique_id=480693055]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="SustainedRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer/StatRowsVBox" unique_id=877747020]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/VBoxContainer/StatRowsVBox/SustainedRow" unique_id=1752479901]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/StatRowsVBox/SustainedRow" unique_id=453193123]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Energies Sustained"
+
+[node name="Count" type="Label" parent="MarginContainer/VBoxContainer/StatRowsVBox/SustainedRow" unique_id=416327575]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="Tier" type="Label" parent="MarginContainer/VBoxContainer/StatRowsVBox/SustainedRow" unique_id=1504648759]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="MissedRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer/StatRowsVBox" unique_id=1294642264]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/VBoxContainer/StatRowsVBox/MissedRow" unique_id=125016957]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/StatRowsVBox/MissedRow" unique_id=731955635]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Energies Missed"
+
+[node name="Count" type="Label" parent="MarginContainer/VBoxContainer/StatRowsVBox/MissedRow" unique_id=903356833]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="Tier" type="Label" parent="MarginContainer/VBoxContainer/StatRowsVBox/MissedRow" unique_id=1508182654]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="WinsRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer/StatRowsVBox" unique_id=1559888538]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/VBoxContainer/StatRowsVBox/WinsRow" unique_id=641917512]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/StatRowsVBox/WinsRow" unique_id=1625812300]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Multiplayer Wins"
+
+[node name="Count" type="Label" parent="MarginContainer/VBoxContainer/StatRowsVBox/WinsRow" unique_id=781680902]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="Tier" type="Label" parent="MarginContainer/VBoxContainer/StatRowsVBox/WinsRow" unique_id=305370528]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="LossesRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer/StatRowsVBox" unique_id=1192329652]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/VBoxContainer/StatRowsVBox/LossesRow" unique_id=667795847]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/StatRowsVBox/LossesRow" unique_id=1750589744]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Multiplayer Losses"
+
+[node name="Count" type="Label" parent="MarginContainer/VBoxContainer/StatRowsVBox/LossesRow" unique_id=844655026]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="Tier" type="Label" parent="MarginContainer/VBoxContainer/StatRowsVBox/LossesRow" unique_id=1448464198]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer" unique_id=1887397018]
+layout_mode = 2
+theme_override_constants/margin_top = 16
+
+[node name="EditButton" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer" unique_id=296386289]
+custom_minimum_size = Vector2(120, 32)
+layout_mode = 2
+text = "Edit"
