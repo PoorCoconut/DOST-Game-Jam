@@ -1,6 +1,6 @@
 # settings_overlay.gd
 extends Control
-
+class_name SettingsOverlayComponent
 signal closed
 signal volume_changed(slider_name: String, value: float)
 signal other_value_changed(field_name: String, value: float)
@@ -19,7 +19,7 @@ signal keybind_changed(action: String, key_name: String)
 @onready var sfx_slider: HSlider = $Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Volume/Volume/SFXRow/HSlider
 @onready var sfx_value: Label = $Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Volume/Volume/SFXRow/ValueLabel
 
-# Keybind rings — Low/High pairs mirror each other
+# Keybind rings
 const RINGS_PATH := "Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Keybinds/Keybinds/KeybindsRings/KeybindsRings"
 
 @onready var low_top: Button = get_node(RINGS_PATH + "/LowRing/LaneTop")
@@ -35,31 +35,30 @@ const RINGS_PATH := "Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxCon
 @onready var transform_button: Button = $Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Keybinds/Keybinds/Transform_Retry/TransformRow/RebindButton
 @onready var quick_retry_button: Button = $Panel/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Keybinds/Keybinds/Transform_Retry/QuickRetryRow/RebindButton
 
-const LANE_NAMES := ["lane1 (Top)", "lane2 (Right)", "lane3 (Bottom)", "lane4 (Left)"]
-
-# [action_name, low_button, high_button]
-var lane_pairs: Array = []
-var awaiting_rebind: String = ""
+var control_buttons: Dictionary = {}
+var awaiting_rebind: String = "" #
 
 func _ready() -> void:
 	visible = false
+	
+	control_buttons = {
+		"low_top": low_top,
+		"low_right": low_right,
+		"low_bottom": low_bottom,
+		"low_left": low_left,
+		"high_topright": high_topright,
+		"high_bottomright": high_bottomright,
+		"high_bottomleft": high_bottomleft,
+		"high_topleft": high_topleft,
+		"transform": transform_button,
+		"quick_retry": quick_retry_button
+	}
 
-	lane_pairs = [
-		[LANE_NAMES[0], low_top, high_topright],
-		[LANE_NAMES[1], low_right, high_bottomright],
-		[LANE_NAMES[2], low_bottom, high_bottomleft],
-		[LANE_NAMES[3], low_left, high_topleft],
-	]
-
-	for pair in lane_pairs:
-		var action: String = pair[0]
-		var low_btn: Button = pair[1]
-		var high_btn: Button = pair[2]
-		low_btn.pressed.connect(_on_rebind_pressed.bind(action))
-		high_btn.pressed.connect(_on_rebind_pressed.bind(action))
-
-	transform_button.pressed.connect(_on_rebind_pressed.bind("transform"))
-	quick_retry_button.pressed.connect(_on_rebind_pressed.bind("quick_retry"))
+	for action in control_buttons.keys():
+		var btn: Button = control_buttons[action]
+		if btn:
+			btn.focus_mode = Control.FOCUS_NONE # Banish spacebar click hijacking
+			btn.pressed.connect(_on_rebind_pressed.bind(action))
 
 	scroll_speed_slider.value_changed.connect(func(v): _update_percent_label(scroll_speed_value, scroll_speed_slider, v); other_value_changed.emit("scroll_speed", v))
 	offset_slider.value_changed.connect(func(v): _update_percent_label(offset_value, offset_slider, v); other_value_changed.emit("audio_offset_ms", v))
@@ -82,7 +81,7 @@ func _update_percent_label(label: Label, slider: HSlider, value: float) -> void:
 
 func _on_rebind_pressed(action: String) -> void:
 	awaiting_rebind = action
-	_set_action_button_text(action, "Press a key...")
+	_set_action_button_text(action, "Press a key")
 
 func _input(event: InputEvent) -> void:
 	if awaiting_rebind == "":
@@ -97,15 +96,8 @@ func _input(event: InputEvent) -> void:
 		awaiting_rebind = ""
 
 func _set_action_button_text(action: String, text: String) -> void:
-	for pair in lane_pairs:
-		if pair[0] == action:
-			pair[1].text = text
-			pair[2].text = text
-			return
-	if action == "transform":
-		transform_button.text = text
-	elif action == "quick_retry":
-		quick_retry_button.text = text
+	if control_buttons.has(action):
+		control_buttons[action].text = text
 
 func set_initial_keybind(action: String, key_name: String) -> void:
 	_set_action_button_text(action, key_name)

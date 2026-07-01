@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://v67gl8unf17j" path="res://scenes/menus/settings/settings_overlay.gd" id="1_b7qag"]
 
 [node name="SettingsOverlay" type="Control" unique_id=690435023]
+z_index = 10
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

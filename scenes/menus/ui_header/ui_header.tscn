@@ -3,6 +3,32 @@
 [ext_resource type="Script" uid="uid://bnhx5mqi27qrn" path="res://scenes/menus/ui_header/ui_header.gd" id="1_064fg"]
 [ext_resource type="PackedScene" uid="uid://gvgujai51nkd" path="res://scenes/menus/ui_header/profile_card/profile_card.tscn" id="2_k600t"]
 
+[sub_resource type="Gradient" id="Gradient_k600t"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wh8p8"]
+gradient = SubResource("Gradient_k600t")
+fill_to = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_k80ji"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_s7h08"]
+gradient = SubResource("Gradient_k80ji")
+fill_from = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_vebe8"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_sgxhp"]
+gradient = SubResource("Gradient_vebe8")
+fill_from = Vector2(1, 0)
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_io8vc"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_xpavr"]
+gradient = SubResource("Gradient_io8vc")
+fill_from = Vector2(1, 1)
+fill_to = Vector2(0, 0)
+
 [node name="UIHeader" type="Control" unique_id=1325149863]
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 3
@@ -39,16 +65,10 @@ size_flags_horizontal = 3
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/LeftProfileSection" unique_id=1282123201]
 layout_mode = 2
-theme_override_constants/margin_right = 24
-
-[node name="BackButton" type="Button" parent="HBoxContainer/LeftProfileSection/MarginContainer" unique_id=1672952723]
-custom_minimum_size = Vector2(64, 72)
-layout_mode = 2
-size_flags_vertical = 0
-theme_override_constants/outline_size = 0
-text = "<--"
+theme_override_constants/margin_right = 48
 
 [node name="ProfileCard" parent="HBoxContainer/LeftProfileSection" unique_id=761239812 instance=ExtResource("2_k600t")]
+custom_minimum_size = Vector2(275, 0)
 layout_mode = 2
 
 [node name="SkillsTabButton" type="Button" parent="HBoxContainer/LeftProfileSection" unique_id=1703843265]
@@ -64,29 +84,44 @@ toggle_mode = true
 text = "Mods"
 
 [node name="ActiveModsRow" type="HBoxContainer" parent="HBoxContainer/LeftProfileSection" unique_id=833146205]
+custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 
 [node name="ModFL" type="TextureRect" parent="HBoxContainer/LeftProfileSection/ActiveModsRow" unique_id=1009787339]
+custom_minimum_size = Vector2(64, 100)
 layout_mode = 2
+size_flags_vertical = 0
+texture = SubResource("GradientTexture2D_wh8p8")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="ModFS" type="TextureRect" parent="HBoxContainer/LeftProfileSection/ActiveModsRow" unique_id=1223068058]
+custom_minimum_size = Vector2(64, 100)
 layout_mode = 2
+size_flags_vertical = 0
+texture = SubResource("GradientTexture2D_s7h08")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="ModDT" type="TextureRect" parent="HBoxContainer/LeftProfileSection/ActiveModsRow" unique_id=1256463690]
+custom_minimum_size = Vector2(64, 100)
 layout_mode = 2
+size_flags_vertical = 0
+texture = SubResource("GradientTexture2D_sgxhp")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="ModHR" type="TextureRect" parent="HBoxContainer/LeftProfileSection/ActiveModsRow" unique_id=1568296445]
+custom_minimum_size = Vector2(64, 100)
 layout_mode = 2
+size_flags_vertical = 0
+texture = SubResource("GradientTexture2D_xpavr")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="RightControlsSection" type="HBoxContainer" parent="HBoxContainer" unique_id=1202793456]
 layout_mode = 2
 alignment = 2
-
-[node name="VolumeButton" type="Button" parent="HBoxContainer/RightControlsSection" unique_id=645169672]
-custom_minimum_size = Vector2(64, 72)
-layout_mode = 2
-size_flags_vertical = 0
-text = "<))"
 
 [node name="SettingsButton" type="Button" parent="HBoxContainer/RightControlsSection" unique_id=270645354]
 custom_minimum_size = Vector2(64, 72)
@@ -94,6 +129,15 @@ layout_mode = 2
 size_flags_vertical = 0
 text = "*"
 
+[node name="BackButton" type="Button" parent="HBoxContainer/RightControlsSection" unique_id=1672952723]
+custom_minimum_size = Vector2(64, 72)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/outline_size = 0
+text = "<--"
+
 [connection signal="profile_clicked" from="HBoxContainer/LeftProfileSection/ProfileCard" to="." method="_on_profile_card_clicked"]
 [connection signal="toggled" from="HBoxContainer/LeftProfileSection/SkillsTabButton" to="." method="_on_skills_tab_toggled"]
 [connection signal="toggled" from="HBoxContainer/LeftProfileSection/ModsTabButton" to="." method="_on_mods_tab_toggled"]
+[connection signal="pressed" from="HBoxContainer/RightControlsSection/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/RightControlsSection/BackButton" to="." method="_on_back_button_pressed"]

@@ -6,6 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://criendm0u25hq" path="res://scenes/menus/song_select/song_list/song_list.tscn" id="3_8y6ec"]
 [ext_resource type="PackedScene" uid="uid://m3fs1bi2pk0w" path="res://scenes/menus/overlay/profile_dropdown/profile_dropdown_overlay.tscn" id="5_ulf0x"]
 [ext_resource type="PackedScene" uid="uid://dhp8w153d0qd6" path="res://scenes/menus/overlay/profile_input/profile_input_modal.tscn" id="6_cnu2e"]
+[ext_resource type="PackedScene" uid="uid://wqfp06qq2upu" path="res://scenes/menus/overlay/mods_overlay/mods_overlay.tscn" id="7_7buys"]
+[ext_resource type="PackedScene" uid="uid://dahnnpr2udico" path="res://scenes/menus/overlay/skills_overlay/skills_overlay.tscn" id="8_35uwn"]
+[ext_resource type="PackedScene" uid="uid://mjjvugmhjvje" path="res://scenes/menus/settings/settings_overlay.tscn" id="9_jjiwh"]
 
 [node name="SongSelectMenu" type="Control" unique_id=701800275]
 layout_mode = 3
@@ -15,6 +18,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_f68u0")
+charts_to_load = null
 
 [node name="BackgroundDimmer" type="ColorRect" parent="." unique_id=495573193]
 layout_mode = 0
@@ -33,7 +37,6 @@ theme_override_constants/separation = 0
 
 [node name="UIHeader" parent="MainVerticalStack" unique_id=1325149863 instance=ExtResource("2_l5ec8")]
 z_index = 1
-clip_contents = true
 custom_minimum_size = Vector2(0, 112)
 layout_mode = 2
 
@@ -70,6 +73,10 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="ModsOverlay" parent="." unique_id=425077867 instance=ExtResource("7_7buys")]
+visible = false
+layout_mode = 1
+
 [node name="ProfileDropdownOverlay" parent="." unique_id=1990743977 instance=ExtResource("5_ulf0x")]
 visible = false
 layout_mode = 0
@@ -81,4 +88,11 @@ grow_vertical = 1
 
 [node name="ProfileInputModal" parent="." unique_id=796207773 instance=ExtResource("6_cnu2e")]
 visible = false
+layout_mode = 1
+
+[node name="SkillsOverlay" parent="." unique_id=829645276 instance=ExtResource("8_35uwn")]
+visible = false
+layout_mode = 1
+
+[node name="SettingsOverlay" parent="." unique_id=690435023 instance=ExtResource("9_jjiwh")]
 layout_mode = 1

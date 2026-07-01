@@ -17,14 +17,22 @@ var current_selected_texture: Texture2D
 func _ready() -> void:
 	visible = false
 	
-	cancel_btn.pressed.connect(_on_cancel_pressed)
-	save_btn.pressed.connect(_on_save_pressed)
-	username_edit.text_submitted.connect(func(_text): _on_save_pressed())
+	if not cancel_btn.pressed.is_connected(_on_cancel_pressed):
+		cancel_btn.pressed.connect(_on_cancel_pressed)
+		
+	if not save_btn.pressed.is_connected(_on_save_pressed):
+		save_btn.pressed.connect(_on_save_pressed)
+		
+	if not username_edit.text_submitted.is_connected(func(_text): _on_save_pressed()):
+		username_edit.text_submitted.connect(func(_text): _on_save_pressed())
 	
-	# Wire up file dialog triggers
-	change_avatar_btn.pressed.connect(_on_change_avatar_pressed)
+	if not change_avatar_btn.pressed.is_connected(_on_change_avatar_pressed):
+		change_avatar_btn.pressed.connect(_on_change_avatar_pressed)
+		
+	if not file_dialog.file_selected.is_connected(_on_avatar_file_selected):
+		file_dialog.file_selected.connect(_on_avatar_file_selected)
+		
 	change_avatar_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-	file_dialog.file_selected.connect(_on_avatar_file_selected)
 
 func open_modal(current_username: String, current_texture: Texture2D) -> void:
 	username_edit.text = current_username

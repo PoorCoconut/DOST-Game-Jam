@@ -2,6 +2,7 @@
 
 [ext_resource type="Shader" uid="uid://bm3rsi62ejdnr" path="res://scenes/menus/ui_header/circle_mask.gdshader" id="1_elw62"]
 [ext_resource type="Script" uid="uid://jg08yapffsyg" path="res://scenes/menus/ui_header/profile_card/profile_card.gd" id="1_vobjc"]
+[ext_resource type="Texture2D" uid="uid://f5ygpd5a7ppw" path="res://assets/backgrounds/test.jpg" id="3_c6y13"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_064fg"]
 bg_color = Color(0.13333334, 0.13333334, 0.14117648, 1)
@@ -13,12 +14,16 @@ corner_radius_bottom_left = 4
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_k600t"]
 shader = ExtResource("1_elw62")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vobjc"]
+shader = ExtResource("1_elw62")
+
 [node name="ProfileCard" type="PanelContainer" unique_id=761239812]
 theme_override_styles/panel = SubResource("StyleBoxFlat_064fg")
 script = ExtResource("1_vobjc")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=749472228]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/margin_left = -16
 theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 16
@@ -26,11 +31,13 @@ theme_override_constants/margin_bottom = 4
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=323480205]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/separation = 12
 
 [node name="AvatarFrame" type="Control" parent="MarginContainer/HBoxContainer" unique_id=935698611]
 custom_minimum_size = Vector2(96, 96)
 layout_mode = 2
+mouse_filter = 2
 
 [node name="AvatarTexture" type="TextureRect" parent="MarginContainer/HBoxContainer/AvatarFrame" unique_id=1996144113]
 material = SubResource("ShaderMaterial_k600t")
@@ -40,11 +47,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("3_c6y13")
 expand_mode = 1
 stretch_mode = 6
 
 [node name="UserTextVBox" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=252331646]
 layout_mode = 2
+mouse_filter = 2
 alignment = 1
 
 [node name="UsernameLabel" type="Label" parent="MarginContainer/HBoxContainer/UserTextVBox" unique_id=564154565]
@@ -54,8 +63,17 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="EnergyIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/UserTextVBox/EnergyHBox" unique_id=1396899622]
-custom_minimum_size = Vector2(16, 16)
+material = SubResource("ShaderMaterial_vobjc")
+custom_minimum_size = Vector2(54, 54)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="EnergyLabelVBox" type="VBoxContainer" parent="MarginContainer/HBoxContainer/UserTextVBox/EnergyHBox" unique_id=785652291]
 layout_mode = 2
 
-[node name="EnergyLabel" type="Label" parent="MarginContainer/HBoxContainer/UserTextVBox/EnergyHBox" unique_id=507660768]
+[node name="EnergyLabel" type="Label" parent="MarginContainer/HBoxContainer/UserTextVBox/EnergyHBox/EnergyLabelVBox" unique_id=507660768]
+layout_mode = 2
+
+[node name="ElementLabel" type="Label" parent="MarginContainer/HBoxContainer/UserTextVBox/EnergyHBox/EnergyLabelVBox" unique_id=2142450337]
 layout_mode = 2

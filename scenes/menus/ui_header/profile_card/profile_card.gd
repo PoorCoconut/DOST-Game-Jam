@@ -2,35 +2,34 @@ extends PanelContainer
 class_name ProfileCardComponent
 
 signal profile_clicked(is_open: bool)
+var is_dropdown_open: bool = false
 
 @onready var username_label: Label = $MarginContainer/HBoxContainer/UserTextVBox/UsernameLabel
-@onready var energy_label: Label = $MarginContainer/HBoxContainer/UserTextVBox/EnergyHBox/EnergyLabel
 @onready var avatar_texture: TextureRect = $MarginContainer/HBoxContainer/AvatarFrame/AvatarTexture
-
-var dropdown_open: bool = false
+@onready var energy_icon: TextureRect = $MarginContainer/HBoxContainer/UserTextVBox/EnergyHBox/EnergyIcon
+@onready var energy_label: Label = $MarginContainer/HBoxContainer/UserTextVBox/EnergyHBox/EnergyLabelVBox/EnergyLabel
+@onready var element_label: Label = $MarginContainer/HBoxContainer/UserTextVBox/EnergyHBox/EnergyLabelVBox/ElementLabel
 
 func _ready() -> void:
-	# Set filter type so this container intercepts mouse clicks natively
-	mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-	
-	# Load default placeholder profile metrics
-	update_display("asterialumi", "Radiance", "SOLAR")
-	
-	var pfp: Texture2D = preload("res://assets/backgrounds/test.jpg")
-	if pfp:
-		avatar_texture.texture = pfp
+	gui_input.connect(_on_gui_input)
+	print("[DIAGNOSTIC] ProfileCard initialized successfully.")
 
-func _gui_input(event: InputEvent) -> void:
-	# Check for left-mouse clicks anywhere on the panel frame
+func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		dropdown_open = !dropdown_open
-		profile_clicked.emit(dropdown_open)
-		accept_event() # Stops the click from hitting underlying menu layers
+		accept_event()
+		is_dropdown_open = !is_dropdown_open
+		profile_clicked.emit(is_dropdown_open)
 
-func update_display(username: String, energy_name: String, energy_type: String) -> void:
-	username_label.text = username
-	energy_label.text = "%s (%s)" % [energy_name.to_upper(), energy_type.to_upper()]
-
-## Call this to programmatically close the dropdown when other tabs override it
 func set_dropdown_state_no_signal(state: bool) -> void:
-	dropdown_open = state
+	is_dropdown_open = state
+
+func update_skill_display(skill_name: String, element_text: String, theme_color: Color, icon_texture: Texture2D) -> void:
+	if username_label and username_label.text.is_empty(): 
+		username_label.text = "Shrek Serato"
+	if energy_label:
+		energy_label.text = skill_name
+		energy_label.add_theme_color_override("font_color", theme_color)
+	if element_label:
+		element_label.text = element_text
+	if energy_icon:
+		energy_icon.texture = icon_texture # Safely handles placeholder textures or null
