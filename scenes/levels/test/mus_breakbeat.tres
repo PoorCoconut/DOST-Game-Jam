@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="ChartData" format=3 uid="uid://bu2btyons4ndn"]
 
 [ext_resource type="Script" uid="uid://dsabl2qk2n1bp" path="res://systems/models/note_data.gd" id="1_nkpuf"]
+[ext_resource type="Script" uid="uid://cw4e2ahon1r5n" path="res://systems/models/scale_event.gd" id="2_e14vh"]
 [ext_resource type="Script" uid="uid://b6mjo1vig2mgq" path="res://systems/models/chart_data.gd" id="2_qkbwu"]
 [ext_resource type="AudioStream" uid="uid://dn2y6qgeq1xe8" path="res://sound/music/mus_breakbeat.mp3" id="3_hu5nj"]
 
