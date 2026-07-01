@@ -22,8 +22,15 @@ class_name ScoreMeterComponent
 @onready var good_label: Label = $HBoxContainer/GoodLabel
 @onready var perfect_label: Label = $HBoxContainer/PerfectLabel
 
-#These hold the LAST DISPLAYED value (tween start point) - NOT a separately accumulated total.
-#The score system (watts/perfects/goods/bads/misses) is the source of truth; this just animates toward it.
+@onready var rank_o: Sprite2D = $Ranks/RankO
+@onready var rank_s: Sprite2D = $Ranks/RankS
+@onready var rank_a: Sprite2D = $Ranks/RankA
+@onready var rank_b: Sprite2D = $Ranks/RankB
+@onready var rank_c: Sprite2D = $Ranks/RankC
+@onready var rank_d: Sprite2D = $Ranks/RankD
+@onready var rank_f: Sprite2D = $Ranks/RankF
+@onready var rank_animations: AnimationPlayer = $RankAnimations
+
 var _score_value: float = 0.0
 var _miss_value: float = 0.0
 var _bad_value: float = 0.0
@@ -37,6 +44,25 @@ var _bad_tween: Tween
 var _good_tween: Tween
 var _perfect_tween: Tween
 
+var _current_rank: String = "F"
+
+func _ready() -> void:
+	ScoreSystem.score_updated.connect(_on_score_updated)
+	ScoreSystem.judgment_made.connect(_on_judgment_made)
+
+func _on_score_updated(_volts: int, watts: int) -> void:
+	set_score(watts)
+	var new_rank := ScoreSystem.get_rank()
+	if new_rank != _current_rank:
+		set_rank(new_rank)
+
+func _on_judgment_made(result: String) -> void:
+	set_perfects(ScoreSystem.perfects)
+	set_goods(ScoreSystem.goods)
+	set_bads(ScoreSystem.bads)
+	set_misses(ScoreSystem.misses)
+	update_accuracy(ScoreSystem.ACCURACY_RATIO[result])
+
 func update_accuracy(accuracy: float) -> void:
 	accuracy = clampf(accuracy, 0.0, 1.0)
 	#lerp from base to 'perfect' point based on accuracy
@@ -47,6 +73,24 @@ func update_accuracy(accuracy: float) -> void:
 	_hand_tween.set_trans(Tween.TRANS_SINE)
 	_hand_tween.set_ease(Tween.EASE_OUT)
 	_hand_tween.tween_property(arrow_line, "position", target_pos, hand_tween_speed_scale)
+
+func set_rank(rank_name: String) -> void:
+	_get_rank_sprite(_current_rank).visible = false
+	var new_sprite := _get_rank_sprite(rank_name)
+	new_sprite.visible = true
+	rank_animations.play("rank_pop")
+	_current_rank = rank_name
+
+#region HELPER FUNCTIONS
+func _get_rank_sprite(rank_name: String) -> Sprite2D:
+	match rank_name:
+		"AP": return rank_o
+		"S": return rank_s
+		"A": return rank_a
+		"B": return rank_b
+		"C": return rank_c
+		"D": return rank_d
+		_: return rank_f
 
 func set_score(new_total: float) -> void:
 	_score_value = _animate_to(score_label, _score_value, new_total, _score_tween)
@@ -76,3 +120,4 @@ func _animate_to(label: Label, current_value: float, new_total: float, tween: Tw
 
 func _set_label_value(value: float, label: Label) -> void:
 	label.text = str(int(round(value)))
+#endregion
