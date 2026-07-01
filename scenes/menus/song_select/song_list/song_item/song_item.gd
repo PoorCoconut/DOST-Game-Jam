@@ -35,9 +35,6 @@ func setup(chart: ChartData) -> void:
 	title_label.text = chart.song_name
 	artist_label.text = chart.artist
 	
-	if chart.background:
-		artwork_texture.texture = chart.background
-	
 	for child in difficulty_row.get_children():
 		child.queue_free()
 		

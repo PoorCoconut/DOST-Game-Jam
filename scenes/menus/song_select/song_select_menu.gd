@@ -60,9 +60,6 @@ func _initialize_menu() -> void:
 
 func _generate_mock_track_data() -> Array[ChartData]:
 	var mock_list: Array[ChartData] = []
-	var test_texture: Texture2D = null
-	if ResourceLoader.exists("res://assets/backgrounds/test.jpg"):
-		test_texture = load("res://assets/backgrounds/test.jpg")
 		
 	var tracks_metadata := [
 		{"name": "Beyond the Edge", "artist": "Xyris (feat. Hanakuma Chifuyu)", "bpm": 205.0},
@@ -74,6 +71,5 @@ func _generate_mock_track_data() -> Array[ChartData]:
 		chart.song_name = metadata["name"]
 		chart.artist = metadata["artist"]
 		chart.bpm = metadata["bpm"]
-		chart.background = test_texture
 		mock_list.append(chart)
 	return mock_list

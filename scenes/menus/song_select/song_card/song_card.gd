@@ -28,9 +28,6 @@ func display_chart_details(chart: ChartData) -> void:
 	artist_label.text = chart.artist
 	bpm_label.text = "%.0f" % chart.bpm
 	count_label.text = str(chart.notes.size())
-	
-	if chart.background:
-		jacket_texture.texture = chart.background
 		
 	# Calculate duration string if stream audio tracks are loaded
 	if chart.stream:
