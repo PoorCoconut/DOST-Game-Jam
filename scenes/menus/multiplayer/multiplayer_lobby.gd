@@ -21,6 +21,10 @@ func _ready() -> void:
 	_setup_player_labels()
 	_setup_host_or_guest_ui()
 
+# added this so that it auto starts without song selection first
+	if multiplayer.is_server():
+		SceneManager.selected_chart = load("res://scenes/levels/actual/chart_lollipop.tres")
+
 	if not NetworkManager.match_load_requested.is_connected(_on_match_load_requested):
 		NetworkManager.match_load_requested.connect(_on_match_load_requested)
 
