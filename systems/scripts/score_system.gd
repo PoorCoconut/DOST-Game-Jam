@@ -26,12 +26,13 @@ const ACCURACY_RATIO: Dictionary = {
 
 const MAX_AMP_SCORE: int   = 900000
 const MAX_VOLT_SCORE: int  = 100000
-const MAX_BONUS_SCORE: int = 100000  # SOLAR power-up, does NOT overflow
+const MAX_BONUS_SCORE: float = 100000.0  # SOLAR power-up, does NOT overflow
 const MAX_SCORE: int = MAX_AMP_SCORE + MAX_VOLT_SCORE
 
-var volts: int = 0      # combo
-var max_volts: int = 0  # highest combo
-var watts: float = 0.0  # score
+var volts: int = 0           # combo
+var max_volts: int = 0       # highest combo
+var base_watts: float = 0.0  # watts before the bonus
+var watts: float = 0.0       # score
 
 # per-chart stats
 var total_notes: int = 0
@@ -58,6 +59,12 @@ var current_hp: float = 100.0
 var max_hp: float = 100.0
 var is_failed: bool = false      # true once HP hits 0 — forces F rank regardless of watts
 
+# geo skill, overflow hp
+var overflow_hp: float = 0.0
+
+# solar skill, overflow watts
+var solar_bonus: float = 0.0
+
 
 func load_chart(chart_resource: ChartData) -> void:
 	_reset()
@@ -76,12 +83,28 @@ func register_judgement(time_diff: float) -> String:
 	_apply_hp(result)
 
 	if result == "miss":
-		volts = 0
+		# WIND GATE (Combo Protection Trade-off)
+		if MatchRules.current_skill == "wind" and MatchRules.is_overdrive:
+			MatchRules.reset_sustain_meter()
+			MatchRules.is_overdrive = false
+		else:
+			volts = 0
 	else:
 		volts += 1
 		max_volts = max(max_volts, volts)
-		watts += base_amp_per_note * ACCURACY_RATIO[result]
-		watts += base_volt_per_note
+		
+		var raw_score = base_amp_per_note * ACCURACY_RATIO[result]
+		
+		base_watts += raw_score
+		base_watts += base_volt_per_note
+		
+		MatchRules.add_sustain(raw_score + base_volt_per_note)
+		
+		if MatchRules.current_skill == "solar" and MatchRules.is_overdrive and result == "perfect":
+			var bonus_gain = raw_score * 0.5
+			solar_bonus = min(solar_bonus + bonus_gain, MAX_BONUS_SCORE)
+
+	watts = base_watts + solar_bonus
 
 	judgement_made.emit(result)
 	score_updated.emit(volts, roundi(watts))
@@ -97,12 +120,29 @@ func register_hold_slice(result: String) -> void:
 	_apply_hp(result)
 
 	if result == "miss":
-		volts = 0
+		if MatchRules.current_skill == "wind" and MatchRules.is_overdrive:
+			MatchRules.reset_sustain_meter()
+			MatchRules.is_overdrive = false
+		else:
+			volts = 0
 	else:
 		volts += 1
 		max_volts = max(max_volts, volts)
-		watts += base_amp_per_note * ACCURACY_RATIO[result]
-		watts += base_volt_per_note
+		
+		var raw_score = base_amp_per_note * ACCURACY_RATIO[result]
+		
+		base_watts += raw_score
+		base_watts += base_volt_per_note
+		
+		# add to sustain
+		MatchRules.add_sustain(raw_score + base_volt_per_note)
+		
+		if MatchRules.current_skill == "solar" and MatchRules.is_overdrive and result == "perfect":
+			var bonus_gain = raw_score * 0.5
+			solar_bonus = min(solar_bonus + bonus_gain, MAX_BONUS_SCORE)
+
+	# 3. Final score assembly before emitting (happens hit or miss)
+	watts = base_watts + solar_bonus
 
 	judgement_made.emit(result)
 	score_updated.emit(volts, roundi(watts))
@@ -118,9 +158,19 @@ func register_lite_hit() -> void:
 	volts += 1
 	max_volts = max(max_volts, volts)
 	
-	# scored as perfect
-	watts += base_amp_per_note * ACCURACY_RATIO["perfect"]
-	watts += base_volt_per_note
+	var raw_score = base_amp_per_note * ACCURACY_RATIO["perfect"]
+	
+	base_watts += raw_score
+	base_watts += base_volt_per_note
+	
+	#add to sustain
+	MatchRules.add_sustain(raw_score + base_volt_per_note)
+	
+	if MatchRules.current_skill == "solar" and MatchRules.is_overdrive:
+		var bonus_gain = raw_score * 0.5
+		solar_bonus = min(solar_bonus + bonus_gain, MAX_BONUS_SCORE)
+	
+	watts = base_watts + solar_bonus
 	
 	judgement_made.emit("perfect")
 	score_updated.emit(volts, roundi(watts))
@@ -130,11 +180,16 @@ func register_lite_miss() -> void:
 	_record_judgement("miss")
 	_apply_hp_direct(-(max_hp * hp_lite_miss))
 	
-	volts = 0
+	if MatchRules.current_skill == "wind" and MatchRules.is_overdrive:
+		MatchRules.reset_sustain_meter()
+		pass
+	else:
+		volts = 0
 	
 	judgement_made.emit("miss")
 	score_updated.emit(volts, roundi(watts))
 	print("[SCORE] LITE MISS | Combo Reset | HP: %.1f" % current_hp)
+	
 
 
 # didn't click
@@ -156,13 +211,25 @@ func get_rank() -> String:
 
 
 func _apply_hp(result: String) -> void:
+	var damage = 0.0
 	match result:
 		"perfect": current_hp = min(current_hp + hp_perfect, max_hp)
 		"good":    current_hp = min(current_hp + hp_good, max_hp)
 		"bad":     current_hp = min(current_hp + hp_bad, max_hp)
 		"miss":    current_hp = max(current_hp - (max_hp * hp_miss_ratio), 0.0)
+	
+	if result == "miss":
+		# geo skill
+		#print("skill =  ", MatchRules.current_skill, " overdrive = ", MatchRules.is_overdrive, " overflow = ", overflow_hp)
+		if MatchRules.current_skill == "geo" and MatchRules.is_overdrive and overflow_hp > 0:
+			overflow_hp = max(overflow_hp - damage, 0.0)
+			print("overflow hp active, remaining = ", overflow_hp)
+		else:
+			current_hp = max(current_hp - damage, 0.0)
+			
 	hp_changed.emit(current_hp, max_hp)
 	
+	# Invincibility override
 	if MatchRules.is_invincible:
 		current_hp = max_hp
 		return
@@ -173,6 +240,18 @@ func _apply_hp(result: String) -> void:
 
 # USED FOR LITE NOTES
 func _apply_hp_direct(amount: float) -> void:
+	# Calculate potential damage if amount is negative
+	var damage = -amount if amount < 0 else 0.0
+	
+	# geo skill
+	#print("skill =  ", MatchRules.current_skill, " overdrive = ", MatchRules.is_overdrive, " overflow = ", overflow_hp)
+	if damage > 0 and MatchRules.current_skill == "geo" and overflow_hp > 0:
+		overflow_hp = max(overflow_hp - damage, 0.0)
+		print("overflow hp active, remaining = ", overflow_hp)
+		hp_changed.emit(current_hp, max_hp)
+		return
+	
+	# normal
 	current_hp = clamp(current_hp + amount, 0.0, max_hp)
 	hp_changed.emit(current_hp, max_hp)
 	
@@ -195,11 +274,16 @@ func _record_judgement(result: String) -> void:
 
 # timings
 func _get_judgement(time_diff: float) -> String:
-	if time_diff <= PERFECT_WINDOW:
+	# hydro skill and rock hard
+	var multiplier = 1.0
+	if MatchRules.current_skill == "hydro" and MatchRules.is_overdrive: multiplier *= 1.5
+	if MatchRules.mod_hard_rock: multiplier *= 0.75
+	
+	if time_diff <= PERFECT_WINDOW * multiplier:
 		return "perfect"
-	elif time_diff <= GOOD_WINDOW:
+	elif time_diff <= GOOD_WINDOW * multiplier:
 		return "good"
-	elif time_diff <= BAD_WINDOW:
+	elif time_diff <= BAD_WINDOW * multiplier:
 		return "bad"
 	else:
 		return "miss"
@@ -213,6 +297,9 @@ func _reset() -> void:
 	misses = 0
 	volts = 0
 	max_volts = 0
+	base_watts = 0.0
 	watts = 0.0
 	current_hp = max_hp
+	overflow_hp = 0.0
+	solar_bonus = 0.0
 	is_failed = false

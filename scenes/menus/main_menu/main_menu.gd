@@ -32,13 +32,14 @@ func _on_freeplay_button_pressed() -> void:
 	SceneManager.load_gameplay(test_chart, "Solar")
 
 func _on_multi_button_pressed() -> void:
-	print("Multi — stub, scene not built yet")
+	#print("Multi — stub, scene not built yet")
+	SceneManager.load_multiplayer_lobby()
 
 func _on_tutorial_button_pressed() -> void:
 	print("Tutorial — stub, scene not built yet")
 
 func _on_settings_button_pressed() -> void:
-	settings_overlay.open()
+	SceneManager.go_to_settings()
 
 func _on_quit_button_pressed() -> void:
 	for btn in buttons:

@@ -16,12 +16,13 @@ var start_time_msec: int = 0
 
 
 # Menu Directories
-const GAMEPLAY_DIR: String  = "res://scenes/menus/gameplay/world_gameplay.tscn"
-const MENU_DIR: String      = "res://scenes/menus/main/main_menu.tscn"
-const RANKING_DIR: String   = "res://scenes/menus/ranking/ranking_panel.tscn"
-const SETTINGS_DIR: String  = "res://scenes/menus/settings/settings_panel.tscn"
-const PAUSE_DIR: String     = "res://scenes/menus/pause/pause_panel.tscn"
-const MULTIPLAYER_LOBBY_DIR: String = "res://scenes/menus/multiplayer/multiplayer_lobby.tscn"
+const GAMEPLAY_DIR: String          = "res://scenes/menus/gameplay/world_gameplay.tscn"
+const MENU_DIR: String              = "res://scenes/menus/main_menu/main_menu.tscn"
+const RANKING_DIR: String           = "res://scenes/menus/ranking/ranking_panel.tscn"
+const SETTINGS_DIR: String          = "res://scenes/menus/settings/settings_overlay.tscn"
+const PAUSE_DIR: String             = "res://scenes/menus/pause/pause_panel.tscn"
+const MULTIPLAYER_LOBBY_DIR: String = "res://scenes/menus/lan/lan_lobby.tscn"
+
 
 func load_gameplay(chart: ChartData, energy: String) -> void:
 	selected_chart = chart

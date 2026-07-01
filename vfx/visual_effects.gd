@@ -2,7 +2,6 @@ extends Node
 
 # this should probably be renamed to NoteEffects
 
-
 @export var plus_color: Color = Color.WHITE
 @export var x_color:    Color = Color(0.49, 0.745, 1.0, 1.0)
 @export var sync_color: Color = Color(2.0, 1.5, 0.0)
@@ -25,6 +24,11 @@ func setup_note_visuals(note: Node2D, mode: String) -> void:
 func apply_sync_visuals(note_group: Array) -> void:
 	for note in note_group:
 		note.modulate = sync_color
+
+
+# fading light
+func get_fading_alpha(distance_to_center: float) -> float:
+	return clamp(distance_to_center / 400.0, 0.0, 1.0)
 
 
 func play_note_miss(note: Node2D) -> void:

@@ -79,6 +79,17 @@ func _process(_delta: float) -> void:
 	body.clear_points()
 	body.add_point(head.position)
 	body.add_point(tail.position)
+	
+	if MatchRules.mod_fading_light:
+		var head_dist = head.position.length()
+		var tail_dist = tail.position.length()
+		head.modulate.a = VisualEffects.get_fading_alpha(head_dist)
+		tail.modulate.a = VisualEffects.get_fading_alpha(tail_dist)
+		body.modulate.a = VisualEffects.get_fading_alpha(head_dist)
+	else:
+		head.modulate.a = 1.0
+		tail.modulate.a = 1.0
+		body.modulate.a = 1.0
 
 	# Auto-miss if head passes without being pressed
 	var effective_miss_window: float = Conductor.MISS_WINDOW / Settings.current_scroll_speed

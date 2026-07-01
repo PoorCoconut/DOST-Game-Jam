@@ -111,7 +111,15 @@ func _process(_delta: float) -> void:
 
 
 func spawn_note(data: NoteData) -> Node2D:
+	# hard rock, swap lanes
 	var lane_idx = data.lane
+	if MatchRules.mod_hard_rock:
+		match lane_idx:
+			0: lane_idx = 2 # N to S
+			1: lane_idx = 3 # E to W
+			2: lane_idx = 0 # S to N
+			3: lane_idx = 1 # W to E
+			
 	var is_hold  = data.is_hold_note()
 
 	var mode   = data.mode_type()

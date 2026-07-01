@@ -26,6 +26,12 @@ signal song_finished
 func _ready() -> void:
 	Input.set_use_accumulated_input(false)
 	audio_player.finished.connect(_on_song_finished)
+	
+	#double time, higher pitch
+	if MatchRules.mod_double_time:
+		audio_player.pitch_scale = 1.5
+	else:
+		audio_player.pitch_scale = 1.0
 
 
 func load_song(chart: ChartData) -> void:
@@ -51,7 +57,9 @@ func play_song() -> void:
 
 func update_song_bpm(value: float) -> void:
 	bpm = value
-	seconds_per_beat = 60.0 / value
+	#with double-time mod in consideration
+	var speed_multiplier = 1.5 if MatchRules.mod_double_time else 1.0
+	seconds_per_beat = (60.0 / value) / speed_multiplier
 
 
 func _process(_delta):

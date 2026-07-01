@@ -39,6 +39,11 @@ func _process(_delta: float) -> void:
 	var distance = max((time_until_hit * speed) + (Conductor.HIT_RADIUS / parent_scale), 0.0)
 	position = direction_vector * distance
 
+	if MatchRules.mod_fading_light:
+		modulate.a = VisualEffects.get_fading_alpha(distance)
+	else:
+		modulate.a = 1.0
+
 	var effective_miss_window: float = Conductor.MISS_WINDOW / Settings.current_scroll_speed
 	if time_until_hit < -effective_miss_window:
 		on_miss()
