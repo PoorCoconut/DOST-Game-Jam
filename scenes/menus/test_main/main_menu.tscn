@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://clev3y13kdqt1"]
 
-[ext_resource type="Script" uid="uid://b2b8q7tr3jsa8" path="res://scenes/menus/main/main_menu.gd" id="1_uxumf"]
+[ext_resource type="Script" uid="uid://b2b8q7tr3jsa8" path="res://scenes/menus/test_main/main_menu.gd" id="1_uxumf"]
 [ext_resource type="Resource" uid="uid://lpfjhe2q18e5" path="res://scenes/levels/test/test_input.tres" id="2_uxumf"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_uxumf"]
