@@ -1,0 +1,153 @@
+[gd_scene format=3 uid="uid://c7hrtsodtko07"]
+
+[ext_resource type="Script" uid="uid://ctyvi4ilkr86y" path="res://scenes/menus/main_menu/main_menu.gd" id="1_kx65a"]
+[ext_resource type="Resource" uid="uid://deov11alfj8w" path="res://scenes/levels/actual/chart_lollipop.tres" id="2_flk2s"]
+[ext_resource type="PackedScene" uid="uid://bv83t3qi6jxqs" path="res://scenes/menus/overlay/confirmation_popup/confirm_popup.tscn" id="3_gm7d7"]
+[ext_resource type="PackedScene" uid="uid://mjjvugmhjvje" path="res://scenes/menus/settings/settings_overlay.tscn" id="4_peecx"]
+
+[node name="MainMenu" type="Control" unique_id=1608711446]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_kx65a")
+test_chart = ExtResource("2_flk2s")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=248124685]
+layout_mode = 0
+offset_left = -576.0
+offset_top = -328.0
+offset_right = 576.0
+offset_bottom = 328.0
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1437971963]
+
+[node name="Logo" type="TextureRect" parent="." unique_id=2031429186]
+visible = false
+layout_mode = 0
+offset_left = -512.0
+offset_top = -168.0
+offset_right = -64.0
+offset_bottom = -15.0
+
+[node name="LogoPlaceholder" type="Label" parent="." unique_id=1535387322]
+layout_mode = 0
+offset_left = -512.0
+offset_top = -168.0
+offset_right = -64.0
+offset_bottom = -24.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 112
+text = "ENCORE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MenuList" type="VBoxContainer" parent="." unique_id=229121963]
+layout_mode = 0
+offset_left = -328.0
+offset_top = 16.0
+offset_right = -248.0
+offset_bottom = 187.0
+
+[node name="FreeplayButton" type="Button" parent="MenuList" unique_id=18419841]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+text = "Freeplay"
+flat = true
+
+[node name="MultiButton" type="Button" parent="MenuList" unique_id=429220393]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+text = "Multi"
+flat = true
+
+[node name="TutorialButton" type="Button" parent="MenuList" unique_id=1342465167]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+text = "Tutorial"
+flat = true
+
+[node name="SettingsButton" type="Button" parent="MenuList" unique_id=764011386]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+text = "Settings"
+flat = true
+
+[node name="QuitButton" type="Button" parent="MenuList" unique_id=119897555]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+text = "Quit"
+flat = true
+
+[node name="FocusIndicator" type="Control" parent="." unique_id=1084035903]
+anchors_preset = 0
+offset_left = -368.0
+offset_top = 16.0
+offset_right = -208.0
+offset_bottom = 40.0
+
+[node name="BracketLeft" type="TextureRect" parent="FocusIndicator" unique_id=4610917]
+visible = false
+layout_mode = 0
+offset_right = 24.0
+offset_bottom = 24.0
+
+[node name="BracketRight" type="TextureRect" parent="FocusIndicator" unique_id=1723394939]
+visible = false
+layout_mode = 0
+offset_left = 136.0
+offset_right = 160.0
+offset_bottom = 24.0
+
+[node name="PlaceholderBracketL" type="Label" parent="FocusIndicator" unique_id=654651380]
+layout_mode = 0
+offset_right = 24.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "(•"
+horizontal_alignment = 1
+
+[node name="PlaceholderBracketR" type="Label" parent="FocusIndicator" unique_id=1135394429]
+layout_mode = 0
+offset_left = 136.0
+offset_right = 160.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "•)"
+horizontal_alignment = 1
+
+[node name="ConfirmPopup" parent="." unique_id=629342930 instance=ExtResource("3_gm7d7")]
+visible = false
+layout_mode = 1
+
+[node name="SettingsOverlay" parent="." unique_id=690435023 instance=ExtResource("4_peecx")]
+visible = false
+layout_mode = 1
+offset_left = -576.0
+offset_top = -328.0
+offset_right = -576.0
+offset_bottom = -328.0
+
+[connection signal="pressed" from="MenuList/FreeplayButton" to="." method="_on_freeplay_button_pressed"]
+[connection signal="pressed" from="MenuList/MultiButton" to="." method="_on_multi_button_pressed"]
+[connection signal="pressed" from="MenuList/TutorialButton" to="." method="_on_tutorial_button_pressed"]
+[connection signal="pressed" from="MenuList/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="MenuList/QuitButton" to="." method="_on_quit_button_pressed"]

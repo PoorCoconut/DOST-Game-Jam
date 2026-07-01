@@ -40,6 +40,11 @@ text = "Clear Chart"
 layout_mode = 2
 text = "Load Chart"
 
+[node name="Choose Background" type="Button" parent="UI/FileButtons" unique_id=190802662]
+layout_mode = 2
+text = "Choose
+Background"
+
 [node name="SongFileDialog" type="FileDialog" parent="UI/FileButtons" unique_id=1258136699]
 title = "Open a File"
 file_mode = 0
@@ -52,6 +57,12 @@ file_mode = 0
 access = 2
 filters = PackedStringArray("*.tres")
 
+[node name="BackgroundFileDialog" type="FileDialog" parent="UI/FileButtons" unique_id=1760473538]
+title = "Open a File"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.png", "*.jpg", "*.jpeg")
+
 [node name="Play_Pause" type="Button" parent="UI/FileButtons" unique_id=484283981]
 layout_mode = 2
 text = "Play/Pause"
@@ -61,21 +72,29 @@ layout_mode = 2
 
 [node name="BPMField" type="LineEdit" parent="UI" unique_id=338541541]
 layout_mode = 0
-offset_top = 210.0
+offset_top = 268.0
 offset_right = 127.0
-offset_bottom = 241.0
+offset_bottom = 299.0
 placeholder_text = "Set BPM"
+alignment = 1
+
+[node name="RingPercentField" type="LineEdit" parent="UI" unique_id=244274957]
+layout_mode = 0
+offset_top = 245.0
+offset_right = 127.0
+offset_bottom = 276.0
+placeholder_text = "Ring Scale"
 alignment = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="UI" unique_id=495508522]
 layout_mode = 0
 offset_left = 137.0
 offset_top = 40.0
-offset_right = 610.0
+offset_right = 636.0
 offset_bottom = 611.0
 
 [node name="GridView" type="Control" parent="UI/ScrollContainer" unique_id=2007271287]
-custom_minimum_size = Vector2(400, 16200)
+custom_minimum_size = Vector2(480, 16200)
 layout_mode = 2
 script = ExtResource("2_xbjp5")
 
@@ -100,10 +119,10 @@ layout_mode = 2
 
 [node name="SongInfo" type="VBoxContainer" parent="UI" unique_id=672828153]
 layout_mode = 0
-offset_left = 631.0
-offset_top = 8.0
-offset_right = 671.0
-offset_bottom = 85.0
+offset_left = 644.0
+offset_top = 16.0
+offset_right = 684.0
+offset_bottom = 93.0
 
 [node name="TitleLabel" type="Label" parent="UI/SongInfo" unique_id=398431317]
 layout_mode = 2
@@ -114,9 +133,12 @@ layout_mode = 2
 [node name="BPMLabel" type="Label" parent="UI/SongInfo" unique_id=469537465]
 layout_mode = 2
 
+[node name="BGPreview" type="TextureRect" parent="UI/SongInfo" unique_id=1378287378]
+layout_mode = 2
+
 [node name="Scrubber" type="Control" parent="UI" unique_id=1704809627]
 anchors_preset = 0
-offset_left = 628.0
+offset_left = 644.0
 offset_top = 104.0
 offset_right = 1124.0
 offset_bottom = 144.0
@@ -126,10 +148,10 @@ script = ExtResource("3_b5stn")
 clip_contents = true
 custom_minimum_size = Vector2(600, 450)
 anchors_preset = 0
-offset_left = 628.0
+offset_left = 644.0
 offset_top = 160.0
-offset_right = 1289.3333
-offset_bottom = 757.3334
+offset_right = 1284.0
+offset_bottom = 768.0
 scale = Vector2(0.75, 0.75)
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="UI/PreviewPanel" unique_id=1634317744]
@@ -137,17 +159,19 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -131.99994
-offset_top = -4.0
-offset_right = 130.31537
-offset_bottom = -40.0
+offset_left = 3.8146973e-05
+offset_top = -10.666667
+offset_right = 545.18494
+offset_bottom = 408.4937
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.54, 0.54)
 stretch = true
 
 [node name="PreviewViewport" type="SubViewport" parent="UI/PreviewPanel/SubViewportContainer" unique_id=1760385502]
+transparent_bg = true
 handle_input_locally = false
-size = Vector2i(923, 561)
+size = Vector2i(902, 572)
 render_target_update_mode = 4
 
 [node name="PreviewRestart" type="Button" parent="UI/PreviewPanel" unique_id=507405584]
@@ -158,15 +182,25 @@ offset_right = 396.66666
 offset_bottom = 596.3333
 text = "Preview Restart"
 
+[node name="for debugging (to visualize playfield" type="ColorRect" parent="." unique_id=1413362]
+offset_left = 654.0
+offset_top = 228.0
+offset_right = 1121.0
+offset_bottom = 491.0
+color = Color(0.6509804, 0.76862746, 1, 0.05882353)
+
 [connection signal="pressed" from="UI/FileButtons/LoadSong" to="." method="_on_load_song_pressed"]
 [connection signal="pressed" from="UI/FileButtons/SaveChart" to="." method="_on_save_chart_pressed"]
 [connection signal="pressed" from="UI/FileButtons/NewChart" to="." method="_on_new_chart_pressed"]
 [connection signal="pressed" from="UI/FileButtons/LoadChart" to="." method="_on_load_chart_pressed"]
+[connection signal="pressed" from="UI/FileButtons/Choose Background" to="." method="_on_choose_bg_pressed"]
 [connection signal="file_selected" from="UI/FileButtons/SongFileDialog" to="." method="_on_song_file_dialog_file_selected"]
 [connection signal="file_selected" from="UI/FileButtons/ChartFileDialog" to="." method="_on_chart_file_dialog_file_selected"]
+[connection signal="file_selected" from="UI/FileButtons/BackgroundFileDialog" to="." method="_on_bg_file_dialog_file_selected"]
 [connection signal="pressed" from="UI/FileButtons/Play_Pause" to="." method="_on_play_pause_pressed"]
 [connection signal="item_selected" from="UI/FileButtons/SnapOption" to="." method="_on_snap_option_item_selected"]
 [connection signal="text_changed" from="UI/BPMField" to="." method="_on_bpm_field_text_changed"]
 [connection signal="text_submitted" from="UI/BPMField" to="." method="_on_bpm_field_text_submitted"]
+[connection signal="text_submitted" from="UI/RingPercentField" to="." method="_on_ring_percent_field_text_submitted"]
 [connection signal="seek_requested" from="UI/Scrubber" to="." method="_on_scrubber_seek_requested"]
 [connection signal="pressed" from="UI/PreviewPanel/PreviewRestart" to="." method="_on_preview_restart_pressed"]

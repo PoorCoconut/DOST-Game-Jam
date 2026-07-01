@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://druuw5p4raul1"]
+
+[ext_resource type="Script" uid="uid://dhbkytwl8ihbx" path="res://scenes/menus/song_select/song_list/song_item/song_item.gd" id="1_4wua8"]
+
+[node name="SongItem" type="Button" unique_id=746286191]
+custom_minimum_size = Vector2(400, 80)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -40.0
+offset_right = 200.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4wua8")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=970171307]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -35.0
+offset_right = 150.0
+offset_bottom = 35.0
+grow_vertical = 2
+
+[node name="ArtworkTexture" type="TextureRect" parent="HBoxContainer" unique_id=2084907013]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+size_flags_horizontal = 3
+expand_mode = 1
+stretch_mode = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=1760708817]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="HBoxContainer/VBoxContainer" unique_id=129731784]
+layout_mode = 2
+text = "Song Title"
+
+[node name="ArtistLabel" type="Label" parent="HBoxContainer/VBoxContainer" unique_id=604428653]
+layout_mode = 2
+text = "Artist"
+
+[node name="DifficultyRow" type="HBoxContainer" parent="HBoxContainer/VBoxContainer" unique_id=1892223875]
+layout_mode = 2
+size_flags_vertical = 3

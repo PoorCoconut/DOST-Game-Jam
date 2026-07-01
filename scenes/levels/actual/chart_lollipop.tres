@@ -1,29 +1,34 @@
 [gd_resource type="Resource" script_class="ChartData" format=3 uid="uid://deov11alfj8w"]
 
 [ext_resource type="Script" uid="uid://dsabl2qk2n1bp" path="res://systems/models/note_data.gd" id="1_6nwpc"]
+[ext_resource type="Script" uid="uid://cw4e2ahon1r5n" path="res://systems/models/scale_event.gd" id="2_kv3wd"]
 [ext_resource type="Script" uid="uid://b6mjo1vig2mgq" path="res://systems/models/chart_data.gd" id="2_ov3j8"]
 [ext_resource type="AudioStream" uid="uid://dbvgscnb3kmft" path="res://sound/music/Geoxor - Lollipop.mp3" id="3_6nwpc"]
 
 [sub_resource type="Resource" id="Resource_ov3j8"]
 script = ExtResource("1_6nwpc")
 beat_start = 2.0
+is_lite = true
 metadata/_custom_type_script = "uid://dsabl2qk2n1bp"
 
 [sub_resource type="Resource" id="Resource_mm4l6"]
 script = ExtResource("1_6nwpc")
 beat_start = 3.0
+is_lite = true
 lane = 1
 metadata/_custom_type_script = "uid://dsabl2qk2n1bp"
 
 [sub_resource type="Resource" id="Resource_spsy1"]
 script = ExtResource("1_6nwpc")
 beat_start = 4.0
+is_lite = true
 lane = 2
 metadata/_custom_type_script = "uid://dsabl2qk2n1bp"
 
 [sub_resource type="Resource" id="Resource_8qkw5"]
 script = ExtResource("1_6nwpc")
 beat_start = 5.0
+is_lite = true
 lane = 3
 metadata/_custom_type_script = "uid://dsabl2qk2n1bp"
 
@@ -48,6 +53,7 @@ metadata/_custom_type_script = "uid://dsabl2qk2n1bp"
 script = ExtResource("1_6nwpc")
 beat_start = 9.0
 beat_end = 11.0
+is_lite = true
 lane = 2
 metadata/_custom_type_script = "uid://dsabl2qk2n1bp"
 

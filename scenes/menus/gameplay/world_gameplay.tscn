@@ -1,15 +1,21 @@
 [gd_scene format=3 uid="uid://bf2dfy7853wb8"]
 
+
 [ext_resource type="PackedScene" uid="uid://djq7ncohokjby" path="res://systems/components/user_interface/FrequencyBarComponent/frequency_bar_component.tscn" id="1_ftldk"]
 [ext_resource type="Texture2D" uid="uid://cww1fm7c8aoe6" path="res://assets/sustain_ring_white.png" id="2_q0nmq"]
 [ext_resource type="Script" uid="uid://fy2itsqbgj0q" path="res://systems/scripts/judgement.gd" id="3_kc66f"]
 [ext_resource type="Texture2D" uid="uid://qdd1dkqbxvyt" path="res://assets/energy_ring.png" id="4_8k7nv"]
+[ext_resource type="Script" uid="uid://1ddbc618by85" path="res://systems/scripts/replay_recorder.gd" id="4_q0nmq"]
 [ext_resource type="Texture2D" uid="uid://1gsm04pemx5x" path="res://assets/energy_mask.png" id="5_fn7vn"]
 [ext_resource type="Script" uid="uid://dhob63b2lbkiu" path="res://systems/scripts/note_spawner.gd" id="6_lr7i6"]
 [ext_resource type="PackedScene" uid="uid://k00spa2y4tnk" path="res://objects/note/tap_note.tscn" id="7_07rdt"]
+[ext_resource type="Script" uid="uid://37kj31j1y7qo" path="res://systems/scripts/ring_scale_controller.gd" id="7_fn7vn"]
 [ext_resource type="PackedScene" uid="uid://d3skweb2myvk" path="res://objects/note/hold_note.tscn" id="8_a5bbv"]
+[ext_resource type="Script" uid="uid://bte3cw0r48u2u" path="res://systems/scripts/replay_player.gd" id="9_replay"]
+[ext_resource type="Script" uid="uid://dcwpsqw6nr4f8" path="res://scenes/menus/gameplay/world_gameplay.gd" id="10_wgp"]
 
 [node name="WorldGameplay" type="Node2D" unique_id=1726405357]
+script = ExtResource("10_wgp")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1344942612]
 
@@ -29,7 +35,16 @@ texture = ExtResource("2_q0nmq")
 [node name="Judge" type="Node" parent="." unique_id=617231441]
 script = ExtResource("3_kc66f")
 
+[node name="ReplayRecorder" type="Node" parent="." unique_id=1462575551]
+unique_name_in_owner = true
+script = ExtResource("4_q0nmq")
+
+[node name="ReplayPlayer" type="Node" parent="." unique_id=1234567890]
+unique_name_in_owner = true
+script = ExtResource("9_replay")
+
 [node name="PlayfieldContainer" type="Node2D" parent="." unique_id=1553197630]
+script = ExtResource("7_fn7vn")
 
 [node name="EnergyRing" type="Sprite2D" parent="PlayfieldContainer" unique_id=451023611]
 scale = Vector2(1.3, 1.3)
@@ -45,8 +60,10 @@ unique_name_in_owner = true
 script = ExtResource("6_lr7i6")
 note_scene = ExtResource("7_07rdt")
 hold_note_scene = ExtResource("8_a5bbv")
+special_note_scene = ExtResource("10_kc66f")
 
 [node name="CoverBackground" type="Sprite2D" parent="." unique_id=865344590]
+unique_name_in_owner = true
 visible = false
 z_index = -10
 scale = Vector2(1.3, 1.3)
