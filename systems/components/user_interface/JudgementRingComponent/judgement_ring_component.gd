@@ -8,6 +8,20 @@ extends Node2D
 @onready var energy_source: Sprite2D = $EnergySource
 @onready var sustain_meter: TextureProgressBar = $SustainMeter
 
+#Sustain Meters
+#Simple
+@onready var simple_solar: TextureProgressBar = $ControlCenter/SimpleSustainMeters/SimpleSolar
+@onready var simple_geo: TextureProgressBar = $ControlCenter/SimpleSustainMeters/SimpleGeo
+@onready var simple_hydro: TextureProgressBar = $ControlCenter/SimpleSustainMeters/SimpleHydro
+@onready var simple_wind: TextureProgressBar = $ControlCenter/SimpleSustainMeters/SimpleWind
+
+#Complex
+@onready var complex_solar: TextureProgressBar = $ControlCenter/ComplexSustainMeters/ComplexSolar
+@onready var complex_geo: TextureProgressBar = $ControlCenter/ComplexSustainMeters/ComplexGeo
+@onready var complex_hydro: TextureProgressBar = $ControlCenter/ComplexSustainMeters/ComplexHydro
+@onready var complex_wind: TextureProgressBar = $ControlCenter/ComplexSustainMeters/ComplexWind
+
+
 @export_category("Quadrant Colors")
 @export var quadrant1_color : Color = Color(1, 1, 1, 1)
 @export var quadrant2_color : Color = Color(1, 1, 1, 1)
@@ -25,7 +39,7 @@ var is_rotating: bool = false
 var base_rotation: float = 45.0 #This is kind of a constant number. Changes on this isn't really recommended.
 var quad_colors: Array[Color] = []
 var quads: Array[Sprite2D] = []
-var lane_actions := ["lane2 (Right)", "lane3 (Bottom)", "lane4 (Left)", "lane1 (Top)"]
+var lane_actions := ["lane2", "lane3", "lane4", "lane1"]
 
 func _ready() -> void:
 	quads = [quad1, quad2, quad3, quad4]

@@ -3,7 +3,7 @@ extends Node
 # lane action names are now generated dynamically from Settings
 
 @onready var spawner: Node2D        = %NoteSpawner
-@onready var sustain_ring: Sprite2D = %SustainRing
+@onready var sustain_ring: Node2D = %SustainRing
 @onready var replay_recorder: Node  = %ReplayRecorder
 
 # --- AUTOPLAYER ---

@@ -48,7 +48,7 @@ var _current_rank: String = "F"
 
 func _ready() -> void:
 	ScoreSystem.score_updated.connect(_on_score_updated)
-	ScoreSystem.judgment_made.connect(_on_judgment_made)
+	ScoreSystem.judgement_made.connect(_on_judgment_made)
 
 func _on_score_updated(_volts: int, watts: int) -> void:
 	set_score(watts)
