@@ -3,7 +3,7 @@ extends Node
 # lane action names are now generated dynamically from Settings
 
 @onready var spawner: Node2D        = %NoteSpawner
-@onready var sustain_ring: Sprite2D = %SustainRing
+@onready var sustain_ring: Node2D = %SustainRing
 @onready var replay_recorder: Node  = %ReplayRecorder
 
 # --- AUTOPLAYER ---
@@ -65,8 +65,8 @@ func _process(_delta: float) -> void:
 
 
 func _toggle_mode() -> void:
-	current_mode = "x" if current_mode == "+" else "+"
-	sustain_ring.rotation_degrees = 45.0 if current_mode == "x" else 0.0
+	#current_mode = "x" if current_mode == "+" else "+"
+	#sustain_ring.rotation_degrees = 45.0 if current_mode == "x" else 0.0
 	print("[JUDGE] Mode Switched: ", current_mode)
 
 

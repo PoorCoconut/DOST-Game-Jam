@@ -20,7 +20,7 @@ buses/default_bus_layout="uid://cur1eswi0qgdq"
 
 [autoload]
 
-Conductor="*uid://cvbbvhpy2p3kl"
+Conductor="*uid://3fpgbse4vgdn"
 SoundManager="*uid://vwumpp0njlov"
 SceneManager="*uid://wd8jaoonho3o"
 NetworkManager="*uid://bsx4nn3kuvrjp"

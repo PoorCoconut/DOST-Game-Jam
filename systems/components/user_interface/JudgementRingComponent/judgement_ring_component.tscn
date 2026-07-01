@@ -1,34 +1,285 @@
 [gd_scene format=3 uid="uid://b7u0kqlhcwvtg"]
 
 [ext_resource type="Script" uid="uid://277h8i6ghlyc" path="res://systems/components/user_interface/JudgementRingComponent/judgement_ring_component.gd" id="1_8o5i6"]
-[ext_resource type="Texture2D" uid="uid://bp0rpjb8w374n" path="res://assets/placeholder_ring.png" id="2_62eii"]
+[ext_resource type="Texture2D" uid="uid://daurxwylw4wwr" path="res://systems/components/user_interface/JudgementRingComponent/judgement_ring.png" id="2_6hyhd"]
 [ext_resource type="Texture2D" uid="uid://bascrkywa76n8" path="res://assets/dcb2b55a30fa32bcae5869c36edf1bcf-removebg-preview.png" id="3_xwuql"]
+[ext_resource type="Texture2D" uid="uid://fsjctiauxhdi" path="res://systems/components/user_interface/JudgementRingComponent/energy_symbols_spritesheet.png" id="4_6eq6w"]
+[ext_resource type="Texture2D" uid="uid://xr2ojb112ubx" path="res://systems/components/user_interface/JudgementRingComponent/judgement_ring_filled.png" id="4_ostiw"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_o8aa4"]
-size = Vector2(50, 50)
+[sub_resource type="AtlasTexture" id="AtlasTexture_dgcvy"]
+atlas = ExtResource("4_6eq6w")
+region = Rect2(0, 61, 624, 624)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_oppgd"]
+load_path = "res://.godot/imported/energy_symbols_spritesheet.png-d9a02ddad044fd140ab5ff9577fa402f.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kj2ga"]
+atlas = SubResource("CompressedTexture2D_oppgd")
+region = Rect2(0, 61, 624, 624)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6eq6w"]
+atlas = ExtResource("4_6eq6w")
+region = Rect2(913, 0, 569, 745)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_vcdhi"]
+load_path = "res://.godot/imported/energy_symbols_spritesheet.png-d9a02ddad044fd140ab5ff9577fa402f.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oppgd"]
+atlas = SubResource("CompressedTexture2D_vcdhi")
+region = Rect2(913, 0, 569, 745)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vcdhi"]
+atlas = ExtResource("4_6eq6w")
+region = Rect2(1770, 32, 680, 680)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_6eq6w"]
+load_path = "res://.godot/imported/energy_symbols_spritesheet.png-d9a02ddad044fd140ab5ff9577fa402f.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7f2db"]
+atlas = SubResource("CompressedTexture2D_6eq6w")
+region = Rect2(1770, 32, 680, 680)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rtwgg"]
+atlas = ExtResource("4_6eq6w")
+region = Rect2(2739, 38, 669, 669)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_qdyfu"]
+load_path = "res://.godot/imported/energy_symbols_spritesheet.png-d9a02ddad044fd140ab5ff9577fa402f.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a3tcf"]
+atlas = SubResource("CompressedTexture2D_qdyfu")
+region = Rect2(2739, 38, 669, 669)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qdyfu"]
+atlas = ExtResource("4_6eq6w")
+region = Rect2(9, 1134, 606, 606)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_a3tcf"]
+load_path = "res://.godot/imported/energy_symbols_spritesheet.png-d9a02ddad044fd140ab5ff9577fa402f.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6qy4v"]
+atlas = SubResource("CompressedTexture2D_a3tcf")
+region = Rect2(9, 1134, 606, 606)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ji328"]
+atlas = ExtResource("4_6eq6w")
+region = Rect2(907, 1070, 560, 734)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_75254"]
+load_path = "res://.godot/imported/energy_symbols_spritesheet.png-d9a02ddad044fd140ab5ff9577fa402f.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i81wa"]
+atlas = SubResource("CompressedTexture2D_75254")
+region = Rect2(907, 1070, 560, 734)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_75254"]
+atlas = ExtResource("4_6eq6w")
+region = Rect2(1759, 1080, 713, 713)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_dgcvy"]
+load_path = "res://.godot/imported/energy_symbols_spritesheet.png-d9a02ddad044fd140ab5ff9577fa402f.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_otqgg"]
+atlas = SubResource("CompressedTexture2D_dgcvy")
+region = Rect2(1759, 1080, 713, 713)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7hlkm"]
+atlas = ExtResource("4_6eq6w")
+region = Rect2(2763, 1115, 645, 645)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_kj2ga"]
+load_path = "res://.godot/imported/energy_symbols_spritesheet.png-d9a02ddad044fd140ab5ff9577fa402f.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iya7i"]
+atlas = SubResource("CompressedTexture2D_kj2ga")
+region = Rect2(2763, 1115, 645, 645)
 
 [node name="JudgementRingComponent" type="Node2D" unique_id=575620661]
 script = ExtResource("1_8o5i6")
+quadrant1_color = Color(1, 0, 0, 1)
+quadrant2_color = Color(0, 1, 0, 1)
+quadrant3_color = Color(0, 0, 1, 1)
+quadrant4_color = Color(1, 1, 0, 1)
+rotate_speed = 0.1
 
-[node name="CenterMark" type="Marker2D" parent="." unique_id=136988184]
-position = Vector2(576, 324)
+[node name="Ring" type="Node2D" parent="." unique_id=1006421433]
+position = Vector2(-6.1035156e-05, -3.0517578e-05)
+rotation = 0.7853982
 
-[node name="PlaceholderRing" type="Sprite2D" parent="." unique_id=1449087777]
-position = Vector2(576, 324)
-scale = Vector2(6, 6)
-texture = ExtResource("2_62eii")
+[node name="Quadrant1" type="Sprite2D" parent="Ring" unique_id=1209266358]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(52.00006, -52)
+scale = Vector2(0.096, 0.096)
+texture = ExtResource("4_ostiw")
+hframes = 2
+vframes = 2
+frame = 1
+
+[node name="Quadrant2" type="Sprite2D" parent="Ring" unique_id=1973606936]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(52, 52)
+scale = Vector2(0.096, 0.096)
+texture = ExtResource("4_ostiw")
+hframes = 2
+vframes = 2
+frame = 3
+
+[node name="Quadrant3" type="Sprite2D" parent="Ring" unique_id=483713345]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(-52, 52)
+scale = Vector2(0.096, 0.096)
+texture = ExtResource("4_ostiw")
+hframes = 2
+vframes = 2
+frame = 2
+
+[node name="Quadrant4" type="Sprite2D" parent="Ring" unique_id=2094443402]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(-52, -52)
+scale = Vector2(0.096, 0.096)
+texture = ExtResource("4_ostiw")
+hframes = 2
+vframes = 2
+
+[node name="JudgementRing" type="Sprite2D" parent="Ring" unique_id=1449087777]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_6hyhd")
+offset = Vector2(-1, 0)
+
+[node name="EnergySymbols" type="Node2D" parent="." unique_id=1418901906]
+scale = Vector2(0.2, 0.2)
+
+[node name="Simple" type="Node2D" parent="EnergySymbols" unique_id=1054518922]
+
+[node name="Complex" type="Node2D" parent="EnergySymbols" unique_id=465409832]
 
 [node name="EnergySource" type="Sprite2D" parent="." unique_id=1430995751]
-position = Vector2(576, 324)
-texture = SubResource("PlaceholderTexture2D_o8aa4")
+visible = false
+position = Vector2(1.9073486e-06, 3.8146973e-06)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("3_xwuql")
 
-[node name="SustainMeter" type="TextureProgressBar" parent="." unique_id=693337917]
-unique_name_in_owner = true
+[node name="ControlCenter" type="Control" parent="." unique_id=1769199914]
+layout_mode = 3
+anchors_preset = 0
+scale = Vector2(0.2, 0.2)
+
+[node name="SimpleSustainMeters" type="Control" parent="ControlCenter" unique_id=277955202]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SimpleSolar" type="TextureProgressBar" parent="ControlCenter/SimpleSustainMeters" unique_id=693337917]
+visible = false
 texture_filter = 2
-offset_left = 501.00003
-offset_top = 249.00002
-offset_right = 1001.0
-offset_bottom = 749.0
-scale = Vector2(0.3, 0.3)
-fill_mode = 4
-texture_progress = ExtResource("3_xwuql")
+layout_mode = 0
+offset_left = -311.99997
+offset_top = -311.99997
+offset_right = 312.00003
+offset_bottom = 312.00003
+pivot_offset = Vector2(312, 312)
+fill_mode = 3
+texture_under = SubResource("AtlasTexture_dgcvy")
+texture_progress = SubResource("AtlasTexture_kj2ga")
+
+[node name="SimpleGeo" type="TextureProgressBar" parent="ControlCenter/SimpleSustainMeters" unique_id=1277782349]
+visible = false
+texture_filter = 2
+layout_mode = 0
+offset_left = -284.99994
+offset_top = -369.99997
+offset_right = 284.00006
+offset_bottom = 375.00003
+scale = Vector2(0.85, 0.85)
+pivot_offset = Vector2(284.5, 372)
+fill_mode = 3
+texture_under = SubResource("AtlasTexture_6eq6w")
+texture_progress = SubResource("AtlasTexture_oppgd")
+
+[node name="SimpleHydro" type="TextureProgressBar" parent="ControlCenter/SimpleSustainMeters" unique_id=800305567]
+visible = false
+texture_filter = 2
+layout_mode = 0
+offset_left = -340.00003
+offset_top = -339.99997
+offset_right = 339.99997
+offset_bottom = 340.00003
+scale = Vector2(0.9, 0.9)
+pivot_offset = Vector2(340, 340)
+fill_mode = 3
+texture_under = SubResource("AtlasTexture_vcdhi")
+texture_progress = SubResource("AtlasTexture_7f2db")
+
+[node name="SimpleWind" type="TextureProgressBar" parent="ControlCenter/SimpleSustainMeters" unique_id=1674147836]
+visible = false
+texture_filter = 2
+layout_mode = 0
+offset_left = -335.0
+offset_top = -335.0
+offset_right = 334.0
+offset_bottom = 334.0
+scale = Vector2(0.75, 0.75)
+pivot_offset = Vector2(335, 335)
+fill_mode = 3
+texture_under = SubResource("AtlasTexture_rtwgg")
+texture_progress = SubResource("AtlasTexture_a3tcf")
+
+[node name="ComplexSustainMeters" type="Control" parent="ControlCenter" unique_id=1327648115]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ComplexSolar" type="TextureProgressBar" parent="ControlCenter/ComplexSustainMeters" unique_id=844053766]
+visible = false
+texture_filter = 2
+layout_mode = 0
+offset_left = -303.0
+offset_top = -303.0
+offset_right = 303.0
+offset_bottom = 303.0
+pivot_offset = Vector2(303, 303)
+fill_mode = 3
+texture_under = SubResource("AtlasTexture_qdyfu")
+texture_progress = SubResource("AtlasTexture_6qy4v")
+
+[node name="ComplexGeo" type="TextureProgressBar" parent="ControlCenter/ComplexSustainMeters" unique_id=1822174487]
+visible = false
+texture_filter = 2
+layout_mode = 0
+offset_left = -280.0
+offset_top = -367.0
+offset_right = 280.0
+offset_bottom = 367.0
+scale = Vector2(0.87, 0.87)
+pivot_offset = Vector2(280, 367)
+fill_mode = 3
+texture_under = SubResource("AtlasTexture_ji328")
+texture_progress = SubResource("AtlasTexture_i81wa")
+
+[node name="ComplexHydro" type="TextureProgressBar" parent="ControlCenter/ComplexSustainMeters" unique_id=1960900028]
+visible = false
+texture_filter = 2
+layout_mode = 0
+offset_left = -356.0
+offset_top = -356.0
+offset_right = 357.0
+offset_bottom = 357.0
+scale = Vector2(0.87, 0.87)
+pivot_offset = Vector2(356, 356)
+fill_mode = 3
+texture_under = SubResource("AtlasTexture_75254")
+texture_progress = SubResource("AtlasTexture_otqgg")
+
+[node name="ComplexWind" type="TextureProgressBar" parent="ControlCenter/ComplexSustainMeters" unique_id=599768516]
+visible = false
+texture_filter = 2
+layout_mode = 0
+offset_left = -322.0
+offset_top = -322.0
+offset_right = 323.0
+offset_bottom = 323.0
+scale = Vector2(0.78, 0.78)
+pivot_offset = Vector2(322, 322)
+fill_mode = 3
+texture_under = SubResource("AtlasTexture_7hlkm")
+texture_progress = SubResource("AtlasTexture_iya7i")

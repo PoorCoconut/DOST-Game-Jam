@@ -18,8 +18,8 @@ var next_slice_beat: float = 0.0              # the beat time of the next slice 
 
 signal auto_resolved(note)
 
-@onready var head: Node2D = $Head
-@onready var tail: Node2D = $Tail
+@onready var head: Node2D = $HeadSprite
+@onready var tail: Node2D = $TailSprite
 @onready var body: Line2D = $Body
 
 
@@ -36,8 +36,8 @@ func setup(p_lane: int, p_target_time: float, p_end_time: float, p_beat_duration
 	is_lite = p_is_lite
 	slices_total = int(round(p_beat_duration))
 
-	head.rotation = direction_vector.angle() + (PI / 2.0)
-	tail.rotation = direction_vector.angle() + (PI / 2.0)
+	head.rotation = direction_vector.angle() - 44.75 + (PI / 2.0)
+	tail.rotation = direction_vector.angle() - 44.75 + (PI / 2.0)
 
 	var current_time = Conductor.get_time()
 	var spd := _actual_speed()

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://d3skweb2myvk"]
 
 [ext_resource type="Script" uid="uid://cex2uuhj60vxt" path="res://objects/note/hold_note.gd" id="1_holdnote"]
+[ext_resource type="Texture2D" uid="uid://oyms0ldc3g0j" path="res://assets/note_spritesheet.png" id="2_chsig"]
 
 [node name="HoldNote" type="Node2D" unique_id=905825719]
 script = ExtResource("1_holdnote")
@@ -16,12 +17,14 @@ color = Color(0.6, 0.6, 0.8, 1)
 polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)
 
 [node name="Head" type="Polygon2D" parent="." unique_id=1888589510]
+visible = false
 position = Vector2(0, -1.6744184)
 scale = Vector2(0.20823245, 0.6511628)
 color = Color(0.9, 0.9, 0.95, 1)
 polygon = PackedVector2Array(-85, -16, -33, -21, 53, -22, 93, -15, 207, 21, 97, 2, 23, -5, 0, -6, -19, -5, -88, 0, -206, 19)
 
 [node name="Tail" type="Polygon2D" parent="." unique_id=448141632]
+visible = false
 position = Vector2(0, -1.6744184)
 scale = Vector2(0.20823245, 0.6511628)
 color = Color(0.9, 0.9, 0.95, 1)
@@ -30,3 +33,19 @@ polygon = PackedVector2Array(-85, -16, -33, -21, 53, -22, 93, -15, 207, 21, 97, 
 [node name="Body" type="Line2D" parent="." unique_id=1044612314]
 width = 8.0
 default_color = Color(1, 1, 1, 0.8)
+
+[node name="HeadSprite" type="Sprite2D" parent="." unique_id=987894564]
+rotation = -0.7853982
+scale = Vector2(0.08, 0.08)
+texture = ExtResource("2_chsig")
+hframes = 2
+vframes = 2
+frame = 1
+
+[node name="TailSprite" type="Sprite2D" parent="." unique_id=895790482]
+rotation = -0.7853982
+scale = Vector2(0.08, 0.08)
+texture = ExtResource("2_chsig")
+hframes = 2
+vframes = 2
+frame = 1
