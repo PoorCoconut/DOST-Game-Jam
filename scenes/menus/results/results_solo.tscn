@@ -1,0 +1,297 @@
+[gd_scene format=3 uid="uid://cyl4w6k5myxgl"]
+
+[ext_resource type="Script" uid="uid://dyaivqbje8wly" path="res://scenes/menus/results/results.gd" id="1_dyusv"]
+[ext_resource type="PackedScene" uid="uid://07sua8ll53xq" path="res://scenes/menus/ui_header/ui_header.tscn" id="1_h8vos"]
+[ext_resource type="PackedScene" uid="uid://bp8aei52hyfm8" path="res://scenes/menus/song_select/song_card/song_card.tscn" id="2_h8vos"]
+[ext_resource type="PackedScene" uid="uid://m3fs1bi2pk0w" path="res://scenes/menus/overlay/profile_dropdown/profile_dropdown_overlay.tscn" id="4_vtb6f"]
+[ext_resource type="PackedScene" uid="uid://dhp8w153d0qd6" path="res://scenes/menus/overlay/profile_input/profile_input_modal.tscn" id="5_atk4l"]
+[ext_resource type="PackedScene" uid="uid://mjjvugmhjvje" path="res://scenes/menus/settings/settings_overlay.tscn" id="6_8kipk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2vi1v"]
+content_margin_left = 40.0
+content_margin_right = 40.0
+bg_color = Color(0.26293245, 0.26293248, 0.26293233, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t5byx"]
+content_margin_left = 60.0
+content_margin_right = 60.0
+bg_color = Color(0.17641908, 0.17641911, 0.17641899, 1)
+
+[node name="ResultsSolo" type="Control" unique_id=1759910765]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dyusv")
+
+[node name="UIHeader" parent="." unique_id=1325149863 instance=ExtResource("1_h8vos")]
+z_index = 1
+custom_minimum_size = Vector2(0, 112)
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+offset_top = 0.0
+offset_right = 1152.0
+offset_bottom = 112.0
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=693295710]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -44.0
+offset_bottom = 44.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 52
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 52
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=733910971]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=383166256]
+layout_mode = 2
+text = "Ranking"
+horizontal_alignment = 1
+
+[node name="TopDivider" type="TextureRect" parent="MarginContainer/VBoxContainer" unique_id=862900353]
+clip_contents = true
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+
+[node name="Line2D" type="Line2D" parent="MarginContainer/VBoxContainer/TopDivider" unique_id=1903232839]
+position = Vector2(0, 1)
+points = PackedVector2Array(0, -1, 1045, -1)
+width = 2.0
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer" unique_id=2141335243]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="CenterLayoutContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer" unique_id=280059811]
+layout_mode = 2
+
+[node name="SongCard" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer" unique_id=296548007 instance=ExtResource("2_h8vos")]
+layout_mode = 2
+
+[node name="ScoreResults" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer" unique_id=283021495]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/ScoreResults" unique_id=758906740]
+custom_minimum_size = Vector2(250, 250)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Score" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/ScoreResults" unique_id=550754942]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "1,000,000"
+horizontal_alignment = 1
+
+[node name="Logs" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/ScoreResults" unique_id=969727707]
+layout_mode = 2
+text = "Submitted 0/00/0000"
+horizontal_alignment = 1
+
+[node name="TabContainer" type="TabContainer" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer" unique_id=1589101715]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_2vi1v")
+theme_override_styles/tab_selected = SubResource("StyleBoxFlat_t5byx")
+tab_alignment = 1
+current_tab = 0
+clip_tabs = false
+drag_to_rearrange_enabled = true
+tab_focus_mode = 1
+
+[node name="Results" type="MarginContainer" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/TabContainer" unique_id=293083509]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="ResulstsVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/TabContainer/Results" unique_id=1346067453]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/TabContainer/Results/ResulstsVBox" unique_id=279406164]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="JudgementCountVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/TabContainer/Results/ResulstsVBox/MarginContainer" unique_id=1109450018]
+layout_mode = 2
+
+[node name="Perfect" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/TabContainer/Results/ResulstsVBox/MarginContainer/JudgementCountVBox" unique_id=151225249]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/TabContainer/Results/ResulstsVBox/MarginContainer/JudgementCountVBox/Perfect" unique_id=1323944380]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Judgement" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/TabContainer/Results/ResulstsVBox/MarginContainer/JudgementCountVBox/Perfect" unique_id=1340127453]
+layout_mode = 2
+text = "Perfect"
+
+[node name="Count" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/TabContainer/Results/ResulstsVBox/MarginContainer/JudgementCountVBox/Perfect" unique_id=1912108411]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1000"
+horizontal_alignment = 2
+
+[node name="Good" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/TabContainer/Results/ResulstsVBox/MarginContainer/JudgementCountVBox" unique_id=1000585174]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/TabContainer/Results/ResulstsVBox/MarginContainer/JudgementCountVBox/Good" unique_id=1915053322]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Judgement" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/TabContainer/Results/ResulstsVBox/MarginContainer/JudgementCountVBox/Good" unique_id=2068588162]
+layout_mode = 2
+text = "Good"
+
+[node name="Count" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/TabContainer/Results/ResulstsVBox/MarginContainer/JudgementCountVBox/Good" unique_id=2113928357]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1000"
+horizontal_alignment = 2
+
+[node name="Bad" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/TabContainer/Results/ResulstsVBox/MarginContainer/JudgementCountVBox" unique_id=617796412]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/TabContainer/Results/ResulstsVBox/MarginContainer/JudgementCountVBox/Bad" unique_id=59670806]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Judgement" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/TabContainer/Results/ResulstsVBox/MarginContainer/JudgementCountVBox/Bad" unique_id=352606881]
+layout_mode = 2
+text = "Bad"
+
+[node name="Count" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/TabContainer/Results/ResulstsVBox/MarginContainer/JudgementCountVBox/Bad" unique_id=1157249656]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1000"
+horizontal_alignment = 2
+
+[node name="Miss" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/TabContainer/Results/ResulstsVBox/MarginContainer/JudgementCountVBox" unique_id=1750716974]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/TabContainer/Results/ResulstsVBox/MarginContainer/JudgementCountVBox/Miss" unique_id=401661219]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Judgement" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/TabContainer/Results/ResulstsVBox/MarginContainer/JudgementCountVBox/Miss" unique_id=2143835316]
+layout_mode = 2
+text = "Miss"
+
+[node name="Count" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/TabContainer/Results/ResulstsVBox/MarginContainer/JudgementCountVBox/Miss" unique_id=1111250513]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1000"
+horizontal_alignment = 2
+
+[node name="ToBeReplacedWithComboMeter" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/TabContainer/Results/ResulstsVBox" unique_id=1546339124]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/TabContainer/Results/ResulstsVBox/ToBeReplacedWithComboMeter" unique_id=1215648450]
+layout_mode = 2
+size_flags_vertical = 5
+text = "Volts"
+horizontal_alignment = 1
+
+[node name="ToBeReplacedWithComboMeter" type="TextureRect" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/TabContainer/Results/ResulstsVBox/ToBeReplacedWithComboMeter" unique_id=961555906]
+layout_mode = 2
+size_flags_vertical = 5
+
+[node name="Leaderboards" type="MarginContainer" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/TabContainer" unique_id=1616207138]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="LeaderboardsMikeMade" type="TextureRect" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/TabContainer/Leaderboards" unique_id=1189570859]
+layout_mode = 2
+
+[node name="BottomDivider" type="TextureRect" parent="MarginContainer/VBoxContainer" unique_id=405842441]
+clip_contents = true
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+
+[node name="Line2D" type="Line2D" parent="MarginContainer/VBoxContainer/BottomDivider" unique_id=1547068907]
+position = Vector2(0, 1)
+points = PackedVector2Array(0, -1, 1096, -1)
+width = 2.0
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer" unique_id=987876422]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_right = 12
+
+[node name="Level Details" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer2" unique_id=892289013]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Artist" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer2/Level Details" unique_id=736273156]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "artist"
+
+[node name="Day" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer2/Level Details" unique_id=46308270]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "day"
+horizontal_alignment = 2
+
+[node name="Buttons" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=805984308]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="ReplayButton" type="Button" parent="MarginContainer/VBoxContainer/Buttons" unique_id=14540177]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+text = "Watch Replay"
+
+[node name="RetryButton" type="Button" parent="MarginContainer/VBoxContainer/Buttons" unique_id=932672167]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+text = "Retry"
+
+[node name="ProfileDropdownOverlay" parent="." unique_id=1990743977 instance=ExtResource("4_vtb6f")]
+visible = false
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="ProfileInputModal" parent="." unique_id=796207773 instance=ExtResource("5_atk4l")]
+visible = false
+layout_mode = 1
+
+[node name="SettingsOverlay" parent="." unique_id=690435023 instance=ExtResource("6_8kipk")]
+visible = false
+layout_mode = 1

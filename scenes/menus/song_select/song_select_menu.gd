@@ -8,13 +8,6 @@ class_name SongSelectMenuController
 @onready var song_card: SongCardComponent = $MainVerticalStack/MarginContainer/CenterLayoutContainer/SongCard
 @onready var loading_spinner: Control = $ViewportLoadingIndicator
 
-# Root overlay tracking nodes
-@onready var profile_dropdown: ProfileDropdownOverlayComponent = $ProfileDropdownOverlay
-@onready var profile_input_modal: ProfileInputModalComponent = $ProfileInputModal
-@onready var mods_overlay: ModsOverlayComponent = $ModsOverlay
-@onready var skills_overlay: SkillsOverlayComponent = $SkillsOverlay
-@onready var settings_overlay: SettingsOverlayComponent = $SettingsOverlay
-
 var active_gameplay_mods: Dictionary = {"FL": false, "FS": false, "DT": false, "HR": false}
 var active_character_skill: String = "Radiance"
 
@@ -24,16 +17,8 @@ func _ready() -> void:
 	if song_list:
 		song_list.selection_changed.connect(_on_song_selection_shifted)
 		song_list.song_activated.connect(_on_song_item_triggered)
-		
+	
 	if ui_header:
-		# Inject the global scene tree overlay paths directly into your header script layer
-		ui_header.mods_overlay = mods_overlay
-		ui_header.skills_overlay = skills_overlay
-		ui_header.profile_dropdown = profile_dropdown
-		ui_header.profile_input_modal = profile_input_modal
-		ui_header.settings_overlay = settings_overlay
-		
-		# Hook data state updates
 		ui_header.gameplay_mods_changed.connect(_on_mods_payload_updated)
 		ui_header.character_skill_changed.connect(_on_skill_payload_updated)
 		

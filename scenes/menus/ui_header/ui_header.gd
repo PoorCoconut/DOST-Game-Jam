@@ -4,7 +4,6 @@ class_name UIHeaderComponent
 signal gameplay_mods_changed(new_mods: Dictionary)
 signal character_skill_changed(new_skill_name: String)
 signal settings_pressed
-signal volume_pressed
 
 @onready var profile_card: ProfileCardComponent = $HBoxContainer/LeftProfileSection/ProfileCard
 @onready var skills_btn: Button = $HBoxContainer/LeftProfileSection/SkillsTabButton
@@ -16,12 +15,11 @@ signal volume_pressed
 @onready var mod_dt: TextureRect = $HBoxContainer/LeftProfileSection/ActiveModsRow/ModDT
 @onready var mod_hr: TextureRect = $HBoxContainer/LeftProfileSection/ActiveModsRow/ModHR
 
-# Managed by the Main Scene Traffic Controller
-var mods_overlay: ModsOverlayComponent
-var skills_overlay: SkillsOverlayComponent
-var profile_dropdown: ProfileDropdownOverlayComponent
-var profile_input_modal: ProfileInputModalComponent
-var settings_overlay: SettingsOverlayComponent
+@onready var mods_overlay: ModsOverlayComponent = $OverlayLayer/ModsOverlay
+@onready var skills_overlay: SkillsOverlayComponent = $OverlayLayer/SkillsOverlay
+@onready var profile_dropdown: ProfileDropdownOverlayComponent = $OverlayLayer/ProfileDropdownOverlay
+@onready var profile_input_modal: ProfileInputModalComponent = $OverlayLayer/ProfileInputModal
+@onready var settings_overlay: SettingsOverlayComponent = $OverlayLayer/SettingsOverlay
 
 var original_btn_y: float = 0.0
 var active_extended_button: Button = null
@@ -41,13 +39,13 @@ const ELEMENT_DATA = {
 func _ready() -> void:
 	_clear_modifier_strip()
 	
-	# Clean guard connections to avoid duplicate listener exceptions
 	if not profile_card.profile_clicked.is_connected(_on_profile_card_clicked):
 		profile_card.profile_clicked.connect(_on_profile_card_clicked)
 	if not skills_btn.toggled.is_connected(_on_skills_tab_toggled):
 		skills_btn.toggled.connect(_on_skills_tab_toggled)
 	if not mods_btn.toggled.is_connected(_on_mods_tab_toggled):
 		mods_btn.toggled.connect(_on_mods_tab_toggled)
+		
 	var settings_btn = $HBoxContainer/RightControlsSection/SettingsButton
 	if not settings_btn.pressed.is_connected(_on_settings_button_pressed):
 		settings_btn.pressed.connect(_on_settings_button_pressed)
@@ -76,7 +74,6 @@ func _animate_tab_extension(target_button: Button) -> void:
 	active_extended_button = target_button
 	original_btn_y = target_button.position.y
 	
-	# Adjusting position.y downwards allows the tab background to integrate perfectly with the menu box
 	var tween := create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	tween.tween_property(target_button, "position:y", original_btn_y + 12.0, 0.15)
 
@@ -109,7 +106,6 @@ func _on_profile_card_clicked(is_open: bool) -> void:
 
 func _on_skills_tab_toggled(is_pressed: bool) -> void:
 	if is_pressed:
-		# Shut off mods tab if open
 		mods_btn.set_pressed_no_signal(false)
 		if is_mods_button_extended:
 			_force_retract_mods_tab()
@@ -118,7 +114,6 @@ func _on_skills_tab_toggled(is_pressed: bool) -> void:
 			profile_card.set_dropdown_state_no_signal(false)
 			if profile_dropdown: profile_dropdown.toggle_dropdown(false)
 		
-		# Record and force-stretch size:y down blindly
 		if not is_skills_button_extended:
 			skills_button_original_height = skills_btn.size.y
 			
@@ -138,7 +133,6 @@ func _on_skills_tab_toggled(is_pressed: bool) -> void:
 			_force_retract_skills_tab()
 
 func _on_skills_overlay_closed(selected_skill: String) -> void:
-	# --- RESET THE TAB SIZE EXTENSION HERE ON ACCEPT ---
 	_force_retract_skills_tab()
 	_update_skill_card_display(selected_skill)
 	character_skill_changed.emit(selected_skill)
@@ -153,7 +147,6 @@ func _force_retract_skills_tab() -> void:
 
 func _on_mods_tab_toggled(is_pressed: bool) -> void:
 	if is_pressed:
-		# Shut off skills tab if open
 		skills_btn.set_pressed_no_signal(false)
 		if is_skills_button_extended:
 			_force_retract_skills_tab()
@@ -162,7 +155,6 @@ func _on_mods_tab_toggled(is_pressed: bool) -> void:
 			profile_card.set_dropdown_state_no_signal(false)
 			if profile_dropdown: profile_dropdown.toggle_dropdown(false)
 		
-		# Record and force-stretch size:y down blindly
 		if not is_mods_button_extended:
 			mods_button_original_height = mods_btn.size.y
 			
@@ -172,14 +164,15 @@ func _on_mods_tab_toggled(is_pressed: bool) -> void:
 		
 		tween.tween_callback(func():
 			if mods_overlay:
-				mods_overlay.open_overlay(owner.active_gameplay_mods if owner else {})
+				# Use safe checking for the controller owner fallback array context
+				var base_mods = owner.active_gameplay_mods if (owner and "active_gameplay_mods" in owner) else {"FL": false, "FS": false, "DT": false, "HR": false}
+				mods_overlay.open_overlay(base_mods)
 		)
 	else:
 		if is_mods_button_extended:
 			_force_retract_mods_tab()
 
 func _on_mods_overlay_closed(confirmed_mods: Dictionary) -> void:
-	# --- RESET THE TAB SIZE EXTENSION HERE ON ACCEPT ---
 	_force_retract_mods_tab()
 	update_active_modifiers(confirmed_mods)
 	gameplay_mods_changed.emit(confirmed_mods)
@@ -225,11 +218,9 @@ func _on_back_button_pressed() -> void:
 	print("Back Button pressed")
 	#SceneManager.change_scene("res://scenes/menus/main_menu/main_menu.tscn")
 
-
 func _on_settings_button_pressed() -> void:
 	print("[UI_HEADER] Settings button activated. Clearing active workspace panels...")
 	
-	# Clear out any hanging active workspace cards or open tabs first [cite: 22, 23]
 	if is_skills_button_extended:
 		_force_retract_skills_tab()
 	if is_mods_button_extended:
@@ -237,13 +228,16 @@ func _on_settings_button_pressed() -> void:
 		
 	if profile_card.is_dropdown_open:
 		profile_card.set_dropdown_state_no_signal(false)
-		if profile_dropdown: 
+		if profile_dropdown:
 			profile_dropdown.toggle_dropdown(false)
 			
 	if settings_overlay:
-		settings_overlay.open() # Calls your component open loop method cleanly [cite: 19]
-		settings_pressed.emit() # Notify the main scene state engine just in case 
+		settings_overlay.open()
+		settings_pressed.emit()
 
 func _on_settings_overlay_closed() -> void:
 	print("[UI_HEADER] Settings configuration saved and closed.")
-	# Add any extra UI refocusing code here if needed when returning to selection
+
+func _hide_skills_mods_buttons() -> void:
+	skills_btn.visible = false
+	mods_btn.visible = false

@@ -4,11 +4,7 @@
 [ext_resource type="Script" uid="uid://tf0rg0jnfvl" path="res://scenes/menus/song_select/song_select_menu.gd" id="1_f68u0"]
 [ext_resource type="PackedScene" uid="uid://07sua8ll53xq" path="res://scenes/menus/ui_header/ui_header.tscn" id="2_l5ec8"]
 [ext_resource type="PackedScene" uid="uid://criendm0u25hq" path="res://scenes/menus/song_select/song_list/song_list.tscn" id="3_8y6ec"]
-[ext_resource type="PackedScene" uid="uid://m3fs1bi2pk0w" path="res://scenes/menus/overlay/profile_dropdown/profile_dropdown_overlay.tscn" id="5_ulf0x"]
-[ext_resource type="PackedScene" uid="uid://dhp8w153d0qd6" path="res://scenes/menus/overlay/profile_input/profile_input_modal.tscn" id="6_cnu2e"]
-[ext_resource type="PackedScene" uid="uid://wqfp06qq2upu" path="res://scenes/menus/overlay/mods_overlay/mods_overlay.tscn" id="7_7buys"]
-[ext_resource type="PackedScene" uid="uid://dahnnpr2udico" path="res://scenes/menus/overlay/skills_overlay/skills_overlay.tscn" id="8_35uwn"]
-[ext_resource type="PackedScene" uid="uid://mjjvugmhjvje" path="res://scenes/menus/settings/settings_overlay.tscn" id="9_jjiwh"]
+[ext_resource type="PackedScene" uid="uid://beag13fwp7sro" path="res://scenes/menus/song_select/song_select_leaderboard.tscn" id="4_f5rrx"]
 
 [node name="SongSelectMenu" type="Control" unique_id=701800275]
 layout_mode = 3
@@ -18,7 +14,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_f68u0")
-charts_to_load = null
 
 [node name="BackgroundDimmer" type="ColorRect" parent="." unique_id=495573193]
 layout_mode = 0
@@ -44,6 +39,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_top = -40
+theme_override_constants/margin_bottom = 12
 
 [node name="CenterLayoutContainer" type="HBoxContainer" parent="MainVerticalStack/MarginContainer" unique_id=321207231]
 clip_contents = true
@@ -52,7 +48,15 @@ size_flags_vertical = 3
 theme_override_constants/separation = 335
 alignment = 2
 
-[node name="SongCard" parent="MainVerticalStack/MarginContainer/CenterLayoutContainer" unique_id=296548007 instance=ExtResource("1_ecet1")]
+[node name="VBoxContainer" type="VBoxContainer" parent="MainVerticalStack/MarginContainer/CenterLayoutContainer" unique_id=832194984]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="SongCard" parent="MainVerticalStack/MarginContainer/CenterLayoutContainer/VBoxContainer" unique_id=296548007 instance=ExtResource("1_ecet1")]
+custom_minimum_size = Vector2(350, 350)
+layout_mode = 2
+
+[node name="SongSelectLeaderboard" parent="MainVerticalStack/MarginContainer/CenterLayoutContainer/VBoxContainer" unique_id=989223180 instance=ExtResource("4_f5rrx")]
 layout_mode = 2
 
 [node name="SongList" parent="MainVerticalStack/MarginContainer/CenterLayoutContainer" unique_id=1708506911 instance=ExtResource("3_8y6ec")]
@@ -72,27 +76,3 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="ModsOverlay" parent="." unique_id=425077867 instance=ExtResource("7_7buys")]
-visible = false
-layout_mode = 1
-
-[node name="ProfileDropdownOverlay" parent="." unique_id=1990743977 instance=ExtResource("5_ulf0x")]
-visible = false
-layout_mode = 0
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-grow_horizontal = 1
-grow_vertical = 1
-
-[node name="ProfileInputModal" parent="." unique_id=796207773 instance=ExtResource("6_cnu2e")]
-visible = false
-layout_mode = 1
-
-[node name="SkillsOverlay" parent="." unique_id=829645276 instance=ExtResource("8_35uwn")]
-visible = false
-layout_mode = 1
-
-[node name="SettingsOverlay" parent="." unique_id=690435023 instance=ExtResource("9_jjiwh")]
-layout_mode = 1

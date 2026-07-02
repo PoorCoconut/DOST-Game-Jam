@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://b77yumn5tqo6j"]
+
+[ext_resource type="Shader" uid="uid://bm3rsi62ejdnr" path="res://scenes/menus/ui_header/circle_mask.gdshader" id="1_80gkd"]
+[ext_resource type="Texture2D" uid="uid://f5ygpd5a7ppw" path="res://assets/backgrounds/test.jpg" id="2_mrlca"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jrk5e"]
+shader = ExtResource("1_80gkd")
+
+[node name="PlayerResultCard" type="PanelContainer" unique_id=1824690737]
+custom_minimum_size = Vector2(350, 0)
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=628083758]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = -16
+theme_override_constants/margin_top = -4
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = -4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=897260076]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="AvatarFrame" type="Control" parent="MarginContainer/HBoxContainer" unique_id=939012974]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="AvatarTexture" type="TextureRect" parent="MarginContainer/HBoxContainer/AvatarFrame" unique_id=1028899050]
+material = SubResource("ShaderMaterial_jrk5e")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_mrlca")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="PlayerDetails" type="HBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=322950994]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="PlayerName" type="Label" parent="MarginContainer/HBoxContainer/PlayerDetails" unique_id=553056895]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "shrek makalintinal"
+
+[node name="PlayerScore" type="Label" parent="MarginContainer/HBoxContainer/PlayerDetails" unique_id=1634602535]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "755,555"
+horizontal_alignment = 2

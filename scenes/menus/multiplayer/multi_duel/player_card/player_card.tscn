@@ -1,0 +1,121 @@
+[gd_scene format=3 uid="uid://bap7qx1wqekal"]
+
+[ext_resource type="Shader" uid="uid://bm3rsi62ejdnr" path="res://scenes/menus/ui_header/circle_mask.gdshader" id="1_yduv2"]
+[ext_resource type="Texture2D" uid="uid://f5ygpd5a7ppw" path="res://assets/backgrounds/test.jpg" id="2_jl052"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yx4g8"]
+shader = ExtResource("1_yduv2")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o5amn"]
+shader = ExtResource("1_yduv2")
+
+[node name="PlayerCard" type="PanelContainer" unique_id=361184950]
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=757437806]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_right = 12
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=150835224]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer" unique_id=1160483739]
+layout_mode = 2
+theme_override_constants/margin_left = -28
+theme_override_constants/margin_right = -28
+
+[node name="AvatarFrame" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer" unique_id=1864300417]
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="AvatarTexture" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer/AvatarFrame" unique_id=1812501448]
+material = SubResource("ShaderMaterial_yx4g8")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_jl052")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/HBoxContainer" unique_id=652348076]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+
+[node name="UserTextVBox" type="VBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer2" unique_id=865833781]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+alignment = 1
+
+[node name="UsernameLabel" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer2/UserTextVBox" unique_id=487634293]
+layout_mode = 2
+text = "Kerhs"
+
+[node name="ReplaceWithFrequencyBar" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer2/UserTextVBox" unique_id=443628967]
+visible = false
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Line" type="ColorRect" parent="MarginContainer/HBoxContainer/MarginContainer2/UserTextVBox/ReplaceWithFrequencyBar" unique_id=1338443020]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="EnergyHBox" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer2/UserTextVBox" unique_id=450790404]
+layout_mode = 2
+
+[node name="EnergyIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer2/UserTextVBox/EnergyHBox" unique_id=284381174]
+material = SubResource("ShaderMaterial_o5amn")
+custom_minimum_size = Vector2(54, 54)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="EnergyLabelVBox" type="VBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer2/UserTextVBox/EnergyHBox" unique_id=2039573893]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="EnergyLabel" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer2/UserTextVBox/EnergyHBox/EnergyLabelVBox" unique_id=1069667026]
+layout_mode = 2
+text = "energy"
+
+[node name="ElementLabel" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer2/UserTextVBox/EnergyHBox/EnergyLabelVBox" unique_id=337907781]
+layout_mode = 2
+text = "e;emnt"
+
+[node name="RemainingWatts" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer2/UserTextVBox/EnergyHBox" unique_id=228503678]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer2/UserTextVBox/EnergyHBox/RemainingWatts" unique_id=2142776059]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Remaining Watts"
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer/MarginContainer2/UserTextVBox/EnergyHBox/RemainingWatts" unique_id=598489345]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer2/UserTextVBox/EnergyHBox/RemainingWatts/PanelContainer" unique_id=1944094289]
+layout_mode = 2
+text = "10000"
+
+[node name="PlayerType" type="Label" parent="MarginContainer/HBoxContainer" unique_id=1433504401]
+layout_mode = 2
+text = "Challenger/Synchronizer"
+horizontal_alignment = 2

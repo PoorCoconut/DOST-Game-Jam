@@ -1,0 +1,392 @@
+[gd_scene format=3 uid="uid://drjhs12ghebpx"]
+
+[ext_resource type="PackedScene" uid="uid://07sua8ll53xq" path="res://scenes/menus/ui_header/ui_header.tscn" id="1_imln1"]
+[ext_resource type="PackedScene" uid="uid://bap7qx1wqekal" path="res://scenes/menus/multiplayer/multi_duel/player_card/player_card.tscn" id="2_t3vt0"]
+[ext_resource type="PackedScene" uid="uid://bp8aei52hyfm8" path="res://scenes/menus/song_select/song_card/song_card.tscn" id="4_eau7s"]
+
+[sub_resource type="Gradient" id="Gradient_k600t"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_11owi"]
+gradient = SubResource("Gradient_k600t")
+fill_to = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_k80ji"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_imln1"]
+gradient = SubResource("Gradient_k80ji")
+fill_from = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_vebe8"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_pwfhx"]
+gradient = SubResource("Gradient_vebe8")
+fill_from = Vector2(1, 0)
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_io8vc"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gf04q"]
+gradient = SubResource("Gradient_io8vc")
+fill_from = Vector2(1, 1)
+fill_to = Vector2(0, 0)
+
+[node name="MultiDuel" type="Control" unique_id=1616966998]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="EnCore" type="Control" parent="." unique_id=1844675992]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="UIHeader" parent="EnCore" unique_id=1325149863 instance=ExtResource("1_imln1")]
+z_index = 1
+custom_minimum_size = Vector2(0, 112)
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 1152.0
+offset_bottom = 112.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="EnCore" unique_id=978249781]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 52
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 52
+
+[node name="CenterLayoutContainer" type="HBoxContainer" parent="EnCore/MarginContainer" unique_id=1150643712]
+layout_mode = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="LeftSectionVBox" type="VBoxContainer" parent="EnCore/MarginContainer/CenterLayoutContainer" unique_id=787148384]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="TitleContainer" type="MarginContainer" parent="EnCore/MarginContainer/CenterLayoutContainer/LeftSectionVBox" unique_id=153451288]
+layout_mode = 2
+theme_override_constants/margin_bottom = 12
+
+[node name="Panel" type="PanelContainer" parent="EnCore/MarginContainer/CenterLayoutContainer/LeftSectionVBox/TitleContainer" unique_id=1623354016]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="Title" type="Label" parent="EnCore/MarginContainer/CenterLayoutContainer/LeftSectionVBox/TitleContainer/Panel" unique_id=1611731895]
+layout_mode = 2
+text = "--| En Core |--"
+horizontal_alignment = 1
+
+[node name="Player1Card" parent="EnCore/MarginContainer/CenterLayoutContainer/LeftSectionVBox" unique_id=361184950 instance=ExtResource("2_t3vt0")]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="VS" type="Label" parent="EnCore/MarginContainer/CenterLayoutContainer/LeftSectionVBox" unique_id=797377367]
+layout_mode = 2
+text = "VS"
+horizontal_alignment = 1
+
+[node name="Player2Card" parent="EnCore/MarginContainer/CenterLayoutContainer/LeftSectionVBox" unique_id=840105638 instance=ExtResource("2_t3vt0")]
+custom_minimum_size = Vector2(0, 100)
+layout_direction = 3
+layout_mode = 2
+
+[node name="ModsContainer" type="MarginContainer" parent="EnCore/MarginContainer/CenterLayoutContainer/LeftSectionVBox" unique_id=1809076999]
+layout_mode = 2
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_bottom = 24
+
+[node name="HBoxContainer" type="HBoxContainer" parent="EnCore/MarginContainer/CenterLayoutContainer/LeftSectionVBox/ModsContainer" unique_id=898120396]
+layout_mode = 2
+
+[node name="ModsLabel" type="MarginContainer" parent="EnCore/MarginContainer/CenterLayoutContainer/LeftSectionVBox/ModsContainer/HBoxContainer" unique_id=1133233202]
+layout_mode = 2
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_bottom = 28
+
+[node name="PanelContainer" type="PanelContainer" parent="EnCore/MarginContainer/CenterLayoutContainer/LeftSectionVBox/ModsContainer/HBoxContainer/ModsLabel" unique_id=816853300]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="EnCore/MarginContainer/CenterLayoutContainer/LeftSectionVBox/ModsContainer/HBoxContainer/ModsLabel/PanelContainer" unique_id=1967585914]
+layout_mode = 2
+text = "Mods: "
+horizontal_alignment = 1
+uppercase = true
+
+[node name="ActiveModsRow" type="HBoxContainer" parent="EnCore/MarginContainer/CenterLayoutContainer/LeftSectionVBox/ModsContainer/HBoxContainer" unique_id=1413274605]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+
+[node name="ModFL" type="TextureRect" parent="EnCore/MarginContainer/CenterLayoutContainer/LeftSectionVBox/ModsContainer/HBoxContainer/ActiveModsRow" unique_id=754525048]
+custom_minimum_size = Vector2(64, 100)
+layout_mode = 2
+size_flags_vertical = 0
+texture = SubResource("GradientTexture2D_11owi")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="ModFS" type="TextureRect" parent="EnCore/MarginContainer/CenterLayoutContainer/LeftSectionVBox/ModsContainer/HBoxContainer/ActiveModsRow" unique_id=1377892786]
+custom_minimum_size = Vector2(64, 100)
+layout_mode = 2
+size_flags_vertical = 0
+texture = SubResource("GradientTexture2D_imln1")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="ModDT" type="TextureRect" parent="EnCore/MarginContainer/CenterLayoutContainer/LeftSectionVBox/ModsContainer/HBoxContainer/ActiveModsRow" unique_id=1076433193]
+custom_minimum_size = Vector2(64, 100)
+layout_mode = 2
+size_flags_vertical = 0
+texture = SubResource("GradientTexture2D_pwfhx")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="ModHR" type="TextureRect" parent="EnCore/MarginContainer/CenterLayoutContainer/LeftSectionVBox/ModsContainer/HBoxContainer/ActiveModsRow" unique_id=1293697609]
+custom_minimum_size = Vector2(64, 100)
+layout_mode = 2
+size_flags_vertical = 0
+texture = SubResource("GradientTexture2D_gf04q")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Button" type="Button" parent="EnCore/MarginContainer/CenterLayoutContainer/LeftSectionVBox" unique_id=1111648171]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Start Match"
+
+[node name="RightSectionVBox" type="VBoxContainer" parent="EnCore/MarginContainer/CenterLayoutContainer" unique_id=1639878490]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="SongCard" parent="EnCore/MarginContainer/CenterLayoutContainer/RightSectionVBox" unique_id=296548007 instance=ExtResource("4_eau7s")]
+custom_minimum_size = Vector2(350, 350)
+layout_mode = 2
+
+[node name="StateLabel" type="PanelContainer" parent="EnCore/MarginContainer/CenterLayoutContainer/RightSectionVBox" unique_id=1323243037]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="EnCore/MarginContainer/CenterLayoutContainer/RightSectionVBox/StateLabel" unique_id=1628709506]
+layout_mode = 2
+
+[node name="StateLabel" type="Label" parent="EnCore/MarginContainer/CenterLayoutContainer/RightSectionVBox/StateLabel/VBoxContainer" unique_id=372240419]
+layout_mode = 2
+text = "One Song, one chance"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="DescLabel" type="Label" parent="EnCore/MarginContainer/CenterLayoutContainer/RightSectionVBox/StateLabel/VBoxContainer" unique_id=1443985054]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Fight 1v1, one song only"
+horizontal_alignment = 1
+
+[node name="Buttons" type="HBoxContainer" parent="EnCore/MarginContainer/CenterLayoutContainer/RightSectionVBox" unique_id=123006507]
+layout_mode = 2
+alignment = 1
+
+[node name="ChooseSongButton" type="Button" parent="EnCore/MarginContainer/CenterLayoutContainer/RightSectionVBox/Buttons" unique_id=422737139]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 14
+text = "Choose Song"
+
+[node name="EnergyDuel" type="Control" parent="." unique_id=2027126754]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="UIHeader" parent="EnergyDuel" unique_id=1127767582 instance=ExtResource("1_imln1")]
+z_index = 1
+custom_minimum_size = Vector2(0, 112)
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 1152.0
+offset_bottom = 112.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="EnergyDuel" unique_id=1590041699]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 52
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 52
+
+[node name="CenterLayoutContainer" type="HBoxContainer" parent="EnergyDuel/MarginContainer" unique_id=1726618553]
+layout_mode = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="LeftSectionVBox" type="VBoxContainer" parent="EnergyDuel/MarginContainer/CenterLayoutContainer" unique_id=1012313285]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="TitleContainer" type="MarginContainer" parent="EnergyDuel/MarginContainer/CenterLayoutContainer/LeftSectionVBox" unique_id=554671465]
+layout_mode = 2
+theme_override_constants/margin_bottom = 12
+
+[node name="Panel" type="PanelContainer" parent="EnergyDuel/MarginContainer/CenterLayoutContainer/LeftSectionVBox/TitleContainer" unique_id=27428150]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="Title" type="Label" parent="EnergyDuel/MarginContainer/CenterLayoutContainer/LeftSectionVBox/TitleContainer/Panel" unique_id=604453183]
+layout_mode = 2
+text = "--| Energy Duel |--"
+horizontal_alignment = 1
+
+[node name="Player1Card" parent="EnergyDuel/MarginContainer/CenterLayoutContainer/LeftSectionVBox" unique_id=1465613473 instance=ExtResource("2_t3vt0")]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="VS" type="Label" parent="EnergyDuel/MarginContainer/CenterLayoutContainer/LeftSectionVBox" unique_id=117487908]
+layout_mode = 2
+text = "VS"
+horizontal_alignment = 1
+
+[node name="Player2Card" parent="EnergyDuel/MarginContainer/CenterLayoutContainer/LeftSectionVBox" unique_id=2050133865 instance=ExtResource("2_t3vt0")]
+custom_minimum_size = Vector2(0, 100)
+layout_direction = 3
+layout_mode = 2
+
+[node name="ModsContainer" type="MarginContainer" parent="EnergyDuel/MarginContainer/CenterLayoutContainer/LeftSectionVBox" unique_id=1743077811]
+layout_mode = 2
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_bottom = 24
+
+[node name="HBoxContainer" type="HBoxContainer" parent="EnergyDuel/MarginContainer/CenterLayoutContainer/LeftSectionVBox/ModsContainer" unique_id=70554959]
+layout_mode = 2
+
+[node name="ModsLabel" type="MarginContainer" parent="EnergyDuel/MarginContainer/CenterLayoutContainer/LeftSectionVBox/ModsContainer/HBoxContainer" unique_id=434216950]
+layout_mode = 2
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_bottom = 28
+
+[node name="PanelContainer" type="PanelContainer" parent="EnergyDuel/MarginContainer/CenterLayoutContainer/LeftSectionVBox/ModsContainer/HBoxContainer/ModsLabel" unique_id=128359947]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="EnergyDuel/MarginContainer/CenterLayoutContainer/LeftSectionVBox/ModsContainer/HBoxContainer/ModsLabel/PanelContainer" unique_id=1641883952]
+layout_mode = 2
+text = "Mods: "
+horizontal_alignment = 1
+uppercase = true
+
+[node name="ActiveModsRow" type="HBoxContainer" parent="EnergyDuel/MarginContainer/CenterLayoutContainer/LeftSectionVBox/ModsContainer/HBoxContainer" unique_id=756602922]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+
+[node name="ModFL" type="TextureRect" parent="EnergyDuel/MarginContainer/CenterLayoutContainer/LeftSectionVBox/ModsContainer/HBoxContainer/ActiveModsRow" unique_id=1378100865]
+custom_minimum_size = Vector2(64, 100)
+layout_mode = 2
+size_flags_vertical = 0
+texture = SubResource("GradientTexture2D_11owi")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="ModFS" type="TextureRect" parent="EnergyDuel/MarginContainer/CenterLayoutContainer/LeftSectionVBox/ModsContainer/HBoxContainer/ActiveModsRow" unique_id=1913592193]
+custom_minimum_size = Vector2(64, 100)
+layout_mode = 2
+size_flags_vertical = 0
+texture = SubResource("GradientTexture2D_imln1")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="ModDT" type="TextureRect" parent="EnergyDuel/MarginContainer/CenterLayoutContainer/LeftSectionVBox/ModsContainer/HBoxContainer/ActiveModsRow" unique_id=454757678]
+custom_minimum_size = Vector2(64, 100)
+layout_mode = 2
+size_flags_vertical = 0
+texture = SubResource("GradientTexture2D_pwfhx")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="ModHR" type="TextureRect" parent="EnergyDuel/MarginContainer/CenterLayoutContainer/LeftSectionVBox/ModsContainer/HBoxContainer/ActiveModsRow" unique_id=370369198]
+custom_minimum_size = Vector2(64, 100)
+layout_mode = 2
+size_flags_vertical = 0
+texture = SubResource("GradientTexture2D_gf04q")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Button" type="Button" parent="EnergyDuel/MarginContainer/CenterLayoutContainer/LeftSectionVBox" unique_id=707953890]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Start Match"
+
+[node name="RightSectionVBox" type="VBoxContainer" parent="EnergyDuel/MarginContainer/CenterLayoutContainer" unique_id=2062128356]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="SongCard" parent="EnergyDuel/MarginContainer/CenterLayoutContainer/RightSectionVBox" unique_id=1543814618 instance=ExtResource("4_eau7s")]
+custom_minimum_size = Vector2(350, 350)
+layout_mode = 2
+
+[node name="StateLabel" type="PanelContainer" parent="EnergyDuel/MarginContainer/CenterLayoutContainer/RightSectionVBox" unique_id=2097344222]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="EnergyDuel/MarginContainer/CenterLayoutContainer/RightSectionVBox/StateLabel" unique_id=311971285]
+layout_mode = 2
+
+[node name="StateLabel" type="Label" parent="EnergyDuel/MarginContainer/CenterLayoutContainer/RightSectionVBox/StateLabel/VBoxContainer" unique_id=1562126351]
+layout_mode = 2
+text = "One Song, one chance"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="DescLabel" type="Label" parent="EnergyDuel/MarginContainer/CenterLayoutContainer/RightSectionVBox/StateLabel/VBoxContainer" unique_id=765886652]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Fight 1v1, one song only"
+horizontal_alignment = 1
+
+[node name="Buttons" type="HBoxContainer" parent="EnergyDuel/MarginContainer/CenterLayoutContainer/RightSectionVBox" unique_id=392520862]
+layout_mode = 2
+alignment = 1
+
+[node name="ChooseSongButton" type="Button" parent="EnergyDuel/MarginContainer/CenterLayoutContainer/RightSectionVBox/Buttons" unique_id=1653234459]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 14
+text = "Choose Song"
+
+[node name="SurrenderButton" type="Button" parent="EnergyDuel/MarginContainer/CenterLayoutContainer/RightSectionVBox/Buttons" unique_id=1853304171]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 14
+text = "Surrrender"

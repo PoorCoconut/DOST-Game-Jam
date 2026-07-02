@@ -1,15 +1,15 @@
 extends Control
 class_name SongCardComponent
 
-@onready var jacket_texture: TextureRect = $VBoxContainer/LargeJacketTexture
-@onready var title_label: Label = $VBoxContainer/DisplayTitle
-@onready var artist_label: Label = $VBoxContainer/DisplayArtist
+@onready var jacket_texture: TextureRect = $MarginContainer/LargeJacketTexture
+@onready var title_label: Label = $MarginContainer/LargeJacketTexture/VBoxContainer/DisplayTitle
+@onready var artist_label: Label = $MarginContainer/LargeJacketTexture/VBoxContainer/DisplayArtist
 
 # Info layout spec references
-@onready var length_label: Label = $VBoxContainer/InfoGrid/LengthValue
-@onready var bpm_label: Label = $VBoxContainer/InfoGrid/BPMValue
-@onready var count_label: Label = $VBoxContainer/InfoGrid/CountValue
-@onready var diff_label: Label = $VBoxContainer/InfoGrid/DiffValue
+@onready var length_label: Label = $MarginContainer/LargeJacketTexture/VBoxContainer/InfoGrid/LengthValue
+@onready var bpm_label: Label = $MarginContainer/LargeJacketTexture/VBoxContainer/InfoGrid/BPMValue
+@onready var count_label: Label = $MarginContainer/LargeJacketTexture/VBoxContainer/InfoGrid/CountValue
+@onready var diff_label: Label = $MarginContainer/LargeJacketTexture/VBoxContainer/InfoGrid/DiffValue
 
 func _ready() -> void:
 	clear_card()

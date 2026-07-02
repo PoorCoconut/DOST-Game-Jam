@@ -53,11 +53,26 @@ stretch_mode = 6
 
 [node name="UserTextVBox" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=252331646]
 layout_mode = 2
+size_flags_horizontal = 3
 mouse_filter = 2
 alignment = 1
 
 [node name="UsernameLabel" type="Label" parent="MarginContainer/HBoxContainer/UserTextVBox" unique_id=564154565]
 layout_mode = 2
+
+[node name="Divider" type="Control" parent="MarginContainer/HBoxContainer/UserTextVBox" unique_id=1261538247]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Line" type="ColorRect" parent="MarginContainer/HBoxContainer/UserTextVBox/Divider" unique_id=267640988]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="EnergyHBox" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UserTextVBox" unique_id=1918246504]
 layout_mode = 2

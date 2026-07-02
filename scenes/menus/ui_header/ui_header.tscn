@@ -2,61 +2,65 @@
 
 [ext_resource type="Script" uid="uid://bnhx5mqi27qrn" path="res://scenes/menus/ui_header/ui_header.gd" id="1_064fg"]
 [ext_resource type="PackedScene" uid="uid://gvgujai51nkd" path="res://scenes/menus/ui_header/profile_card/profile_card.tscn" id="2_k600t"]
+[ext_resource type="PackedScene" uid="uid://mjjvugmhjvje" path="res://scenes/menus/settings/settings_overlay.tscn" id="3_sgxhp"]
+[ext_resource type="PackedScene" uid="uid://wqfp06qq2upu" path="res://scenes/menus/overlay/mods_overlay/mods_overlay.tscn" id="4_io8vc"]
+[ext_resource type="PackedScene" uid="uid://m3fs1bi2pk0w" path="res://scenes/menus/overlay/profile_dropdown/profile_dropdown_overlay.tscn" id="5_xpavr"]
+[ext_resource type="PackedScene" uid="uid://dhp8w153d0qd6" path="res://scenes/menus/overlay/profile_input/profile_input_modal.tscn" id="6_0og3o"]
+[ext_resource type="PackedScene" uid="uid://dahnnpr2udico" path="res://scenes/menus/overlay/skills_overlay/skills_overlay.tscn" id="7_n7567"]
 
-[sub_resource type="Gradient" id="Gradient_k600t"]
+[sub_resource type="Gradient" id="Gradient_mdyi4"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_wh8p8"]
-gradient = SubResource("Gradient_k600t")
+gradient = SubResource("Gradient_mdyi4")
 fill_to = Vector2(1, 1)
 
-[sub_resource type="Gradient" id="Gradient_k80ji"]
+[sub_resource type="Gradient" id="Gradient_jpq07"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_s7h08"]
-gradient = SubResource("Gradient_k80ji")
+gradient = SubResource("Gradient_jpq07")
 fill_from = Vector2(0, 1)
 
-[sub_resource type="Gradient" id="Gradient_vebe8"]
+[sub_resource type="Gradient" id="Gradient_3pk8i"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_sgxhp"]
-gradient = SubResource("Gradient_vebe8")
+gradient = SubResource("Gradient_3pk8i")
 fill_from = Vector2(1, 0)
 fill_to = Vector2(0, 1)
 
-[sub_resource type="Gradient" id="Gradient_io8vc"]
+[sub_resource type="Gradient" id="Gradient_3icwi"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_xpavr"]
-gradient = SubResource("Gradient_io8vc")
+gradient = SubResource("Gradient_3icwi")
 fill_from = Vector2(1, 1)
 fill_to = Vector2(0, 0)
 
 [node name="UIHeader" type="Control" unique_id=1325149863]
-custom_minimum_size = Vector2(0, 64)
+z_index = 1
 layout_mode = 3
-anchors_preset = 10
-anchor_right = 1.0
-offset_top = -8.0
-offset_bottom = 104.0
-grow_horizontal = 2
-size_flags_horizontal = 3
-script = ExtResource("1_064fg")
-
-[node name="HeaderBackground" type="ColorRect" parent="." unique_id=1969018763]
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = -40.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+script = ExtResource("1_064fg")
+
+[node name="HeaderBackground" type="ColorRect" parent="." unique_id=1969018763]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 72.0
+grow_horizontal = 2
 color = Color(0, 0, 0, 0.2627451)
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=288677413]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = 10
 anchor_right = 1.0
-anchor_bottom = 1.0
+offset_bottom = 112.0
 grow_horizontal = 2
-grow_vertical = 2
 theme_override_constants/separation = 12
 
 [node name="LeftProfileSection" type="HBoxContainer" parent="HBoxContainer" unique_id=2041291720]
@@ -135,6 +139,33 @@ layout_mode = 2
 size_flags_vertical = 0
 theme_override_constants/outline_size = 0
 text = "<--"
+
+[node name="OverlayLayer" type="CanvasLayer" parent="." unique_id=1313057809]
+
+[node name="SettingsOverlay" parent="OverlayLayer" unique_id=690435023 instance=ExtResource("3_sgxhp")]
+visible = false
+
+[node name="ModsOverlay" parent="OverlayLayer" unique_id=425077867 instance=ExtResource("4_io8vc")]
+visible = false
+
+[node name="ProfileDropdownOverlay" parent="OverlayLayer" unique_id=1990743977 instance=ExtResource("5_xpavr")]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -131.0
+offset_top = -124.0
+offset_right = 131.0
+offset_bottom = 124.0
+size_flags_vertical = 0
+
+[node name="ProfileInputModal" parent="OverlayLayer" unique_id=796207773 instance=ExtResource("6_0og3o")]
+visible = false
+
+[node name="SkillsOverlay" parent="OverlayLayer" unique_id=1853363720 instance=ExtResource("7_n7567")]
+visible = false
 
 [connection signal="profile_clicked" from="HBoxContainer/LeftProfileSection/ProfileCard" to="." method="_on_profile_card_clicked"]
 [connection signal="toggled" from="HBoxContainer/LeftProfileSection/SkillsTabButton" to="." method="_on_skills_tab_toggled"]

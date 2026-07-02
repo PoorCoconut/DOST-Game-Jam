@@ -1,0 +1,353 @@
+[gd_scene format=3 uid="uid://djm10mun3iw7f"]
+
+[ext_resource type="Script" uid="uid://dyaivqbje8wly" path="res://scenes/menus/results/results.gd" id="1_fwhv2"]
+[ext_resource type="PackedScene" uid="uid://07sua8ll53xq" path="res://scenes/menus/ui_header/ui_header.tscn" id="1_pk1i0"]
+[ext_resource type="PackedScene" uid="uid://bp8aei52hyfm8" path="res://scenes/menus/song_select/song_card/song_card.tscn" id="2_pk1i0"]
+[ext_resource type="PackedScene" uid="uid://b77yumn5tqo6j" path="res://scenes/menus/results/player_results_card/player_result_card.tscn" id="3_s3f1m"]
+
+[node name="ResultsDuel" type="Control" unique_id=1188515492]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fwhv2")
+
+[node name="UIHeader" parent="." unique_id=1325149863 instance=ExtResource("1_pk1i0")]
+clip_contents = true
+custom_minimum_size = Vector2(0, 112)
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 1152.0
+offset_bottom = 112.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1866030261]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -44.0
+offset_bottom = 44.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 52
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 52
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=217940471]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=2018183772]
+layout_mode = 2
+text = "Ranking"
+horizontal_alignment = 1
+
+[node name="TopDivider" type="TextureRect" parent="MarginContainer/VBoxContainer" unique_id=1310243353]
+clip_contents = true
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+
+[node name="Line2D" type="Line2D" parent="MarginContainer/VBoxContainer/TopDivider" unique_id=104063455]
+position = Vector2(0, 1)
+points = PackedVector2Array(0, -1, 1096, -1)
+width = 2.0
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer" unique_id=1674032201]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="CenterLayoutContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer" unique_id=924388402]
+layout_mode = 2
+
+[node name="P1ScoreResults" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer" unique_id=338981141]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="Score" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P1ScoreResults" unique_id=740110813]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "1,000,000"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P1ScoreResults" unique_id=1549605597]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="JudgementCountVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P1ScoreResults/HBoxContainer" unique_id=1256486105]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Perfect" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P1ScoreResults/HBoxContainer/JudgementCountVBox" unique_id=743107786]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P1ScoreResults/HBoxContainer/JudgementCountVBox/Perfect" unique_id=1168161000]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Judgement" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P1ScoreResults/HBoxContainer/JudgementCountVBox/Perfect" unique_id=1919251318]
+layout_mode = 2
+text = "Perfect"
+
+[node name="Count" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P1ScoreResults/HBoxContainer/JudgementCountVBox/Perfect" unique_id=1955937715]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1000"
+horizontal_alignment = 2
+
+[node name="Good" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P1ScoreResults/HBoxContainer/JudgementCountVBox" unique_id=807972138]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P1ScoreResults/HBoxContainer/JudgementCountVBox/Good" unique_id=2023807155]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Judgement" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P1ScoreResults/HBoxContainer/JudgementCountVBox/Good" unique_id=1187873495]
+layout_mode = 2
+text = "Good"
+
+[node name="Count" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P1ScoreResults/HBoxContainer/JudgementCountVBox/Good" unique_id=685914329]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1000"
+horizontal_alignment = 2
+
+[node name="Bad" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P1ScoreResults/HBoxContainer/JudgementCountVBox" unique_id=1700530550]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P1ScoreResults/HBoxContainer/JudgementCountVBox/Bad" unique_id=625906506]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Judgement" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P1ScoreResults/HBoxContainer/JudgementCountVBox/Bad" unique_id=467070132]
+layout_mode = 2
+text = "Bad"
+
+[node name="Count" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P1ScoreResults/HBoxContainer/JudgementCountVBox/Bad" unique_id=568290493]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1000"
+horizontal_alignment = 2
+
+[node name="Miss" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P1ScoreResults/HBoxContainer/JudgementCountVBox" unique_id=1010958951]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P1ScoreResults/HBoxContainer/JudgementCountVBox/Miss" unique_id=864627416]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Judgement" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P1ScoreResults/HBoxContainer/JudgementCountVBox/Miss" unique_id=944136428]
+layout_mode = 2
+text = "Miss"
+
+[node name="Count" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P1ScoreResults/HBoxContainer/JudgementCountVBox/Miss" unique_id=1798478484]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1000"
+horizontal_alignment = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P1ScoreResults/HBoxContainer" unique_id=333128353]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="ToBeReplacedWithComboMeter" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P1ScoreResults" unique_id=1405390147]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P1ScoreResults/ToBeReplacedWithComboMeter" unique_id=1155275876]
+layout_mode = 2
+size_flags_vertical = 5
+text = "Volts"
+horizontal_alignment = 1
+
+[node name="ToBeReplacedWithComboMeter" type="TextureRect" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P1ScoreResults/ToBeReplacedWithComboMeter" unique_id=693651439]
+layout_mode = 2
+size_flags_vertical = 5
+
+[node name="DuelResult" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P1ScoreResults" unique_id=505782357]
+layout_mode = 2
+text = "Victory/Defeat"
+horizontal_alignment = 1
+
+[node name="SongCard" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer" unique_id=296548007 instance=ExtResource("2_pk1i0")]
+layout_mode = 2
+
+[node name="P2ScoreResults" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer" unique_id=589207489]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="Score" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P2ScoreResults" unique_id=1197972752]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "1,000,000"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P2ScoreResults" unique_id=1995706239]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="JudgementCountVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P2ScoreResults/HBoxContainer" unique_id=636185232]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Perfect" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P2ScoreResults/HBoxContainer/JudgementCountVBox" unique_id=379873657]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P2ScoreResults/HBoxContainer/JudgementCountVBox/Perfect" unique_id=518006428]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Judgement" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P2ScoreResults/HBoxContainer/JudgementCountVBox/Perfect" unique_id=962117840]
+layout_mode = 2
+text = "Perfect"
+
+[node name="Count" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P2ScoreResults/HBoxContainer/JudgementCountVBox/Perfect" unique_id=1176862233]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1000"
+horizontal_alignment = 2
+
+[node name="Good" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P2ScoreResults/HBoxContainer/JudgementCountVBox" unique_id=735594693]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P2ScoreResults/HBoxContainer/JudgementCountVBox/Good" unique_id=892478440]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Judgement" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P2ScoreResults/HBoxContainer/JudgementCountVBox/Good" unique_id=1275534367]
+layout_mode = 2
+text = "Good"
+
+[node name="Count" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P2ScoreResults/HBoxContainer/JudgementCountVBox/Good" unique_id=804016256]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1000"
+horizontal_alignment = 2
+
+[node name="Bad" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P2ScoreResults/HBoxContainer/JudgementCountVBox" unique_id=2090526783]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P2ScoreResults/HBoxContainer/JudgementCountVBox/Bad" unique_id=433926136]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Judgement" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P2ScoreResults/HBoxContainer/JudgementCountVBox/Bad" unique_id=963965664]
+layout_mode = 2
+text = "Bad"
+
+[node name="Count" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P2ScoreResults/HBoxContainer/JudgementCountVBox/Bad" unique_id=1276522865]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1000"
+horizontal_alignment = 2
+
+[node name="Miss" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P2ScoreResults/HBoxContainer/JudgementCountVBox" unique_id=125426979]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P2ScoreResults/HBoxContainer/JudgementCountVBox/Miss" unique_id=1224865233]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Judgement" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P2ScoreResults/HBoxContainer/JudgementCountVBox/Miss" unique_id=860547333]
+layout_mode = 2
+text = "Miss"
+
+[node name="Count" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P2ScoreResults/HBoxContainer/JudgementCountVBox/Miss" unique_id=1340113198]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1000"
+horizontal_alignment = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P2ScoreResults/HBoxContainer" unique_id=1481065600]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="ToBeReplacedWithComboMeter" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P2ScoreResults" unique_id=1376311002]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P2ScoreResults/ToBeReplacedWithComboMeter" unique_id=413399386]
+layout_mode = 2
+size_flags_vertical = 5
+text = "Volts"
+horizontal_alignment = 1
+
+[node name="ToBeReplacedWithComboMeter" type="TextureRect" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P2ScoreResults/ToBeReplacedWithComboMeter" unique_id=1527820020]
+layout_mode = 2
+size_flags_vertical = 5
+
+[node name="DuelResult" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/CenterLayoutContainer/P2ScoreResults" unique_id=984420733]
+layout_mode = 2
+text = "Victory/Defeat"
+horizontal_alignment = 1
+
+[node name="BottomDivider" type="TextureRect" parent="MarginContainer/VBoxContainer" unique_id=541695358]
+clip_contents = true
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+
+[node name="Line2D" type="Line2D" parent="MarginContainer/VBoxContainer/BottomDivider" unique_id=297753313]
+position = Vector2(0, 1)
+points = PackedVector2Array(0, -1, 1096, -1)
+width = 2.0
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer" unique_id=1385982517]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 32
+
+[node name="PlayerResults" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer2" unique_id=1900596849]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Player1ResultCard" parent="MarginContainer/VBoxContainer/MarginContainer2/PlayerResults" unique_id=1824690737 instance=ExtResource("3_s3f1m")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Divider" type="MarginContainer" parent="MarginContainer/VBoxContainer/MarginContainer2/PlayerResults" unique_id=39497316]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Player2ResultCard2" parent="MarginContainer/VBoxContainer/MarginContainer2/PlayerResults" unique_id=1438994424 instance=ExtResource("3_s3f1m")]
+layout_mode = 2
+size_flags_horizontal = 3
