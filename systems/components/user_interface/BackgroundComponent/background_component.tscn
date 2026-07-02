@@ -28,7 +28,6 @@ shader_parameter/speed = 0.20000000298024
 
 [node name="BackgroundComponent" type="Node2D" unique_id=1832983265]
 script = ExtResource("1_rfalh")
-parallax = true
 
 [node name="BackgroundContainer" type="Node2D" parent="." unique_id=1333894944]
 
