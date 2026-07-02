@@ -6,7 +6,7 @@ extends Node2D
 
 
 func _ready() -> void:
-	print("[Gameplay] Multiplayer =", SceneManager.is_multiplayer)
+	print("[Ga5meplay] Multiplayer =", SceneManager.is_multiplayer)
 
 	print("[GAMEPLAY] is_replay: ", SceneManager.is_replay)
 	replay_recorder.add_to_group("replay_recorder")
@@ -32,7 +32,7 @@ func _ready() -> void:
 	if SceneManager.is_multiplayer:
 		print("[Gameplay] Connected countdown signal")
 		NetworkManager.countdown_started.connect(_on_countdown_started)
-
+		NetworkManager.opponent_disconnected.connect(_on_opponent_disconnected)
 		if multiplayer.is_server():
 			print("[Gameplay] Host ready")
 			NetworkManager.set_host_ready()
@@ -76,3 +76,7 @@ func _on_countdown_started(start_time: int): #for multiplayer countdown
 
 	print("[Gameplay] Starting song now")
 	Conductor.play_song()
+
+func _on_opponent_disconnected() -> void:
+	Conductor.audio_player.stop()
+	PauseManager.cleanup()

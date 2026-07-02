@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://bte3cw0r48u2u" path="res://systems/scripts/replay_player.gd" id="9_kc66f"]
 [ext_resource type="PackedScene" uid="uid://dleilsmim1rix" path="res://systems/components/user_interface/LevelHUD/level_hud_component.tscn" id="9_q0nmq"]
 [ext_resource type="PackedScene" uid="uid://b7u0kqlhcwvtg" path="res://systems/components/user_interface/JudgementRingComponent/judgement_ring_component.tscn" id="10_kc66f"]
+[ext_resource type="Script" uid="uid://c5tjdow6fxkne" path="res://scenes/menus/multiplayer/multiplayer_score_panel.gd" id="11_8k7nv"]
 
 [node name="WorldGameplay" type="Node2D" unique_id=1726405357]
 script = ExtResource("1_i6826")
@@ -52,3 +53,10 @@ unique_name_in_owner = true
 script = ExtResource("6_lr7i6")
 note_scene = ExtResource("7_07rdt")
 hold_note_scene = ExtResource("8_a5bbv")
+
+[node name="Control" type="Control" parent="." unique_id=1162314924]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("11_8k7nv")

@@ -18,6 +18,7 @@ const MSG_INVITE   = "INVITE"
 const MSG_ACCEPT   = "ACCEPT"
 const MSG_DECLINE  = "DECLINE"
 const MSG_SESSION  = "SESSION"
+const MSG_ROOM = "ROOM" #added for room (new lobby design)
 
 # what the ui listens
 signal peer_found(ip: String, peer_name: String)
@@ -27,9 +28,18 @@ signal invite_declined()
 signal session_ready()          # ENet establishjed
 signal opponent_disconnected()
 
+signal guest_name_received(guest_name: String)
+signal opponent_score_updated(score: int)
+signal room_found(ip: String, room_name: String, host_name: String)
+signal room_lost(ip: String)
+
 var player_name: String = "Player"
 var host_name: String = ""
+var guest_name: String = "" #oops forgot this added july 2 a
 var my_ip: String = ""
+var my_room_name: String = ""
+var is_hosting_room: bool = false
+var _active_rooms: Dictionary = {}
 
 var _active_peers: Dictionary = {}      # ip -> { "name": String, "last_seen": float }
 var _pending_invite_ip: String = ""     # who WE invited (we become host if accepted)
@@ -111,7 +121,15 @@ func _broadcast_tick(delta: float) -> void:
 	_broadcast_timer += delta
 	if _broadcast_timer >= BROADCAST_INTERVAL:
 		_broadcast_timer = 0.0
-		var packet := { "type": MSG_PRESENCE, "name": player_name }
+		var packet: Dictionary
+		if is_hosting_room:
+			packet = {
+				"type": MSG_ROOM,
+				"room_name": my_room_name,
+				"host_name": player_name,
+			}
+		else:
+			packet = { "type": MSG_PRESENCE, "name": player_name }
 		_broadcast_socket.set_dest_address("255.255.255.255", PRESENCE_PORT)
 		_broadcast_socket.put_packet(JSON.stringify(packet).to_utf8_buffer())
 
@@ -122,21 +140,31 @@ func _read_presence() -> void:
 	while _presence_socket.get_available_packet_count() > 0:
 		var bytes := _presence_socket.get_packet()
 		var sender_ip := _presence_socket.get_packet_ip()
-
 		if sender_ip == my_ip:
-			continue  # ignore our own broadcast
-
-		var msg = JSON.parse_string(bytes.get_string_from_utf8())
-		if msg == null or msg.get("type") != MSG_PRESENCE:
 			continue
-
-		var peer_name: String = msg.get("name", "Unknown")
-
-		if not _active_peers.has(sender_ip):
-			_active_peers[sender_ip] = { "name": peer_name, "last_seen": 0.0 }
-			peer_found.emit(sender_ip, peer_name)
-		else:
-			_active_peers[sender_ip]["last_seen"] = 0.0
+		var msg = JSON.parse_string(bytes.get_string_from_utf8())
+		if msg == null:
+			continue
+		match msg.get("type"):
+			MSG_PRESENCE:
+				var peer_name: String = msg.get("name", "Unknown")
+				if not _active_peers.has(sender_ip):
+					_active_peers[sender_ip] = { "name": peer_name, "last_seen": 0.0 }
+					peer_found.emit(sender_ip, peer_name)
+				else:
+					_active_peers[sender_ip]["last_seen"] = 0.0
+			MSG_ROOM:
+				var room_name: String = msg.get("room_name", "Room")
+				var host_name: String = msg.get("host_name", "Host")
+				if not _active_rooms.has(sender_ip):
+					_active_rooms[sender_ip] = {
+						"room_name": room_name,
+						"host_name": host_name,
+						"last_seen": 0.0
+					}
+					room_found.emit(sender_ip, room_name, host_name)
+				else:
+					_active_rooms[sender_ip]["last_seen"] = 0.0
 
 # remove LAN players that have stopped broadcasting their presence.
 func _expire_peers(delta: float) -> void:
@@ -148,6 +176,15 @@ func _expire_peers(delta: float) -> void:
 	for ip in to_remove:
 		_active_peers.erase(ip)
 		peer_lost.emit(ip)
+
+	var rooms_to_remove: Array = []
+	for ip in _active_rooms:
+		_active_rooms[ip]["last_seen"] += delta
+		if _active_rooms[ip]["last_seen"] > PEER_TIMEOUT:
+			rooms_to_remove.append(ip)
+	for ip in rooms_to_remove:
+		_active_rooms.erase(ip)
+		room_lost.emit(ip)
 
 
 # on some signalingg tyshttt invite, accept, reject sessions
@@ -166,12 +203,17 @@ func _read_signals() -> void:
 
 		match msg.get("type"):
 			MSG_INVITE:
-				invite_received.emit(sender_ip, msg.get("name", "Unknown"))
+				if is_hosting_room:
+					print("[Net] %s joined our room" % sender_ip)
+					_become_host(sender_ip)
+				else:
+					invite_received.emit(sender_ip, msg.get("name", "Unknown"))
 
 			MSG_ACCEPT:
+				guest_name = msg.get("name", "Guest")
 				print("[Net] %s accepted — becoming host" % sender_ip)
 				_become_host(sender_ip)
-				return 
+				return
 
 			MSG_DECLINE:
 				_pending_invite_ip = ""
@@ -199,9 +241,11 @@ func send_invite(target_ip: String) -> void:
 
 
 func accept_invite(from_ip: String) -> void:
-	_send_signal(from_ip, { "type": MSG_ACCEPT })
+	_send_signal(from_ip, {
+		"type": MSG_ACCEPT,
+		"name": player_name
+	})
 	print("[Net] Accepted invite from ", from_ip)
-	# We now wait for a seesion message from them (they become host)
 
 
 func decline_invite(from_ip: String) -> void:
@@ -295,6 +339,10 @@ func reset_session() -> void: #basically sets everything to false to run back de
 	_session_starting = false
 	host_ready = false
 	guest_opponent_ready = false
+	is_hosting_room = false
+	my_room_name = ""
+	_active_rooms.clear()
+	guest_name = ""
 
 func disconnect_session() -> void:
 	reset_session()
@@ -383,3 +431,27 @@ func set_host_ready():
 
 	if host_ready and guest_opponent_ready:
 		begin_match_countdown()
+
+# for live scoring
+@rpc("any_peer", "unreliable") # its acutally reliable, its just how its designed 
+func receive_score_update(score: int) -> void:
+	opponent_score_updated.emit(score)
+
+func send_score_update(score: int) -> void:
+	var peer_ids = multiplayer.get_peers()
+	if peer_ids.is_empty():
+		return
+	receive_score_update.rpc_id(peer_ids[0], score)
+
+func create_room(room_name: String) -> void:
+	my_room_name = room_name
+	is_hosting_room = true
+
+func close_room() -> void:
+	is_hosting_room = false
+	my_room_name = ""
+
+@rpc("any_peer", "reliable")
+func send_guest_name(name: String) -> void:
+	guest_name = name
+	guest_name_received.emit(name)

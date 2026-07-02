@@ -65,6 +65,14 @@ horizontal_alignment = 1
 layout_mode = 2
 text = "Leave Lobby"
 
+[node name="Label" type="Label" parent="." unique_id=1576865340]
+layout_mode = 0
+offset_left = 413.0
+offset_top = 116.0
+offset_right = 520.0
+offset_bottom = 139.0
+text = "En Core"
+
 [connection signal="item_selected" from="Layout/SettingsPanel/EnergyOption" to="." method="_on_energy_selected"]
 [connection signal="pressed" from="Layout/StartButton" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="Layout/QuitButton" to="." method="_on_quit_pressed"]

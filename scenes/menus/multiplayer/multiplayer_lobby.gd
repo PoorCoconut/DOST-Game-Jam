@@ -20,13 +20,12 @@ func _ready() -> void:
 	_populate_energy_options()
 	_setup_player_labels()
 	_setup_host_or_guest_ui()
-
-# added this so that it auto starts without song selection first
+	NetworkManager.opponent_disconnected.connect(_on_opponent_disconnected)
 	if multiplayer.is_server():
 		SceneManager.selected_chart = load("res://scenes/levels/actual/chart_lollipop.tres")
-
 	if not NetworkManager.match_load_requested.is_connected(_on_match_load_requested):
 		NetworkManager.match_load_requested.connect(_on_match_load_requested)
+	NetworkManager.guest_name_received.connect(_on_guest_name_received)
 
 
 func _populate_energy_options() -> void:
@@ -42,7 +41,7 @@ func _populate_energy_options() -> void:
 func _setup_player_labels() -> void:
 	if multiplayer.is_server():
 		host_label.text = "You (Host): %s" % NetworkManager.player_name
-		guest_label.text = "Guest: connecting..."
+		guest_label.text = "Waiting for Player 2"
 	else:
 		host_label.text = "Host: %s" % NetworkManager.host_name
 		guest_label.text = "You (Guest): %s" % NetworkManager.player_name
@@ -84,3 +83,9 @@ func _on_match_load_requested(_chart_path: String,_energy: String) -> void:
 func _on_quit_pressed() -> void:
 	NetworkManager.disconnect_session()
 	SceneManager.quit_to_menu()
+
+func _on_guest_name_received(name: String) -> void:
+	guest_label.text = "Player 2: %s" % name
+
+func _on_opponent_disconnected() -> void:
+	NetworkManager.disconnect_session()

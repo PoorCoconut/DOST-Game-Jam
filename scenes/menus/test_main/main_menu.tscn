@@ -52,6 +52,14 @@ text = "Multiplayer"
 layout_mode = 2
 text = "Settings"
 
+[node name="DisconnectLabel" type="Label" parent="." unique_id=2064815250]
+visible = false
+layout_mode = 0
+offset_left = 490.0
+offset_top = 235.0
+offset_right = 659.0
+offset_bottom = 258.0
+
 [connection signal="pressed" from="CenterContainer/VBoxContainer/playButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Multiplayer" to="." method="_on_multiplayer_button_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Settings" to="." method="_on_settings_button_pressed"]

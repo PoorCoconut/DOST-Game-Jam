@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://8nxtx53iistm" path="res://scenes/menus/lan/lan_lobby.gd" id="1_script"]
 
-[node name="LANLobby" type="Control" unique_id=1961365679]
+[node name="LANLobby" type="Control" unique_id=979028782]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,87 +11,81 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_script")
 
-[node name="Background" type="ColorRect" parent="." unique_id=185685249]
+[node name="Background" type="ColorRect" parent="." unique_id=1362707467]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.6)
+color = Color(0.1, 0.1, 0.1, 0.85)
 
-[node name="MainPanel" type="VBoxContainer" parent="." unique_id=490488377]
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=234953901]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -150.0
-offset_top = -120.0
-offset_right = 150.0
-offset_bottom = 120.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="NameInput" type="LineEdit" parent="MainPanel" unique_id=1168331480]
+[node name="MainPanel" type="PanelContainer" parent="CenterContainer" unique_id=852489790]
+custom_minimum_size = Vector2(500, 460)
 layout_mode = 2
-placeholder_text = "Enter your name"
 
-[node name="GoOnlineButton" type="Button" parent="MainPanel" unique_id=825597635]
+[node name="Margin" type="MarginContainer" parent="CenterContainer/MainPanel" unique_id=208839572]
 layout_mode = 2
-text = "Go Online"
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
 
-[node name="StatusLabel" type="Label" parent="MainPanel" unique_id=145609296]
+[node name="VBox" type="VBoxContainer" parent="CenterContainer/MainPanel/Margin" unique_id=785396315]
 layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TopBar" type="HBoxContainer" parent="CenterContainer/MainPanel/Margin/VBox" unique_id=272574929]
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="CenterContainer/MainPanel/Margin/VBox/TopBar" unique_id=840292174]
+layout_mode = 2
+text = "←"
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/MainPanel/Margin/VBox/TopBar" unique_id=1405466572]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Select Room"
 horizontal_alignment = 1
 
-[node name="PeerList" type="ItemList" parent="MainPanel" unique_id=29452106]
-visible = false
-custom_minimum_size = Vector2(0, 120)
+[node name="InputRow" type="HBoxContainer" parent="CenterContainer/MainPanel/Margin/VBox" unique_id=1790400914]
 layout_mode = 2
+theme_override_constants/separation = 8
 
-[node name="BackButton" type="Button" parent="MainPanel" unique_id=402536927]
+[node name="NameInput" type="LineEdit" parent="CenterContainer/MainPanel/Margin/VBox/InputRow" unique_id=1083681553]
 layout_mode = 2
-text = "Back"
+size_flags_horizontal = 3
+placeholder_text = "name"
 
-[node name="InvitePanel" type="PanelContainer" parent="." unique_id=645662243]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -130.0
-offset_top = -50.0
-offset_right = 130.0
-offset_bottom = 50.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="InviteVBox" type="VBoxContainer" parent="InvitePanel" unique_id=447048435]
+[node name="HostRoomButton" type="Button" parent="CenterContainer/MainPanel/Margin/VBox/InputRow" unique_id=852421916]
 layout_mode = 2
+text = "+ Host Room"
 
-[node name="InviteLabel" type="Label" parent="InvitePanel/InviteVBox" unique_id=175766791]
+[node name="StatusLabel" type="Label" parent="CenterContainer/MainPanel/Margin/VBox" unique_id=1808312107]
 layout_mode = 2
-text = "Invite text"
+text = "not currently hosting."
+
+[node name="AvailableLabel" type="Label" parent="CenterContainer/MainPanel/Margin/VBox" unique_id=1668487498]
+layout_mode = 2
+text = "Available lobbies"
 horizontal_alignment = 1
 
-[node name="InviteButtons" type="HBoxContainer" parent="InvitePanel/InviteVBox" unique_id=244141294]
+[node name="ScrollContainer" type="ScrollContainer" parent="CenterContainer/MainPanel/Margin/VBox" unique_id=1825566250]
 layout_mode = 2
-alignment = 1
+size_flags_vertical = 3
 
-[node name="AcceptButton" type="Button" parent="InvitePanel/InviteVBox/InviteButtons" unique_id=271836137]
+[node name="RoomList" type="VBoxContainer" parent="CenterContainer/MainPanel/Margin/VBox/ScrollContainer" unique_id=1953628982]
 layout_mode = 2
-text = "Accept"
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
 
-[node name="DeclineButton" type="Button" parent="InvitePanel/InviteVBox/InviteButtons" unique_id=52744293]
-layout_mode = 2
-text = "Decline"
-
-[connection signal="pressed" from="MainPanel/GoOnlineButton" to="." method="_on_go_online_pressed"]
-[connection signal="item_activated" from="MainPanel/PeerList" to="." method="_on_peer_selected"]
-[connection signal="pressed" from="MainPanel/BackButton" to="." method="_on_back_pressed"]
-[connection signal="pressed" from="InvitePanel/InviteVBox/InviteButtons/AcceptButton" to="." method="_on_accept_pressed"]
-[connection signal="pressed" from="InvitePanel/InviteVBox/InviteButtons/DeclineButton" to="." method="_on_decline_pressed"]
+[connection signal="pressed" from="CenterContainer/MainPanel/Margin/VBox/TopBar/BackButton" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="CenterContainer/MainPanel/Margin/VBox/InputRow/HostRoomButton" to="." method="_on_host_room_pressed"]

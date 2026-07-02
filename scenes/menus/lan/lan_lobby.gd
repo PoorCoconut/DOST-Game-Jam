@@ -1,94 +1,80 @@
 extends Control
 
-@onready var name_input: LineEdit = $MainPanel/NameInput
-@onready var go_online_button: Button = $MainPanel/GoOnlineButton
-@onready var status_label: Label = $MainPanel/StatusLabel
-@onready var peer_list: ItemList = $MainPanel/PeerList
+@onready var name_input: LineEdit     = $CenterContainer/MainPanel/Margin/VBox/InputRow/NameInput
+@onready var host_room_button: Button = $CenterContainer/MainPanel/Margin/VBox/InputRow/HostRoomButton
+@onready var status_label: Label      = $CenterContainer/MainPanel/Margin/VBox/StatusLabel
+@onready var room_list: VBoxContainer = $CenterContainer/MainPanel/Margin/VBox/ScrollContainer/RoomList
 
-@onready var invite_panel: PanelContainer = $InvitePanel
-@onready var invite_label: Label = $InvitePanel/InviteVBox/InviteLabel
-
-var _peer_ips: Array[String] = []
-var _pending_invite_from: String = ""
-var _awaiting_response: bool = false
-
+var _room_ips: Array[String] = []
+var _is_hosting: bool = false
 
 func _ready() -> void:
-	invite_panel.visible = false
-	peer_list.visible = false
-
-	NetworkManager.peer_found.connect(_on_peer_found)
-	NetworkManager.peer_lost.connect(_on_peer_lost)
-	NetworkManager.invite_received.connect(_on_invite_received)
-	NetworkManager.invite_declined.connect(_on_invite_declined)
-	NetworkManager.session_ready.connect(_on_session_ready)
+	NetworkManager.start_presence("Player")
+	NetworkManager.room_found.connect(_on_room_found)
+	NetworkManager.room_lost.connect(_on_room_lost)
+	# Only guest needs session_ready — host goes to lobby directly
+	if not _is_hosting:
+		NetworkManager.session_ready.connect(_on_session_ready)
 
 
-func _on_go_online_pressed() -> void:
+func _on_back_pressed() -> void:
+	NetworkManager.stop_presence()
+	NetworkManager.close_room()
+	SceneManager.quit_to_menu()
+
+
+func _on_host_room_pressed() -> void:
+	var entered_name := name_input.text.strip_edges()
+	if entered_name.is_empty():
+		status_label.text = "Enter a name first."
+		return
+	NetworkManager.player_name = entered_name
+	NetworkManager.start_presence(entered_name)
+	NetworkManager.create_room(entered_name + "'s room")
+	_is_hosting = true
+	SceneManager.is_multiplayer = true
+	SceneManager.load_multiplayer_lobby()
+
+
+func _on_room_found(ip: String, room_name: String, _host_name: String) -> void:
+	if _room_ips.has(ip):
+		return
+	_room_ips.append(ip)
+
+	var btn := Button.new()
+	btn.text = room_name
+	btn.name = "Room_" + ip.replace(".", "_")
+	btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	btn.pressed.connect(func(): _on_room_clicked(ip))
+	room_list.add_child(btn)
+
+
+func _on_room_lost(ip: String) -> void:
+	var idx := _room_ips.find(ip)
+	if idx == -1:
+		return
+	_room_ips.remove_at(idx)
+	var node := room_list.get_node_or_null("Room_" + ip.replace(".", "_"))
+	if node:
+		node.queue_free()
+
+
+func _on_room_clicked(ip: String) -> void:
 	var entered_name := name_input.text.strip_edges()
 	if entered_name.is_empty():
 		status_label.text = "Enter a name first."
 		return
 
-	NetworkManager.start_presence(entered_name)
-	name_input.editable = false
-	go_online_button.disabled = true
-	peer_list.visible = true
-	status_label.text = "Scanning for players on the LAN..."
-
-
-func _on_peer_found(ip: String, peer_name: String) -> void:
-	_peer_ips.append(ip)
-	peer_list.add_item("%s  (%s)" % [peer_name, ip])
-
-
-func _on_peer_lost(ip: String) -> void:
-	var idx := _peer_ips.find(ip)
-	if idx == -1:
-		return
-	_peer_ips.remove_at(idx)
-	peer_list.remove_item(idx)
-
-
-func _on_peer_selected(index: int) -> void:
-	if _awaiting_response:
-		return
-	_awaiting_response = true
-
-	var target_ip := _peer_ips[index]
-	NetworkManager.send_invite(target_ip)
-	status_label.text = "Invite sent. Waiting for response..."
-
-
-func _on_invite_received(from_ip: String, from_name: String) -> void:
-	_pending_invite_from = from_ip
-	invite_label.text = "%s wants to play. Accept?" % from_name
-	invite_panel.visible = true
-
-
-func _on_accept_pressed() -> void:
-	invite_panel.visible = false
-	NetworkManager.accept_invite(_pending_invite_from)
-	status_label.text = "Connecting..."
-
-
-func _on_decline_pressed() -> void:
-	invite_panel.visible = false
-	NetworkManager.decline_invite(_pending_invite_from)
-	_pending_invite_from = ""
-
-
-func _on_invite_declined() -> void:
-	status_label.text = "Invite declined."
-	_awaiting_response = false
+	NetworkManager.player_name = entered_name
+	status_label.text = "Joining room..."
+	NetworkManager.send_invite(ip)
 
 
 func _on_session_ready() -> void:
+	NetworkManager.session_ready.disconnect(_on_session_ready)
 	SceneManager.is_multiplayer = true
+	await get_tree().create_timer(0.1).timeout
+	if multiplayer.multiplayer_peer != null and not multiplayer.is_server():
+		NetworkManager.send_guest_name.rpc_id(1, NetworkManager.player_name)
 	SceneManager.load_multiplayer_lobby()
-
-
-func _on_back_pressed() -> void:
-	NetworkManager.stop_presence()
-	queue_free()
-	SceneManager.quit_to_menu()
